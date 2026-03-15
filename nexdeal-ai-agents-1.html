@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NexDeal AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#07080f;--s:#0e1020;--c:#121428;--b:#1e2240;--blue:#3b82f6;--cyan:#06b6d4;--green:#22c55e;--orange:#f97316;--t:#e8eaf6;--m:#6b7280}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--t);font-family:'Outfit',sans-serif;display:flex;flex-direction:column}
+.header{background:rgba(7,8,15,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--b);padding:.85rem 1.25rem;display:flex;align-items:center;gap:.75rem;flex-shrink:0;z-index:10}
+.back{width:34px;height:34px;background:var(--s);border:1px solid var(--b);border-radius:8px;color:var(--t);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1rem;flex-shrink:0}
+.ai-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;box-shadow:0 0 20px rgba(59,130,246,.3)}
+.ai-name{font-size:.9rem;font-weight:700}
+.ai-status{display:flex;align-items:center;gap:.35rem;font-size:.7rem;color:var(--green);font-weight:500}
+.dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:p 1.5s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+.tabs{display:flex;gap:.4rem;padding:.65rem 1.25rem;background:var(--s);border-bottom:1px solid var(--b);overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.tabs::-webkit-scrollbar{display:none}
+.tab{display:flex;align-items:center;gap:.35rem;padding:.45rem .9rem;border-radius:100px;border:1px solid var(--b);background:var(--c);color:var(--m);font-size:.75rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Outfit',sans-serif;transition:all .2s}
+.tab.active{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.4);color:var(--blue)}
+.chat{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.msgs{flex:1;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:1rem}
+.msgs::-webkit-scrollbar{width:3px}
+.msgs::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px}
+.mrow{display:flex;gap:.6rem;align-items:flex-end}
+.mrow.user{flex-direction:row-reverse}
+.mav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;font-weight:700}
+.mav.ai{background:linear-gradient(135deg,var(--blue),var(--cyan))}
+.mav.user{background:rgba(249,115,22,.2);color:var(--orange)}
+.mc{max-width:83%;display:flex;flex-direction:column;gap:.2rem}
+.mrow.user .mc{align-items:flex-end}
+.bbl{padding:.8rem 1rem;border-radius:14px;font-size:.875rem;line-height:1.65}
+.mrow.ai .bbl{background:var(--c);border:1px solid var(--b);border-bottom-left-radius:4px}
+.mrow.user .bbl{background:linear-gradient(135deg,rgba(59,130,246,.18),rgba(6,182,212,.12));border:1px solid rgba(59,130,246,.25);border-bottom-right-radius:4px}
+.mt{font-size:.62rem;color:var(--m);padding:0 .2rem}
+.typing{display:flex;gap:4px;align-items:center;padding:.85rem 1rem;background:var(--c);border:1px solid var(--b);border-radius:14px;border-bottom-left-radius:4px;width:fit-content}
+.typing span{width:7px;height:7px;background:var(--m);border-radius:50%;animation:tb 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes tb{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;text-align:center;gap:1rem}
+.wav{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 0 40px rgba(59,130,246,.25)}
+.welcome h2{font-size:1.25rem;font-weight:800;letter-spacing:-.02em}
+.welcome p{font-size:.85rem;color:var(--m);max-width:280px;line-height:1.6}
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;width:100%;max-width:320px}
+.wcard{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:.85rem;text-align:left;cursor:pointer;transition:all .2s}
+.wcard:hover{border-color:var(--blue);transform:translateY(-2px)}
+.wi{font-size:1.4rem;margin-bottom:.3rem;display:block}
+.wt{font-size:.78rem;font-weight:700;margin-bottom:.15rem}
+.wd{font-size:.68rem;color:var(--m);line-height:1.4}
+.qrs{padding:.6rem 1.25rem;display:flex;gap:.4rem;flex-wrap:wrap;border-top:1px solid var(--b);background:var(--s);flex-shrink:0}
+.qr{padding:.4rem .8rem;background:var(--c);border:1px solid var(--b);border-radius:100px;font-size:.73rem;font-weight:500;color:var(--m);cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;white-space:nowrap}
+.qr:hover{color:var(--blue);border-color:rgba(59,130,246,.4)}
+.inp-area{padding:.75rem 1.25rem;background:rgba(7,8,15,.98);border-top:1px solid var(--b);display:flex;gap:.6rem;align-items:flex-end;flex-shrink:0}
+.inp{flex:1;background:var(--c);border:1px solid var(--b);border-radius:12px;padding:.75rem 1rem;color:var(--t);font-family:'Outfit',sans-serif;font-size:.875rem;outline:none;resize:none;min-height:44px;max-height:120px;line-height:1.5;transition:border-color .2s}
+.inp:focus{border-color:var(--blue)}
+.inp::placeholder{color:var(--m)}
+.sbtn{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;color:white;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .2s,transform .1s;box-shadow:0 4px 15px rgba(59,130,246,.3)}
+.sbtn:hover{opacity:.9;transform:scale(1.05)}
+.sbtn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.price{color:var(--green);font-weight:700}
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="index.html" class="back">←</a>
+  <div class="ai-av">🤖</div>
+  <div>
+    <div class="ai-name" id="aname">NexDeal AI Assistant</div>
+    <div class="ai-status"><div class="dot"></div> Online • Claude AI</div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="sw('general')" id="t-general">🤖 Assistant</button>
+  <button class="tab" onclick="sw('deals')" id="t-deals">🔍 Deal Finder</button>
+  <button class="tab" onclick="sw('compare')" id="t-compare">⚖️ Compare</button>
+  <button class="tab" onclick="sw('support')" id="t-support">💬 Support</button>
+  <button class="tab" onclick="sw('budget')" id="t-budget">💰 Budget</button>
+</div>
+<div class="chat">
+  <div class="msgs" id="msgs">
+    <div class="welcome" id="ws">
+      <div class="wav">🤖</div>
+      <h2>Namaste! I'm NexDeal AI 🙏</h2>
+      <p>Ask me anything about electronics — phones, laptops, earbuds, prices, comparisons. I'll help you buy smart!</p>
+      <div class="wgrid">
+        <div class="wcard" onclick="qa('Best smartphone under 15000 rupees in India')"><span class="wi">📱</span><div class="wt">Best Phone</div><div class="wd">Top picks in budget</div></div>
+        <div class="wcard" onclick="qa('Compare iPhone 16 vs Samsung Galaxy S25')"><span class="wi">⚖️</span><div class="wt">Compare</div><div class="wd">Honest comparison</div></div>
+        <div class="wcard" onclick="qa('Best laptop for CSE student under 60000 rupees')"><span class="wi">💻</span><div class="wt">Study Laptop</div><div class="wd">Best for coding</div></div>
+        <div class="wcard" onclick="qa('Amazon vs Flipkart which is safer for electronics?')"><span class="wi">🛒</span><div class="wt">Where to Buy?</div><div class="wd">Platform advice</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="qrs">
+    <button class="qr" onclick="qa('Best phone under 10000 rupees India 2025')">📱 Under ₹10k</button>
+    <button class="qr" onclick="qa('Best wireless earbuds under 2000 rupees')">🎧 Earbuds ₹2k</button>
+    <button class="qr" onclick="qa('iPhone 16 price on Amazon and Flipkart India')">🍎 iPhone price</button>
+    <button class="qr" onclick="qa('Best gaming laptop under 80000 rupees India')">🎮 Gaming laptop</button>
+    <button class="qr" onclick="qa('Best smartwatch under 3000 rupees India')">⌚ Smartwatch</button>
+    <button class="qr" onclick="qa('What is Flipkart return policy for mobiles?')">🔄 Return policy</button>
+  </div>
+  <div class="inp-area">
+    <textarea class="inp" id="ui" placeholder="Ask anything... e.g. best phone under ₹20,000" rows="1" onkeydown="ke(event)" oninput="ar(this)"></textarea>
+    <button class="sbtn" id="sb" onclick="send()">➤</button>
+  </div>
+</div>
+<script>
+const AG={
+  general:{name:"NexDeal Assistant",sys:`You are NexDeal AI — a friendly expert shopping assistant for Indians buying electronics online. Help find best deals on Amazon India, Flipkart, Myntra, JioMart. Be like a knowledgeable friend/bhai. Use simple language, occasionally say "bhai" or "yaar". Use emojis. Always give specific ₹ prices. Mention which platform has best price. Give clear recommendation. Add money saving tips. End with helpful follow-up question.`},
+  deals:{name:"Deal Finder",sys:`You are NexDeal Deal Finder. Find BEST deals on electronics in India. Give TOP 3 options with prices. Format: Name | Price | Best on: Platform | Why good value. Mention savings vs MRP. Give ONE clear winner. Always use ₹ symbol. Say "Compare on NexDeal!" Use 🔥💰 emojis.`},
+  compare:{name:"Product Comparer",sys:`You are NexDeal Product Comparer. Do honest side-by-side comparisons. Compare: Price, Display, Performance, Camera, Battery, Value. Give prices on Amazon AND Flipkart. Give clear verdict: "Buy A if... Buy B if..." Be completely honest. Use simple language. End with "Which matters more to you? 😊"`},
+  support:{name:"Customer Support",sys:`You are NexDeal Customer Support helping Indian buyers shop safely. Help with: product advice, platform safety (Amazon/Flipkart safest), return policies (Amazon 10 days, Flipkart 10 days, Myntra 30 days), delivery times, spotting fake sellers, EMI options. Always remind: buy from official brand stores, check seller ratings. Be warm and patient like a helpful bhai/didi.`},
+  budget:{name:"Budget Advisor",sys:`You are NexDeal Budget Advisor maximizing value for Indian buyers. For any budget: tell what they can get, suggest if small stretch gives much better value, give SINGLE best recommendation, calculate rough EMI (÷12), mention if waiting for sale saves money. Be practical and honest. Use ₹ always.`}
+};
+let ca='general',hist=[],ld=false;
+function sw(id){
+  ca=id;hist=[];
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('t-'+id).classList.add('active');
+  document.getElementById('aname').textContent=AG[id].name;
+  document.getElementById('msgs').innerHTML='';
+  const g={general:"Namaste bhai! 🙏 I'm NexDeal AI!\n\nAsk me anything — best phones, laptops, earbuds, price comparisons, where to buy safely...\n\nWhat are you looking to buy today? 😊",deals:"🔥 Deal Finder ready!\n\nTell me what product you want + your budget in ₹\n\nI'll find the BEST deal across all platforms! 💰",compare:"⚖️ Product Comparer here!\n\nWhich 2 products should I compare?\n\nExample: 'Compare OnePlus 12 vs Samsung S24'\n\nHonest comparison guaranteed! 🎯",support:"Hello! NexDeal Support here! 😊\n\nI help with:\n• Which product to buy\n• Safe online shopping tips\n• Return & warranty info\n• Finding genuine sellers\n\nHow can I help you?",budget:"💰 Budget Advisor here!\n\nTell me your budget + what you need\n\nExample: 'I have ₹20,000 for a smartphone'\n\nLet's maximize your money! 🚀"};
+  aiMsg(g[id]);
+}
+async function send(){
+  const u=document.getElementById('ui'),txt=u.value.trim();
+  if(!txt||ld)return;
+  const ws=document.getElementById('ws');if(ws)ws.remove();
+  u.value='';u.style.height='auto';
+  userMsg(txt);hist.push({role:'user',content:txt});
+  setLd(true);showT();
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:AG[ca].sys,messages:hist})});
+    const d=await r.json();hideT();
+    const rep=d.content?.[0]?.text||"Sorry, try again! 🙏";
+    hist.push({role:'assistant',content:rep});aiMsg(rep);
+  }catch(e){hideT();aiMsg("⚠️ Connection issue! Check internet and try again. 🙏");}
+  setLd(false);
+}
+function qa(t){const ws=document.getElementById('ws');if(ws)ws.remove();document.getElementById('ui').value=t;send();}
+function ke(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+function ar(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
+function userMsg(t){const m=document.getElementById('msgs'),d=document.createElement('div');d.className='mrow user';d.innerHTML=`<div class="mav user">A</div><div class="mc"><div class="bbl">${esc(t)}</div><div class="mt">${gt()}</div></div>`;m.appendChild(d);sc();}
+function aiMsg(t){const m=document.getElementById('msgs'),d=document.createElement('div');d.className='mrow ai';d.innerHTML=`<div class="mav ai">🤖</div><div class="mc"><div class="bbl">${fmt(t)}</div><div class="mt">${gt()} • ${AG[ca].name}</div></div>`;m.appendChild(d);sc();}
+function fmt(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/(₹[\d,]+)/g,'<span class="price">$1</span>').replace(/\n/g,'<br>');}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function showT(){const m=document.getElementById('msgs'),d=document.createElement('div');d.className='mrow ai';d.id='ty';d.innerHTML=`<div class="mav ai">🤖</div><div class="mc"><div class="typing"><span></span><span></span><span></span></div></div>`;m.appendChild(d);sc();}
+function hideT(){const t=document.getElementById('ty');if(t)t.remove();}
+function setLd(v){ld=v;document.getElementById('sb').disabled=v;}
+function sc(){const m=document.getElementById('msgs');setTimeout(()=>m.scrollTop=m.scrollHeight,50);}
+function gt(){return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
+</script>
+</body>
+</html>
