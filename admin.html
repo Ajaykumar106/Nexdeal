@@ -1,542 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>NexDeal Admin Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Firebase SDK - using CDN with proper loading -->
+<script>
+// Firebase config - defined before scripts load
+window.FBCONFIG = {
+  apiKey:"AIzaSyAMAk5_UPUTtHXs786DOQWDM-LZBGcxU4Y",
+  authDomain:"nexdeal-app-f29fb.firebaseapp.com",
+  projectId:"nexdeal-app-f29fb",
+  storageBucket:"nexdeal-app-f29fb.firebasestorage.app",
+  messagingSenderId:"793227042599",
+  appId:"1:793227042599:web:b6e880ebaf48f9f5691302"
+};
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 <style>
-:root{--bg:#060812;--glass:rgba(255,255,255,0.06);--gb:rgba(255,255,255,0.12);--blue:#4f9cf9;--cyan:#00d4ff;--green:#00e5a0;--orange:#ff6b35;--red:#ff4757;--text:#fff;--text2:rgba(255,255,255,0.7);--text3:rgba(255,255,255,0.4)}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(79,156,249,0.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(0,212,255,0.06) 0%,transparent 50%);pointer-events:none;z-index:0}
+:root{
+  --p:#4f46e5;--p2:#818cf8;--a:#f97316;
+  --bg:#f8f9ff;--card:#fff;--card2:#f0f2ff;
+  --text:#1a1840;--muted:#64748b;--muted2:#94a3b8;
+  --border:rgba(79,70,229,.12);--border2:rgba(79,70,229,.3);
+  --sh:0 2px 12px rgba(79,70,229,.08);--sh2:0 8px 32px rgba(79,70,229,.16);
+  --green:#10b981;--red:#ef4444;--r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-/* LOGIN */
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;position:relative;z-index:1}
-.login-card{background:rgba(255,255,255,0.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 25px 50px rgba(0,0,0,0.5)}
-.login-logo{text-align:center;margin-bottom:2rem}
-.login-logo .logo-text{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.login-logo .logo-text span{-webkit-text-fill-color:var(--orange)}
-.login-logo p{color:var(--text3);font-size:.85rem;margin-top:.4rem}
-.form-group{margin-bottom:1.25rem}
-.form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:.5rem;letter-spacing:.05em;text-transform:uppercase}
-.form-group input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:.85rem 1rem;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
-.form-group input:focus{border-color:var(--blue)}
-.form-group input::placeholder{color:var(--text3)}
-.btn-login{width:100%;background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;padding:1rem;border-radius:12px;color:white;font-weight:700;font-size:.95rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:opacity .2s;margin-top:.5rem}
-.btn-login:hover{opacity:.85}
-.login-note{text-align:center;font-size:.75rem;color:var(--text3);margin-top:1.25rem}
+/* ── LOGIN ── */
+.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(145deg,#eef2ff,#fff8f4);}
+.login-box{background:var(--card);border-radius:24px;padding:36px 28px;width:100%;max-width:380px;box-shadow:var(--sh2);border:1px solid var(--border);}
+.login-logo{font-family:'Syne',sans-serif;font-size:26px;font-weight:900;text-align:center;margin-bottom:4px;}
+.login-logo .n{color:var(--p)}.login-logo .d{color:var(--a)}
+.login-sub{text-align:center;font-size:13px;color:var(--muted);margin-bottom:28px;}
+.login-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px;display:block;}
+.login-inp{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;margin-bottom:14px;}
+.login-inp:focus{border-color:var(--border2);background:var(--card);}
+.login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:4px;}
+.login-btn:active{transform:scale(.98);}
+.login-err{background:#fff5f5;border:1px solid #fee2e2;border-radius:9px;padding:10px 13px;font-size:12px;color:var(--red);margin-top:10px;display:none;}
+.login-secure{text-align:center;font-size:11px;color:var(--muted);margin-top:14px;display:flex;align-items:center;justify-content:center;gap:5px;}
 
-/* ADMIN LAYOUT */
-.admin-wrap{display:none;min-height:100vh;position:relative;z-index:1}
-.admin-wrap.show{display:flex}
+/* ── ADMIN APP ── */
+.app{display:none;}
 
-/* SIDEBAR */
-.sidebar{width:240px;background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border-right:1px solid rgba(255,255,255,0.08);padding:1.5rem 1rem;display:flex;flex-direction:column;gap:.4rem;flex-shrink:0}
-.sidebar-logo{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;padding:.5rem .75rem;margin-bottom:1rem}
-.sidebar-logo span{-webkit-text-fill-color:var(--orange)}
-.nav-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;border-radius:12px;cursor:pointer;font-size:.875rem;font-weight:500;color:var(--text2);transition:all .2s;border:1px solid transparent}
-.nav-item:hover{background:rgba(255,255,255,0.06);color:var(--text)}
-.nav-item.active{background:rgba(79,156,249,0.15);border-color:rgba(79,156,249,0.3);color:var(--blue)}
-.nav-item .ni{font-size:1.1rem}
-.sidebar-bottom{margin-top:auto}
-.btn-logout{width:100%;background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.2);color:var(--red);padding:.75rem;border-radius:12px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:.85rem;transition:all .2s}
-.btn-logout:hover{background:rgba(255,71,87,0.2)}
+/* TOP HEADER */
+.top-hdr{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:var(--sh);}
+.hdr-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:900;text-decoration:none;}
+.hdr-logo .n{color:var(--p)}.hdr-logo .d{color:var(--a)}
+.hdr-badge{background:rgba(79,70,229,.08);border:1px solid var(--border2);border-radius:999px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--p);}
+.hdr-r{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.view-btn{padding:7px 12px;border-radius:999px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:var(--green);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;}
+.logout-btn{padding:7px 12px;border-radius:999px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red);font-size:12px;font-weight:700;cursor:pointer;border:1px solid rgba(239,68,68,.2);font-family:'DM Sans',sans-serif;}
 
-/* MAIN CONTENT */
-.main{flex:1;overflow-y:auto;padding:2rem}
-.page{display:none}
-.page.active{display:block}
-.page-title{font-size:1.5rem;font-weight:800;margin-bottom:.4rem}
-.page-sub{color:var(--text3);font-size:.875rem;margin-bottom:2rem}
+/* TAB NAV */
+.tab-nav{background:var(--card);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{padding:13px 18px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;white-space:nowrap;border-bottom:2.5px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.tab-btn.on{color:var(--p);border-bottom-color:var(--p);font-weight:700;}
 
-/* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
-.stat-card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1.25rem}
-.stat-card .sc-icon{font-size:1.75rem;margin-bottom:.75rem;display:block}
-.stat-card .sc-num{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.stat-card .sc-label{font-size:.75rem;color:var(--text3);margin-top:.2rem}
+/* CONTENT */
+.content{padding:16px;max-width:800px;margin:0 auto;}
+
+/* DASHBOARD CARDS */
+.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
+@media(min-width:600px){.dash-grid{grid-template-columns:repeat(4,1fr);}}
+.dash-card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:16px;text-align:center;box-shadow:var(--sh);}
+.dash-ic{font-size:26px;margin-bottom:6px;}
+.dash-n{font-family:'Syne',sans-serif;font-size:24px;font-weight:900;color:var(--p);margin-bottom:2px;}
+.dash-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+.dash-actions{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:16px;box-shadow:var(--sh);margin-bottom:16px;}
+.dash-act-t{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:12px;}
+.act-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.act-btn{padding:9px 16px;border-radius:10px;border:none;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.act-btn:active{transform:scale(.97);}
+.act-p{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;}
+.act-s{background:var(--card2);color:var(--p);border:1.5px solid var(--border2);}
+.act-g{background:rgba(16,185,129,.1);color:var(--green);border:1.5px solid rgba(16,185,129,.25);}
 
 /* FORM */
-.form-card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-bottom:2rem}
-.form-card h3{font-size:1.1rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
-.fg{display:flex;flex-direction:column;gap:.4rem}
-.fg label{font-size:.75rem;font-weight:600;color:var(--text2);letter-spacing:.05em;text-transform:uppercase}
-.fg input,.fg select,.fg textarea{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:.75rem 1rem;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;outline:none;transition:border-color .2s;width:100%}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue)}
-.fg input::placeholder,.fg textarea::placeholder{color:var(--text3)}
-.fg select option{background:#1a1f3e}
-.fg textarea{resize:vertical;min-height:80px}
-.fg-full{grid-column:1/-1}
-.btn-save{background:linear-gradient(135deg,var(--green),#00b894);border:none;padding:.85rem 2rem;border-radius:12px;color:#000;font-weight:700;font-size:.9rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:opacity .2s;margin-top:1rem}
-.btn-save:hover{opacity:.85}
-.btn-danger{background:rgba(255,71,87,0.15);border:1px solid rgba(255,71,87,0.3);color:var(--red);padding:.5rem 1rem;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
-.btn-danger:hover{background:rgba(255,71,87,0.25)}
+.form-card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:18px;box-shadow:var(--sh);margin-bottom:14px;}
+.form-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+@media(max-width:480px){.form-grid{grid-template-columns:1fr;}}
+.form-full{grid-column:1/-1;}
+.f-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:5px;display:block;}
+.f-required{color:var(--red);}
+.f-inp{width:100%;padding:11px 13px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;}
+.f-inp:focus{border-color:var(--border2);background:var(--card);box-shadow:0 0 0 3px rgba(79,70,229,.07);}
+.f-inp::placeholder{color:var(--muted2);}
+.f-sel{width:100%;padding:11px 13px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer;}
+.f-sel:focus{border-color:var(--border2);}
 
-/* PRODUCTS TABLE */
-.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
-.admin-pcard{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;transition:border-color .2s}
-.admin-pcard:hover{border-color:rgba(79,156,249,0.3)}
-.apc-img{height:140px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,0.03)}
-.apc-img img{width:100%;height:100%;object-fit:contain;padding:1rem}
-.apc-body{padding:1rem}
-.apc-brand{font-size:.62rem;color:var(--blue);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem}
-.apc-name{font-size:.9rem;font-weight:700;margin-bottom:.3rem}
-.apc-price{font-size:1rem;font-weight:800;color:var(--green);margin-bottom:.75rem}
-.apc-actions{display:flex;gap:.5rem}
-.btn-edit{background:rgba(79,156,249,0.15);border:1px solid rgba(79,156,249,0.3);color:var(--blue);padding:.45rem .9rem;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
-.btn-edit:hover{background:rgba(79,156,249,0.25)}
+/* IMAGE PREVIEW */
+.img-preview-row{display:flex;gap:8px;margin-top:8px;}
+.img-prev{width:60px;height:60px;border-radius:9px;border:1.5px solid var(--border);background:var(--card2);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted);flex-shrink:0;}
+.img-prev img{width:100%;height:100%;object-fit:contain;}
+
+/* SAVE BTN */
+.save-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--a));color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.save-btn:hover{opacity:.92;transform:translateY(-1px);}
+.save-btn:active{transform:scale(.98);}
+.save-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* SUCCESS/ERROR */
+.alert{border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;margin-bottom:12px;display:none;}
+.alert.success{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;}
+.alert.error{background:#fff5f5;border:1px solid #fee2e2;color:var(--red);}
+.alert.on{display:block;}
+
+/* PRODUCTS LIST */
+.prod-list{display:flex;flex-direction:column;gap:10px;}
+.prod-item{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:13px;display:flex;align-items:center;gap:12px;box-shadow:var(--sh);}
+.prod-img{width:52px;height:52px;border-radius:9px;background:var(--card2);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.prod-img img{width:100%;height:100%;object-fit:contain;}
+.prod-inf{flex:1;min-width:0;}
+.prod-br{font-size:9px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;}
+.prod-nm{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.prod-cat{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:5px;}
+.prod-bdg{display:inline-block;padding:1px 7px;border-radius:999px;font-size:9px;font-weight:800;text-transform:uppercase;}
+.bdg-hot{background:#fee2e2;color:var(--red);}
+.bdg-new{background:#dcfce7;color:#166534;}
+.bdg-sale{background:#fff7ed;color:#c2410c;}
+.prod-acts{display:flex;gap:6px;flex-shrink:0;}
+.prod-edit{padding:6px 11px;border-radius:7px;background:var(--card2);border:1px solid var(--border2);color:var(--p);font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.prod-del{padding:6px 11px;border-radius:7px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);color:var(--red);font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+/* LOADING SPINNER */
+.spin{width:30px;height:30px;border:2.5px solid var(--border);border-top-color:var(--p);border-radius:50%;animation:sp .8s linear infinite;margin:20px auto;}
+@keyframes sp{to{transform:rotate(360deg)}}
+.empty-state{text-align:center;padding:36px 20px;color:var(--muted);}
+.empty-ic{font-size:40px;margin-bottom:8px;}
+
+/* TABS HIDDEN PANELS */
+.tab-panel{display:none;}
+.tab-panel.on{display:block;}
 
 /* TOAST */
-.toast{position:fixed;bottom:2rem;right:2rem;background:rgba(0,229,160,0.15);backdrop-filter:blur(10px);border:1px solid rgba(0,229,160,0.3);border-radius:12px;padding:1rem 1.5rem;color:var(--green);font-weight:600;font-size:.875rem;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s}
-.toast.show{transform:translateY(0);opacity:1}
-.toast.error{background:rgba(255,71,87,0.15);border-color:rgba(255,71,87,0.3);color:var(--red)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;font-weight:700;z-index:999;transition:transform .3s;white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center;}
+.toast.on{transform:translateX(-50%) translateY(0);}
 
-/* EMPTY STATE */
-.empty{text-align:center;padding:4rem 2rem;color:var(--text3)}
-.empty div{font-size:3rem;margin-bottom:1rem}
+/* SECTION HEADER */
+.sec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.sec-t{font-family:'Syne',sans-serif;font-size:17px;font-weight:900;}
+.count-badge{background:var(--card2);border:1px solid var(--border2);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:var(--p);}
 
-@media(max-width:768px){
-  .sidebar{width:60px;padding:.75rem .5rem}
-  .sidebar-logo,.nav-item span,.sidebar-bottom .btn-logout{display:none}
-  .nav-item{justify-content:center;padding:.75rem}
-  .main{padding:1rem}
-  .form-grid{grid-template-columns:1fr}
-}
+/* BANK OFFERS */
+.offer-item-card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:13px;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:var(--sh);margin-bottom:8px;}
+.offer-left{display:flex;align-items:center;gap:10px;}
+.offer-ic{font-size:24px;}
+.offer-nm{font-size:13px;font-weight:700;margin-bottom:2px;}
+.offer-txt{font-size:12px;color:var(--p);font-weight:600;}
+.offer-vl{font-size:10px;color:var(--muted);}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div class="login-wrap" id="loginWrap">
-  <div class="login-card">
-    <div class="login-logo">
-      <div class="logo-text">Nex<span>Deal</span></div>
-      <p>Admin Panel — Only for Ajay 🔐</p>
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="loginEmail" placeholder="your@email.com"/>
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
-    </div>
-    <button class="btn-login" onclick="doLogin()">🔐 Login to Admin</button>
-    <p class="login-note">🔒 Protected by Firebase Auth</p>
+<!-- LOGIN PAGE -->
+<div class="login-page" id="loginPage">
+  <div class="login-box">
+    <div class="login-logo"><span class="n">Nex</span><span class="d">Deal</span></div>
+    <p class="login-sub">Admin Panel — Only for Ajay 🔐</p>
+    <label class="login-label">Email</label>
+    <input class="login-inp" type="email" id="loginEmail" placeholder="your@email.com">
+    <label class="login-label">Password</label>
+    <input class="login-inp" type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()" id="loginBtn">🔐 Login to Admin</button>
+    <div class="login-err" id="loginErr"></div>
+    <p class="login-secure">🔒 Protected by Firebase Auth</p>
   </div>
 </div>
 
-<!-- ADMIN -->
-<div class="admin-wrap" id="adminWrap">
-  <aside class="sidebar">
-    <div class="sidebar-logo">Nex<span>Deal</span></div>
-    <div class="nav-item active" onclick="showPage('dashboard')"><span class="ni">📊</span><span>Dashboard</span></div>
-    <div class="nav-item" onclick="showPage('addProduct')"><span class="ni">➕</span><span>Add Product</span></div>
-    <div class="nav-item" onclick="showPage('products')"><span class="ni">📦</span><span>Products</span></div>
-    <div class="nav-item" onclick="showPage('banners')"><span class="ni">🎨</span><span>Banners</span></div>
-    <div class="nav-item" onclick="showPage('offers')"><span class="ni">💳</span><span>Bank Offers</span></div>
-    <div class="sidebar-bottom">
-      <button class="btn-logout" onclick="doLogout()">🚪 Logout</button>
-    </div>
-  </aside>
+<!-- ADMIN APP -->
+<div class="app" id="adminApp">
 
-  <main class="main">
+  <!-- HEADER -->
+  <header class="top-hdr">
+    <span class="hdr-logo"><span class="n">Nex</span><span class="d">Deal</span></span>
+    <span class="hdr-badge">⚙️ Admin</span>
+    <div class="hdr-r">
+      <a href="index.html" class="view-btn" target="_blank">🌐 Live Site</a>
+      <button class="logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- TAB NAV -->
+  <nav class="tab-nav">
+    <button class="tab-btn on" onclick="showTab('dashboard',this)">📊 Dashboard</button>
+    <button class="tab-btn" onclick="showTab('add',this)">➕ Add Product</button>
+    <button class="tab-btn" onclick="showTab('products',this)">📦 Products</button>
+    <button class="tab-btn" onclick="showTab('bank',this)">💳 Bank Offers</button>
+    <button class="tab-btn" onclick="showTab('banners',this)">🎨 Banners</button>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="content">
 
     <!-- DASHBOARD -->
-    <div class="page active" id="page-dashboard">
-      <div class="page-title">👋 Welcome Ajay!</div>
-      <div class="page-sub">NexDeal Admin Dashboard</div>
-      <div class="stats-grid">
-        <div class="stat-card"><span class="sc-icon">📦</span><div class="sc-num" id="totalProducts">0</div><div class="sc-label">Total Products</div></div>
-        <div class="stat-card"><span class="sc-icon">🎨</span><div class="sc-num" id="totalBanners">0</div><div class="sc-label">Banners</div></div>
-        <div class="stat-card"><span class="sc-icon">💳</span><div class="sc-num" id="totalOffers">0</div><div class="sc-label">Bank Offers</div></div>
-        <div class="stat-card"><span class="sc-icon">🔥</span><div class="sc-num">Live</div><div class="sc-label">Site Status</div></div>
+    <div class="tab-panel on" id="tab-dashboard">
+      <div style="padding:4px 0 16px;">
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:900;margin-bottom:2px;">👋 Welcome Ajay!</div>
+        <div style="font-size:13px;color:var(--muted);">NexDeal Admin Dashboard</div>
       </div>
+      <div class="dash-grid">
+        <div class="dash-card"><div class="dash-ic">📦</div><div class="dash-n" id="totalProds">0</div><div class="dash-l">Products</div></div>
+        <div class="dash-card"><div class="dash-ic">💳</div><div class="dash-n" id="totalOffers">0</div><div class="dash-l">Bank Offers</div></div>
+        <div class="dash-card"><div class="dash-ic">🎨</div><div class="dash-n" id="totalBanners">0</div><div class="dash-l">Banners</div></div>
+        <div class="dash-card" style="background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.2);"><div class="dash-ic">🔥</div><div class="dash-n" style="color:var(--green);">Live</div><div class="dash-l">Status</div></div>
+      </div>
+      <div class="dash-actions">
+        <div class="dash-act-t">⚡ Quick Actions</div>
+        <div class="act-btns">
+          <button class="act-btn act-p" onclick="showTab('add',document.querySelector('[onclick*=add]'))">➕ Add Product</button>
+          <a href="index.html" target="_blank" class="act-btn act-g" style="text-decoration:none;">🌐 View Site</a>
+          <a href="https://t.me/nexdeal_deals" target="_blank" class="act-btn act-s" style="text-decoration:none;">✈️ Telegram</a>
+        </div>
+      </div>
+      <!-- TIPS -->
       <div class="form-card">
-        <h3>🚀 Quick Actions</h3>
-        <div style="display:flex;gap:1rem;flex-wrap:wrap">
-          <button class="btn-save" onclick="showPage('addProduct')">➕ Add New Product</button>
-          <a href="index.html" target="_blank" style="background:rgba(79,156,249,0.15);border:1px solid rgba(79,156,249,0.3);color:var(--blue);padding:.85rem 2rem;border-radius:12px;text-decoration:none;font-weight:700;font-size:.9rem">🌐 View Live Site</a>
-          <a href="https://t.me/nexdeal_deals" target="_blank" style="background:rgba(34,157,217,0.15);border:1px solid rgba(34,157,217,0.3);color:#229ed9;padding:.85rem 2rem;border-radius:12px;text-decoration:none;font-weight:700;font-size:.9rem">✈️ Telegram Channel</a>
+        <div class="form-title">💡 Daily Update Tips</div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="font-size:18px;flex-shrink:0;">🖼️</span><div><strong>Images</strong> — Use Imgur.com to upload and get permanent image links</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="font-size:18px;flex-shrink:0;">🔗</span><div><strong>Amazon links</strong> — Always add <code style="background:var(--card2);padding:1px 5px;border-radius:4px;">?tag=nexdeal-21</code> at the end</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="font-size:18px;flex-shrink:0;">⏰</span><div><strong>Update daily</strong> — Amazon links work best within 24 hours</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="font-size:18px;flex-shrink:0;">📊</span><div><strong>GSMArena</strong> — Best source for phone specs & images</div></div>
         </div>
       </div>
     </div>
 
     <!-- ADD PRODUCT -->
-    <div class="page" id="page-addProduct">
-      <div class="page-title">➕ Add New Product</div>
-      <div class="page-sub">Fill all details — product appears on homepage instantly!</div>
+    <div class="tab-panel" id="tab-add">
+      <div class="alert success" id="addSuccess">✅ Product saved successfully! Homepage updated!</div>
+      <div class="alert error" id="addError"></div>
+
       <div class="form-card">
-        <h3>📦 Product Details</h3>
+        <div class="form-title">📦 Product Details</div>
         <div class="form-grid">
-          <div class="fg">
-            <label>Brand Name *</label>
-            <input type="text" id="p-brand" placeholder="e.g. Apple, Samsung"/>
+          <div>
+            <label class="f-label">Brand Name <span class="f-required">*</span></label>
+            <input class="f-inp" id="fBrand" placeholder="e.g. Apple, Samsung">
           </div>
-          <div class="fg">
-            <label>Product Title *</label>
-            <input type="text" id="p-title" placeholder="e.g. iPhone 17 Pro 256GB"/>
-          </div>
-          <div class="fg">
-            <label>Category *</label>
-            <select id="p-cat">
-              <option value="Smartphones">📱 Smartphones</option>
-              <option value="Laptops">💻 Laptops</option>
-              <option value="Audio">🎧 Audio</option>
-              <option value="Smartwatches">⌚ Smartwatches</option>
-              <option value="Cameras">📷 Cameras</option>
-              <option value="Accessories">🔌 Accessories</option>
-              <option value="Fashion">👗 Fashion</option>
-              <option value="Gaming">🎮 Gaming</option>
+          <div>
+            <label class="f-label">Category <span class="f-required">*</span></label>
+            <select class="f-sel" id="fCat">
+              <option value="smartphones">📱 Smartphones</option>
+              <option value="laptops">💻 Laptops</option>
+              <option value="audio">🎧 Audio</option>
+              <option value="smartwatches">⌚ Smartwatches</option>
+              <option value="cameras">📷 Cameras</option>
+              <option value="accessories">🔌 Accessories</option>
+              <option value="gaming">🎮 Gaming</option>
             </select>
           </div>
-          <div class="fg">
-            <label>Badge</label>
-            <select id="p-badge">
-              <option value="HOT">🔥 HOT</option>
-              <option value="NEW">✨ NEW</option>
-              <option value="SALE">💰 SALE</option>
+          <div class="form-full">
+            <label class="f-label">Product Title <span class="f-required">*</span></label>
+            <input class="f-inp" id="fTitle" placeholder="e.g. iPhone 17 Pro 256GB">
+          </div>
+          <div>
+            <label class="f-label">Badge</label>
+            <select class="f-sel" id="fBadge">
+              <option value="">None</option>
+              <option value="hot">🔥 HOT</option>
+              <option value="new">✨ NEW</option>
+              <option value="sale">💰 SALE</option>
             </select>
           </div>
-          <div class="fg">
-            <label>Rating (e.g. 4.8)</label>
-            <input type="number" id="p-rating" placeholder="4.8" min="1" max="5" step="0.1"/>
+          <div>
+            <label class="f-label">Rating (e.g. 4.8)</label>
+            <input class="f-inp" id="fRating" type="number" step="0.1" min="1" max="5" placeholder="4.8">
           </div>
-          <div class="fg">
-            <label>Total Reviews</label>
-            <input type="number" id="p-reviews" placeholder="e.g. 12000"/>
+          <div>
+            <label class="f-label">Total Reviews</label>
+            <input class="f-inp" id="fReviews" type="number" placeholder="e.g. 12000">
           </div>
-          <div class="fg">
-            <label>Stock Left</label>
-            <input type="number" id="p-stock" placeholder="e.g. 15"/>
+          <div>
+            <label class="f-label">Stock Left</label>
+            <input class="f-inp" id="fStock" type="number" placeholder="e.g. 15">
           </div>
-          <div class="fg fg-full">
-            <label>Specs (one line)</label>
-            <input type="text" id="p-specs" placeholder="e.g. A19 Pro Chip | 48MP | 256GB | Titanium"/>
+          <div class="form-full">
+            <label class="f-label">Specs (one line)</label>
+            <input class="f-inp" id="fSpecs" placeholder="e.g. A19 Pro Chip | 48MP | 1TB | Titanium">
           </div>
-          <div class="fg fg-full">
-            <label>Product Image 1 URL * (Main image)</label>
-            <input type="url" id="p-img1" placeholder="https://m.media-amazon.com/images/I/...jpg"/>
+        </div>
+      </div>
+
+      <!-- IMAGES -->
+      <div class="form-card">
+        <div class="form-title">🖼️ Product Images</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Upload images to <strong>imgur.com</strong> → copy link → paste below. Or use GSMArena image URLs.</p>
+        <div style="margin-bottom:12px;">
+          <label class="f-label">Image 1 URL <span class="f-required">*</span> (Main)</label>
+          <input class="f-inp" id="fImg1" placeholder="https://imgur.com/..." oninput="previewImg('fImg1','prev1')">
+          <div class="img-preview-row">
+            <div class="img-prev" id="prev1">👆 Preview</div>
           </div>
-          <div class="fg fg-full">
-            <label>Product Image 2 URL (optional)</label>
-            <input type="url" id="p-img2" placeholder="https://m.media-amazon.com/images/I/...jpg"/>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label class="f-label">Image 2 URL (optional)</label>
+          <input class="f-inp" id="fImg2" placeholder="https://imgur.com/..." oninput="previewImg('fImg2','prev2')">
+          <div class="img-preview-row">
+            <div class="img-prev" id="prev2">👆 Preview</div>
           </div>
-          <div class="fg fg-full">
-            <label>Product Image 3 URL (optional)</label>
-            <input type="url" id="p-img3" placeholder="https://m.media-amazon.com/images/I/...jpg"/>
+        </div>
+        <div>
+          <label class="f-label">Image 3 URL (optional)</label>
+          <input class="f-inp" id="fImg3" placeholder="https://imgur.com/..." oninput="previewImg('fImg3','prev3')">
+          <div class="img-preview-row">
+            <div class="img-prev" id="prev3">👆 Preview</div>
           </div>
-          <div class="fg fg-full">
-            <label>Amazon Affiliate Link *</label>
-            <input type="url" id="p-amazon" placeholder="https://amzn.to/XXXXX"/>
+        </div>
+      </div>
+
+      <!-- LINKS & PRICES -->
+      <div class="form-card">
+        <div class="form-title">🔗 Affiliate Links & Prices</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Always add <code style="background:var(--card2);padding:1px 6px;border-radius:4px;font-size:11px;">?tag=nexdeal-21</code> to Amazon links!</p>
+        <div class="form-grid">
+          <div class="form-full">
+            <label class="f-label">Amazon Affiliate Link <span class="f-required">*</span></label>
+            <input class="f-inp" id="fAmz" placeholder="https://www.amazon.in/dp/XXXXX?tag=nexdeal-21">
           </div>
-          <div class="fg fg-full">
-            <label>Flipkart Affiliate Link</label>
-            <input type="url" id="p-flipkart" placeholder="https://fktr.in/XXXXX"/>
+          <div class="form-full">
+            <label class="f-label">Flipkart Affiliate Link</label>
+            <input class="f-inp" id="fFlp" placeholder="https://www.flipkart.com/product/...">
           </div>
-          <div class="fg">
-            <label>Amazon Price</label>
-            <input type="text" id="p-amazonprice" placeholder="e.g. ₹1,29,999"/>
+          <div>
+            <label class="f-label">Amazon Price</label>
+            <input class="f-inp" id="fAmzPrice" placeholder="e.g. ₹1,29,999">
           </div>
-          <div class="fg">
-            <label>Flipkart Price</label>
-            <input type="text" id="p-fkprice" placeholder="e.g. ₹1,31,999"/>
+          <div>
+            <label class="f-label">Flipkart Price</label>
+            <input class="f-inp" id="fFlpPrice" placeholder="e.g. ₹1,31,999">
           </div>
-          <div class="fg">
-            <label>Best Platform</label>
-            <select id="p-best">
-              <option value="Amazon">Amazon</option>
-              <option value="Flipkart">Flipkart</option>
+          <div>
+            <label class="f-label">Best Platform</label>
+            <select class="f-sel" id="fBest">
+              <option value="amazon">Amazon</option>
+              <option value="flipkart">Flipkart</option>
             </select>
           </div>
-          <div class="fg">
-            <label>Featured Product?</label>
-            <select id="p-featured">
-              <option value="true">⭐ Yes — Show on top</option>
-              <option value="false">No</option>
+          <div>
+            <label class="f-label">Featured Product?</label>
+            <select class="f-sel" id="fFeatured">
+              <option value="no">No</option>
+              <option value="yes">⭐ Yes — Show on top</option>
             </select>
           </div>
         </div>
-        <button class="btn-save" onclick="saveProduct()">💾 Save Product to Database</button>
       </div>
+
+      <input type="hidden" id="fEditId">
+      <button class="save-btn" id="saveBtn" onclick="saveProduct()">💾 Save Product to Database</button>
     </div>
 
-    <!-- MANAGE PRODUCTS -->
-    <div class="page" id="page-products">
-      <div class="page-title">📦 Manage Products</div>
-      <div class="page-sub">All your products — edit or delete anytime</div>
-      <div class="products-grid" id="productsGrid">
-        <div class="empty"><div>📦</div>Loading products...</div>
+    <!-- PRODUCTS LIST -->
+    <div class="tab-panel" id="tab-products">
+      <div class="sec-hd">
+        <div class="sec-t">📦 All Products</div>
+        <span class="count-badge" id="prodCount">0 products</span>
       </div>
-    </div>
-
-    <!-- BANNERS -->
-    <div class="page" id="page-banners">
-      <div class="page-title">🎨 Banner Control</div>
-      <div class="page-sub">Control homepage banners and announcements</div>
-      <div class="form-card">
-        <h3>➕ Add Banner</h3>
-        <div class="form-grid">
-          <div class="fg">
-            <label>Banner Title</label>
-            <input type="text" id="b-title" placeholder="e.g. 🔥 Amazon Sale Live!"/>
-          </div>
-          <div class="fg">
-            <label>Button Text</label>
-            <input type="text" id="b-btn" placeholder="e.g. Shop Now"/>
-          </div>
-          <div class="fg fg-full">
-            <label>Banner Link</label>
-            <input type="url" id="b-link" placeholder="https://amzn.to/XXXXX"/>
-          </div>
-          <div class="fg fg-full">
-            <label>Background Color (CSS gradient)</label>
-            <input type="text" id="b-color" placeholder="linear-gradient(135deg,#4f9cf9,#00d4ff)"/>
-          </div>
-        </div>
-        <button class="btn-save" onclick="saveBanner()">💾 Save Banner</button>
-      </div>
+      <div id="prodList"><div class="spin"></div></div>
     </div>
 
     <!-- BANK OFFERS -->
-    <div class="page" id="page-offers">
-      <div class="page-title">💳 Bank Offers</div>
-      <div class="page-sub">Add credit/debit card offers shown on product pages</div>
+    <div class="tab-panel" id="tab-bank">
+      <div class="sec-hd">
+        <div class="sec-t">💳 Bank Offers</div>
+        <span class="count-badge" id="bankCount">0 offers</span>
+      </div>
+
+      <!-- ADD OFFER FORM -->
       <div class="form-card">
-        <h3>➕ Add Bank Offer</h3>
+        <div class="form-title">➕ Add Bank Offer</div>
         <div class="form-grid">
-          <div class="fg">
-            <label>Bank Name</label>
-            <input type="text" id="o-bank" placeholder="e.g. HDFC Bank"/>
+          <div>
+            <label class="f-label">Bank Name</label>
+            <input class="f-inp" id="bkName" placeholder="e.g. HDFC Bank">
           </div>
-          <div class="fg">
-            <label>Card Type</label>
-            <input type="text" id="o-card" placeholder="e.g. Credit Card"/>
+          <div>
+            <label class="f-label">Emoji Icon</label>
+            <input class="f-inp" id="bkIc" placeholder="e.g. 💳">
           </div>
-          <div class="fg fg-full">
-            <label>Offer Text</label>
-            <input type="text" id="o-offer" placeholder="e.g. 10% off up to ₹1,500"/>
+          <div class="form-full">
+            <label class="f-label">Offer Text</label>
+            <input class="f-inp" id="bkOff" placeholder="e.g. Extra 10% off on Electronics">
           </div>
-          <div class="fg">
-            <label>Valid Till</label>
-            <input type="date" id="o-valid"/>
-          </div>
-          <div class="fg">
-            <label>Emoji Icon</label>
-            <input type="text" id="o-emoji" placeholder="💳"/>
+          <div class="form-full">
+            <label class="f-label">Valid Till</label>
+            <input class="f-inp" id="bkVl" placeholder="e.g. Valid till 31 Mar">
           </div>
         </div>
-        <button class="btn-save" onclick="saveOffer()">💾 Save Offer</button>
+        <button class="save-btn" onclick="saveBankOffer()" style="margin-top:12px;">💾 Save Bank Offer</button>
       </div>
-      <div id="offersList"></div>
+
+      <div id="bankList"><div class="spin"></div></div>
     </div>
 
-  </main>
-</div>
+    <!-- BANNERS -->
+    <div class="tab-panel" id="tab-banners">
+      <div class="sec-hd">
+        <div class="sec-t">🎨 Banners</div>
+        <span class="count-badge" id="bannerCount">0 banners</span>
+      </div>
+      <div class="form-card">
+        <div class="form-title">➕ Add Banner</div>
+        <div class="form-grid">
+          <div class="form-full">
+            <label class="f-label">Banner Title</label>
+            <input class="f-inp" id="bnTitle" placeholder="e.g. 🔥 Republic Day Sale — Up to 70% OFF!">
+          </div>
+          <div>
+            <label class="f-label">Button Text</label>
+            <input class="f-inp" id="bnBtn" placeholder="e.g. Shop Now">
+          </div>
+          <div>
+            <label class="f-label">Button Link</label>
+            <input class="f-inp" id="bnLink" placeholder="e.g. #products">
+          </div>
+          <div class="form-full">
+            <label class="f-label">Background Color</label>
+            <input class="f-inp" id="bnBg" placeholder="e.g. linear-gradient(135deg,#4f46e5,#f97316)">
+          </div>
+        </div>
+        <button class="save-btn" onclick="saveBanner()" style="margin-top:12px;">💾 Save Banner</button>
+      </div>
+      <div id="bannerList"><div class="spin"></div></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /app -->
 
 <div class="toast" id="toast"></div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+<script>
+// Wait for Firebase to be ready
+(function initFirebase() {
+  if (typeof firebase === 'undefined') {
+    setTimeout(initFirebase, 100);
+    return;
+  }
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAMAk5_UPUTtHXs786DOQWDM-LZBGcxU4Y",
-  authDomain: "nexdeal-app-f29fb.firebaseapp.com",
-  projectId: "nexdeal-app-f29fb",
-  storageBucket: "nexdeal-app-f29fb.firebasestorage.app",
-  messagingSenderId: "793227042599",
-  appId: "1:793227042599:web:b6e880ebaf48f9f5691302"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// AUTH STATE
-onAuthStateChanged(auth, user => {
-  if(user){
-    document.getElementById('loginWrap').style.display='none';
-    document.getElementById('adminWrap').classList.add('show');
-    loadDashboard();
+// FIREBASE INIT
+let fb, auth, db;
+try {
+  if (!firebase.apps.length) {
+    fb = firebase.initializeApp(window.FBCONFIG);
   } else {
-    document.getElementById('loginWrap').style.display='flex';
-    document.getElementById('adminWrap').classList.remove('show');
+    fb = firebase.app();
+  }
+  auth = firebase.auth();
+  db = firebase.firestore();
+} catch(e) {
+  console.error('Firebase init error:', e);
+  alert('Firebase error: ' + e.message);
+  return;
+}
+
+// ── AUTH ──
+auth.onAuthStateChanged(user => {
+  if(user){
+    document.getElementById('loginPage').style.display='none';
+    document.getElementById('adminApp').style.display='block';
+    loadDashboard();
+    loadProducts();
+    loadBankOffers();
+    loadBanners();
+  } else {
+    document.getElementById('loginPage').style.display='flex';
+    document.getElementById('adminApp').style.display='none';
   }
 });
 
-// LOGIN
-window.doLogin = async () => {
-  const email = document.getElementById('loginEmail').value;
-  const pass = document.getElementById('loginPass').value;
-  if(!email||!pass){showToast('Fill email and password!','error');return;}
-  try {
-    await signInWithEmailAndPassword(auth, email, pass);
-    showToast('Welcome Ajay! 🎉');
-  } catch(e) {
-    showToast('Wrong email or password!','error');
+async function doLogin(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  const btn=document.getElementById('loginBtn');
+  const err=document.getElementById('loginErr');
+  if(!email||!pass){err.textContent='⚠️ Enter email and password';err.style.display='block';return;}
+  btn.textContent='Logging in...';btn.disabled=true;err.style.display='none';
+  try{
+    await auth.signInWithEmailAndPassword(email,pass);
+  }catch(e){
+    err.textContent='❌ '+e.message;err.style.display='block';
+    btn.textContent='🔐 Login to Admin';btn.disabled=false;
   }
-};
+}
+function doLogout(){auth.signOut();}
 
-// LOGOUT
-window.doLogout = async () => {
-  await signOut(auth);
-  showToast('Logged out!');
-};
-
-// PAGES
-window.showPage = (page) => {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  if(page==='products') loadProducts();
-  if(page==='offers') loadOffers();
-};
-
-// DASHBOARD STATS
-async function loadDashboard(){
-  try {
-    const ps = await getDocs(collection(db,'products'));
-    const bs = await getDocs(collection(db,'banners'));
-    const os = await getDocs(collection(db,'bank_offers'));
-    document.getElementById('totalProducts').textContent = ps.size;
-    document.getElementById('totalBanners').textContent = bs.size;
-    document.getElementById('totalOffers').textContent = os.size;
-  } catch(e){}
+// ── TABS ──
+function showTab(id,el){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  el.classList.add('on');
 }
 
-// SAVE PRODUCT
-window.saveProduct = async () => {
-  const title = document.getElementById('p-title').value.trim();
-  const brand = document.getElementById('p-brand').value.trim();
-  const amazonLink = document.getElementById('p-amazon').value.trim();
-  const img1 = document.getElementById('p-img1').value.trim();
-  if(!title||!brand||!amazonLink||!img1){showToast('Fill required fields (*)','error');return;}
-  try {
-    await addDoc(collection(db,'products'),{
-      brand, title,
-      category: document.getElementById('p-cat').value,
-      badge: document.getElementById('p-badge').value,
-      rating: parseFloat(document.getElementById('p-rating').value)||4.5,
-      reviews: parseInt(document.getElementById('p-reviews').value)||0,
-      stock: parseInt(document.getElementById('p-stock').value)||50,
-      specs: document.getElementById('p-specs').value,
-      images: [img1, document.getElementById('p-img2').value, document.getElementById('p-img3').value].filter(Boolean),
-      amazon_link: amazonLink,
-      flipkart_link: document.getElementById('p-flipkart').value,
-      amazon_price: document.getElementById('p-amazonprice').value||'Check Price',
-      flipkart_price: document.getElementById('p-fkprice').value||'Check Price',
-      best: document.getElementById('p-best').value,
-      featured: document.getElementById('p-featured').value==='true',
-      created_at: serverTimestamp()
-    });
-    showToast('✅ Product saved! Live on site now!');
-    // Clear form
-    ['p-title','p-brand','p-specs','p-img1','p-img2','p-img3','p-amazon','p-flipkart','p-amazonprice','p-fkprice','p-rating','p-reviews','p-stock'].forEach(id=>{document.getElementById(id).value='';});
-    loadDashboard();
-  } catch(e) {
-    showToast('Error: '+e.message,'error');
-  }
-};
+// ── DASHBOARD ──
+async function loadDashboard(){
+  try{
+    const ps=await db.collection('products').get();
+    const bs=await db.collection('bankOffers').get();
+    const bns=await db.collection('banners').get();
+    document.getElementById('totalProds').textContent=ps.size;
+    document.getElementById('totalOffers').textContent=bs.size;
+    document.getElementById('totalBanners').textContent=bns.size;
+  }catch(e){}
+}
 
-// LOAD PRODUCTS
+// ── IMAGE PREVIEW ──
+function previewImg(inputId,prevId){
+  const url=document.getElementById(inputId).value.trim();
+  const prev=document.getElementById(prevId);
+  if(url){
+    prev.innerHTML=`<img src="${url}" onerror="this.parentElement.innerHTML='❌'">`;
+  } else {
+    prev.innerHTML='👆 Preview';
+  }
+}
+
+// ── SAVE PRODUCT ──
+async function saveProduct(){
+  const brand=document.getElementById('fBrand').value.trim();
+  const title=document.getElementById('fTitle').value.trim();
+  const amz=document.getElementById('fAmz').value.trim();
+  if(!brand||!title||!amz){showAlert('addError','⚠️ Brand, Title and Amazon Link are required!');return;}
+  const btn=document.getElementById('saveBtn');
+  btn.disabled=true;btn.innerHTML='⏳ Saving...';
+  hideAlerts();
+  const imgs=[
+    document.getElementById('fImg1').value.trim(),
+    document.getElementById('fImg2').value.trim(),
+    document.getElementById('fImg3').value.trim(),
+  ].filter(Boolean);
+  const data={
+    brand,name:title,
+    cat:document.getElementById('fCat').value,
+    badge:document.getElementById('fBadge').value,
+    rating:parseFloat(document.getElementById('fRating').value)||4.5,
+    reviews:parseInt(document.getElementById('fReviews').value)||0,
+    stock:parseInt(document.getElementById('fStock').value)||99,
+    specs:document.getElementById('fSpecs').value.trim(),
+    imgs,image1:imgs[0]||'',image2:imgs[1]||'',image3:imgs[2]||'',
+    amazonLink:amz,flipkartLink:document.getElementById('fFlp').value.trim(),
+    amazonPrice:document.getElementById('fAmzPrice').value.trim(),
+    flipkartPrice:document.getElementById('fFlpPrice').value.trim(),
+    bestPlatform:document.getElementById('fBest').value,
+    featured:document.getElementById('fFeatured').value==='yes',
+    updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+  };
+  try{
+    const editId=document.getElementById('fEditId').value;
+    if(editId){
+      await db.collection('products').doc(editId).update(data);
+      document.getElementById('fEditId').value='';
+      btn.innerHTML='💾 Save Product to Database';
+    } else {
+      data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+      await db.collection('products').add(data);
+    }
+    showAlert('addSuccess','✅ Product saved! Homepage updated automatically!');
+    clearProductForm();
+    loadDashboard();
+    showToast('✅ Product saved successfully!');
+  }catch(e){
+    showAlert('addError','❌ Error: '+e.message);
+  }
+  btn.disabled=false;btn.innerHTML='💾 Save Product to Database';
+}
+
+function clearProductForm(){
+  ['fBrand','fTitle','fRating','fReviews','fStock','fSpecs','fImg1','fImg2','fImg3','fAmz','fFlp','fAmzPrice','fFlpPrice','fEditId'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fBadge').value='';
+  document.getElementById('fBest').value='amazon';
+  document.getElementById('fFeatured').value='no';
+  ['prev1','prev2','prev3'].forEach(id=>document.getElementById(id).innerHTML='👆 Preview');
+}
+
+// ── LOAD PRODUCTS ──
 async function loadProducts(){
-  const grid = document.getElementById('productsGrid');
-  grid.innerHTML='<div class="empty"><div>⏳</div>Loading...</div>';
-  try {
-    const snap = await getDocs(query(collection(db,'products'),orderBy('created_at','desc')));
-    if(snap.empty){grid.innerHTML='<div class="empty"><div>📦</div>No products yet. Add some!</div>';return;}
-    grid.innerHTML = snap.docs.map(d=>{
-      const p=d.data();
-      return `<div class="admin-pcard">
-        <div class="apc-img"><img src="${p.images?.[0]||''}" alt="${p.title}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><text y=%2250%22 font-size=%2240%22>📦</text></svg>'"/></div>
-        <div class="apc-body">
-          <div class="apc-brand">${p.brand}</div>
-          <div class="apc-name">${p.title}</div>
-          <div class="apc-price">${p.amazon_price}</div>
-          <div class="apc-actions">
-            <button class="btn-danger" onclick="deleteProduct('${d.id}')">🗑️ Delete</button>
-            <span style="font-size:.72rem;color:var(--text3);margin-left:.5rem">${p.category}</span>
+  const list=document.getElementById('prodList');
+  try{
+    const snap=await db.collection('products').orderBy('createdAt','desc').get();
+    document.getElementById('prodCount').textContent=snap.size+' products';
+    if(snap.empty){list.innerHTML='<div class="empty-state"><div class="empty-ic">📦</div><p>No products yet. Add your first product!</p></div>';return;}
+    list.innerHTML=snap.docs.map(doc=>{
+      const p={id:doc.id,...doc.data()};
+      const img=p.imgs?.[0]||p.image1||p.img||'';
+      const badge=p.badge||'';
+      return`<div class="prod-item">
+        <div class="prod-img">${img?`<img src="${img}" alt="${p.name}">`:'📦'}</div>
+        <div class="prod-inf">
+          <div class="prod-br">${p.brand||''}</div>
+          <div class="prod-nm">${p.name}</div>
+          <div class="prod-cat">
+            ${p.cat||''} 
+            ${badge?`<span class="prod-bdg bdg-${badge}">${badge.toUpperCase()}</span>`:''}
           </div>
+        </div>
+        <div class="prod-acts">
+          <button class="prod-edit" onclick="editProduct('${doc.id}')">✏️ Edit</button>
+          <button class="prod-del" onclick="deleteProduct('${doc.id}','${p.name}')">🗑️</button>
         </div>
       </div>`;
     }).join('');
-  } catch(e){
-    grid.innerHTML='<div class="empty"><div>⚠️</div>Error loading. Check Firestore rules.</div>';
-  }
+  }catch(e){list.innerHTML='<div class="empty-state"><p>❌ Error loading products</p></div>';}
 }
 
-// DELETE PRODUCT
-window.deleteProduct = async (id) => {
-  if(!confirm('Delete this product?'))return;
-  await deleteDoc(doc(db,'products',id));
-  showToast('Product deleted!');
-  loadProducts();
-  loadDashboard();
-};
-
-// SAVE BANNER
-window.saveBanner = async () => {
-  const title = document.getElementById('b-title').value.trim();
-  if(!title){showToast('Add banner title!','error');return;}
-  await addDoc(collection(db,'banners'),{
-    title,
-    btn_text: document.getElementById('b-btn').value,
-    link: document.getElementById('b-link').value,
-    color: document.getElementById('b-color').value||'linear-gradient(135deg,#4f9cf9,#00d4ff)',
-    created_at: serverTimestamp()
-  });
-  showToast('✅ Banner saved!');
-  loadDashboard();
-};
-
-// SAVE OFFER
-window.saveOffer = async () => {
-  const bank = document.getElementById('o-bank').value.trim();
-  if(!bank){showToast('Add bank name!','error');return;}
-  await addDoc(collection(db,'bank_offers'),{
-    bank, 
-    card: document.getElementById('o-card').value,
-    offer: document.getElementById('o-offer').value,
-    valid: document.getElementById('o-valid').value,
-    emoji: document.getElementById('o-emoji').value||'💳',
-    created_at: serverTimestamp()
-  });
-  showToast('✅ Offer saved!');
-  loadOffers();
-  loadDashboard();
-};
-
-// LOAD OFFERS
-async function loadOffers(){
-  const list = document.getElementById('offersList');
-  const snap = await getDocs(collection(db,'bank_offers'));
-  if(snap.empty){list.innerHTML='';return;}
-  list.innerHTML = `<div class="form-card"><h3>💳 Active Offers</h3><div style="display:flex;flex-direction:column;gap:.75rem">${
-    snap.docs.map(d=>{const o=d.data();return`<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:.85rem 1rem">
-      <div><span style="font-size:1.25rem;margin-right:.5rem">${o.emoji}</span><strong>${o.bank}</strong> — ${o.offer}</div>
-      <button class="btn-danger" onclick="deleteOffer('${d.id}')">🗑️</button>
-    </div>`;}).join('')
-  }</div></div>`;
+async function editProduct(id){
+  try{
+    const doc=await db.collection('products').doc(id).get();
+    const p=doc.data();
+    document.getElementById('fBrand').value=p.brand||'';
+    document.getElementById('fTitle').value=p.name||'';
+    document.getElementById('fCat').value=p.cat||'smartphones';
+    document.getElementById('fBadge').value=p.badge||'';
+    document.getElementById('fRating').value=p.rating||'';
+    document.getElementById('fReviews').value=p.reviews||'';
+    document.getElementById('fStock').value=p.stock||'';
+    document.getElementById('fSpecs').value=p.specs||'';
+    const imgs=p.imgs||[];
+    document.getElementById('fImg1').value=imgs[0]||p.image1||'';
+    document.getElementById('fImg2').value=imgs[1]||p.image2||'';
+    document.getElementById('fImg3').value=imgs[2]||p.image3||'';
+    document.getElementById('fAmz').value=p.amazonLink||'';
+    document.getElementById('fFlp').value=p.flipkartLink||'';
+    document.getElementById('fAmzPrice').value=p.amazonPrice||'';
+    document.getElementById('fFlpPrice').value=p.flipkartPrice||'';
+    document.getElementById('fBest').value=p.bestPlatform||'amazon';
+    document.getElementById('fFeatured').value=p.featured?'yes':'no';
+    document.getElementById('fEditId').value=id;
+    ['fImg1','fImg2','fImg3'].forEach((fid,i)=>{
+      const v=document.getElementById(fid).value;
+      const prev=document.getElementById('prev'+(i+1));
+      if(v)prev.innerHTML=`<img src="${v}">`;
+    });
+    document.getElementById('saveBtn').innerHTML='💾 Update Product';
+    showTab('add',document.querySelectorAll('.tab-btn')[1]);
+    window.scrollTo(0,0);
+    showToast('✏️ Editing: '+p.name);
+  }catch(e){showToast('❌ Error loading product');}
 }
 
-window.deleteOffer = async (id) => {
-  await deleteDoc(doc(db,'bank_offers',id));
-  showToast('Offer deleted!');
-  loadOffers();
-};
-
-// TOAST
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.className='toast show'+(type?' '+type:'');
-  setTimeout(()=>t.className='toast',3000);
+async function deleteProduct(id,name){
+  if(!confirm(`Delete "${name}"?`))return;
+  try{
+    await db.collection('products').doc(id).delete();
+    showToast('🗑️ Deleted: '+name);
+    loadProducts();loadDashboard();
+  }catch(e){showToast('❌ Error: '+e.message);}
 }
-window.showToast=showToast;
+
+// ── BANK OFFERS ──
+async function saveBankOffer(){
+  const nm=document.getElementById('bkName').value.trim();
+  const off=document.getElementById('bkOff').value.trim();
+  if(!nm||!off){showToast('⚠️ Enter bank name and offer!');return;}
+  try{
+    await db.collection('bankOffers').add({
+      nm,ic:document.getElementById('bkIc').value||'💳',
+      off,vl:document.getElementById('bkVl').value.trim(),
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    ['bkName','bkIc','bkOff','bkVl'].forEach(id=>document.getElementById(id).value='');
+    showToast('✅ Bank offer saved!');loadBankOffers();loadDashboard();
+  }catch(e){showToast('❌ Error: '+e.message);}
+}
+async function loadBankOffers(){
+  const list=document.getElementById('bankList');
+  try{
+    const snap=await db.collection('bankOffers').get();
+    document.getElementById('bankCount').textContent=snap.size+' offers';
+    if(snap.empty){list.innerHTML='<div class="empty-state"><div class="empty-ic">💳</div><p>No bank offers yet</p></div>';return;}
+    list.innerHTML=snap.docs.map(doc=>{
+      const b={id:doc.id,...doc.data()};
+      return`<div class="offer-item-card">
+        <div class="offer-left"><span class="offer-ic">${b.ic||'💳'}</span><div><div class="offer-nm">${b.nm}</div><div class="offer-txt">${b.off}</div><div class="offer-vl">${b.vl||''}</div></div></div>
+        <button class="prod-del" onclick="deleteOffer('${doc.id}')">🗑️</button>
+      </div>`;
+    }).join('');
+  }catch(e){}
+}
+async function deleteOffer(id){
+  await db.collection('bankOffers').doc(id).delete();
+  showToast('🗑️ Deleted!');loadBankOffers();loadDashboard();
+}
+
+// ── BANNERS ──
+async function saveBanner(){
+  const title=document.getElementById('bnTitle').value.trim();
+  if(!title){showToast('⚠️ Enter banner title!');return;}
+  try{
+    await db.collection('banners').add({
+      title,btnText:document.getElementById('bnBtn').value.trim(),
+      link:document.getElementById('bnLink').value.trim(),
+      bg:document.getElementById('bnBg').value.trim(),
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    ['bnTitle','bnBtn','bnLink','bnBg'].forEach(id=>document.getElementById(id).value='');
+    showToast('✅ Banner saved!');loadBanners();loadDashboard();
+  }catch(e){showToast('❌ Error: '+e.message);}
+}
+async function loadBanners(){
+  const list=document.getElementById('bannerList');
+  try{
+    const snap=await db.collection('banners').get();
+    document.getElementById('bannerCount').textContent=snap.size+' banners';
+    if(snap.empty){list.innerHTML='<div class="empty-state"><div class="empty-ic">🎨</div><p>No banners yet</p></div>';return;}
+    list.innerHTML=snap.docs.map(doc=>{
+      const b={id:doc.id,...doc.data()};
+      return`<div class="offer-item-card">
+        <div class="offer-left"><div><div class="offer-nm">${b.title}</div><div class="offer-txt">${b.btnText||''} ${b.link||''}</div></div></div>
+        <button class="prod-del" onclick="deleteBanner('${doc.id}')">🗑️</button>
+      </div>`;
+    }).join('');
+  }catch(e){}
+}
+async function deleteBanner(id){
+  await db.collection('banners').doc(id).delete();
+  showToast('🗑️ Deleted!');loadBanners();loadDashboard();
+}
+
+// ── UTILS ──
+function showAlert(id,msg){
+  const el=document.getElementById(id);el.textContent=msg;el.classList.add('on');
+  setTimeout(()=>el.classList.remove('on'),5000);
+}
+function hideAlerts(){['addSuccess','addError'].forEach(id=>document.getElementById(id).classList.remove('on'));}
+let _tt;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('on'),3000);}
+
+})(); // end initFirebase
 </script>
 </body>
 </html>
