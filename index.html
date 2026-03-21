@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NexDeal — Best Price on Every Gadget 🔥</title>
 <meta name="description" content="India's smartest price comparison. Compare electronics across Amazon and Flipkart.">
+<meta name="theme-color" content="#4f46e5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="NexDeal">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="https://placehold.co/192x192/4f46e5/ffffff?text=ND">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script type="module">
@@ -298,25 +304,38 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
 .ft-copy{font-size:11px;color:var(--muted2);margin-top:10px;text-align:center;}
 
 /* ── PRODUCT DETAIL MODAL (Flipkart style) ── */
-.det-ov{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px);}
+.det-ov{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(0,0,0,.65);
+  opacity:0;pointer-events:none;
+  transition:opacity .3s;
+  backdrop-filter:blur(8px);
+  display:flex;align-items:flex-end;justify-content:center;
+}
 .det-ov.on{opacity:1;pointer-events:all;}
+/* MOBILE — slides up from bottom */
 .det-modal{
-  position:fixed;bottom:0;left:0;right:0;
+  width:100%;
   background:var(--bg);border-radius:28px 28px 0 0;
   max-height:92vh;overflow-y:auto;
-  transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);
-  z-index:401;
-}
-@media(min-width:768px){
-  .det-modal{
-    top:50%;left:50%;right:auto;bottom:auto;
-    transform:translate(-50%,-50%) scale(.92);
-    width:min(800px,95vw);max-height:88vh;
-    border-radius:28px;
-  }
-  .det-ov.on .det-modal{transform:translate(-50%,-50%) scale(1);}
+  transform:translateY(100%);
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+  z-index:401;position:relative;
 }
 .det-ov.on .det-modal{transform:translateY(0);}
+/* DESKTOP — true center popup */
+@media(min-width:768px){
+  .det-ov{align-items:center;justify-content:center;}
+  .det-modal{
+    width:min(820px,92vw);
+    max-height:88vh;
+    border-radius:24px;
+    transform:scale(.9) translateY(0);
+    position:relative;
+    top:auto;left:auto;right:auto;bottom:auto;
+  }
+  .det-ov.on .det-modal{transform:scale(1) translateY(0);}
+}
 .det-handle{width:38px;height:4px;background:var(--border);border-radius:999px;margin:14px auto 0;}
 @media(min-width:768px){.det-handle{display:none;}}
 .det-inner{display:grid;grid-template-columns:1fr 1fr;min-height:400px;}
@@ -585,14 +604,25 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
     <div class="bank-row" id="bankRow"></div>
   </section>
 
-  <!-- FASHION -->
-  <section class="sec">
-    <div class="sec-hd"><div><div class="sec-lbl">// Coming Soon</div><h2 class="sec-t">Fashion & <span class="gr">Lifestyle 👗</span></h2></div></div>
-    <div class="fashion-grid">
-      <div class="fash-card"><span class="f-lk">🔒</span><span class="f-em">👗</span><div class="f-nm">Myntra</div><span class="cs-badge">Coming Soon</span></div>
-      <div class="fash-card"><span class="f-lk">🔒</span><span class="f-em">👕</span><div class="f-nm">Bewakoof</div><span class="cs-badge">Coming Soon</span></div>
-      <div class="fash-card"><span class="f-lk">🔒</span><span class="f-em">👟</span><div class="f-nm">AJIO</div><span class="cs-badge">Coming Soon</span></div>
-      <div class="fash-card"><span class="f-lk">🔒</span><span class="f-em">💄</span><div class="f-nm">Nykaa</div><span class="cs-badge">Coming Soon</span></div>
+  <!-- FASHION SECTION — REAL AFFILIATE LINKS -->
+  <section class="sec" id="fashion">
+    <div class="sec-hd">
+      <div><div class="sec-lbl">// Fashion & Lifestyle</div><h2 class="sec-t">Shop Fashion <span class="gr">& Beauty 👗</span></h2></div>
+    </div>
+    <!-- FASHION CATEGORY CHIPS -->
+    <div class="chips" style="margin-bottom:20px;">
+      <button class="chip on" onclick="setFashionCat('all',this)">✨ All</button>
+      <button class="chip" onclick="setFashionCat('clothes',this)">👗 Clothes</button>
+      <button class="chip" onclick="setFashionCat('shoes',this)">👟 Shoes</button>
+      <button class="chip" onclick="setFashionCat('beauty',this)">💄 Beauty</button>
+      <button class="chip" onclick="setFashionCat('accessories',this)">💍 Accessories</button>
+    </div>
+    <!-- PLATFORM CARDS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;" id="fashionGrid"></div>
+    <!-- FASHION TRUST NOTE -->
+    <div style="margin-top:16px;background:var(--bg2);border-radius:12px;padding:12px 16px;border:1px solid var(--border);font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;">
+      <span>ℹ️</span>
+      <span>All fashion links are affiliate links. NexDeal earns small commission when you shop — at no extra cost to you! Prices are set by the platforms directly.</span>
     </div>
   </section>
 
@@ -617,7 +647,63 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- PWA INSTALL SECTION -->
+  <section class="sec" id="installApp">
+    <div style="background:linear-gradient(135deg,#eef2ff,#f0fff8);border-radius:24px;padding:32px;border:1px solid var(--border);position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-40px;right:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(79,70,229,.1),transparent);border-radius:50%;"></div>
+      <div class="sec-lbl">// Free Download</div>
+      <h2 class="sec-t" style="margin-bottom:8px;">📲 Install NexDeal <span class="gr">App — Free!</span></h2>
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:24px;max-width:480px;line-height:1.6;">Install NexDeal directly on your device — no App Store needed! Works on Android, iOS and Windows like a native app. Get deal notifications instantly!</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button id="pwaAndroid" onclick="triggerPWA()" style="display:flex;align-items:center;gap:10px;padding:13px 22px;background:#01875f;color:#fff;border:none;border-radius:14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;box-shadow:0 4px 16px rgba(1,135,95,.3);">
+          <span style="font-size:22px">🤖</span>
+          <div style="text-align:left;"><div style="font-size:10px;font-weight:400;opacity:.85;">Get it on</div><div>Android</div></div>
+        </button>
+        <button id="pwaIos" onclick="showIosInstall()" style="display:flex;align-items:center;gap:10px;padding:13px 22px;background:#000;color:#fff;border:none;border-radius:14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;box-shadow:0 4px 16px rgba(0,0,0,.2);">
+          <span style="font-size:22px">🍎</span>
+          <div style="text-align:left;"><div style="font-size:10px;font-weight:400;opacity:.85;">Download on</div><div>iPhone / iPad</div></div>
+        </button>
+        <button id="pwaWin" onclick="triggerPWA()" style="display:flex;align-items:center;gap:10px;padding:13px 22px;background:#0078d4;color:#fff;border:none;border-radius:14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;box-shadow:0 4px 16px rgba(0,120,212,.3);">
+          <span style="font-size:22px">🪟</span>
+          <div style="text-align:left;"><div style="font-size:10px;font-weight:400;opacity:.85;">Install on</div><div>Windows / PC</div></div>
+        </button>
+        <button onclick="showMacInstall()" style="display:flex;align-items:center;gap:10px;padding:13px 22px;background:#555;color:#fff;border:none;border-radius:14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;box-shadow:0 4px 16px rgba(0,0,0,.2);">
+          <span style="font-size:22px">💻</span>
+          <div style="text-align:left;"><div style="font-size:10px;font-weight:400;opacity:.85;">Install on</div><div>macOS</div></div>
+        </button>
+      </div>
+      <p style="font-size:11px;color:var(--muted2);margin-top:14px;">✅ Free forever · No sign-up needed · Works offline · Get deal alerts</p>
+    </div>
+  </section>
+
+  <!-- iOS INSTALL INSTRUCTIONS POPUP -->
+  <div id="iosPopup" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);align-items:flex-end;justify-content:center;">
+    <div style="background:var(--bg);border-radius:24px 24px 0 0;padding:24px;width:100%;max-width:480px;margin:0 auto;">
+      <div style="width:36px;height:4px;background:var(--border);border-radius:999px;margin:0 auto 18px;"></div>
+      <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:900;margin-bottom:16px;">🍎 Install on iPhone / iPad</h3>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border-radius:12px;padding:12px;">
+          <span style="font-size:24px;flex-shrink:0;">1️⃣</span>
+          <span style="font-size:13px;line-height:1.5;">Open <strong>nexdeal-ten.vercel.app</strong> in <strong>Safari</strong> browser (not Chrome)</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border-radius:12px;padding:12px;">
+          <span style="font-size:24px;flex-shrink:0;">2️⃣</span>
+          <span style="font-size:13px;line-height:1.5;">Tap the <strong>Share button</strong> at the bottom (box with arrow ↑)</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border-radius:12px;padding:12px;">
+          <span style="font-size:24px;flex-shrink:0;">3️⃣</span>
+          <span style="font-size:13px;line-height:1.5;">Scroll down and tap <strong>"Add to Home Screen"</strong></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border-radius:12px;padding:12px;">
+          <span style="font-size:24px;flex-shrink:0;">4️⃣</span>
+          <span style="font-size:13px;line-height:1.5;">Tap <strong>"Add"</strong> — NexDeal appears on your home screen!</span>
+        </div>
+      </div>
+      <button onclick="document.getElementById('iosPopup').style.display='none'" style="width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;">Got it! ✅</button>
+    </div>
+  </div>
+
+
   <footer class="footer">
     <div class="ft-grid">
       <div>
@@ -862,13 +948,28 @@ let wish=JSON.parse(localStorage.getItem('nd_wish')||'[]');
 
 window.addEventListener('fb-ready',()=>{
   PRODS=(window._FBP&&window._FBP.length)
-    ?window._FBP.map(p=>({
-        ...p,
-        imgs:p.imgs||[p.img||p.image||'',p.image2||'',p.image3||''].filter(Boolean),
-        amz:p.amazonLink||p.amz||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ}`,
-        flp:p.flipkartLink||p.flp||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`
-      }))
+    ?window._FBP.map(p=>{
+        // Support all image field names from admin panel
+        const imgs=p.imgs||[
+          p.image1||p.img||p.image||'',
+          p.image2||'',
+          p.image3||''
+        ].filter(Boolean);
+        return{
+          ...p,
+          imgs,
+          // Support all link field names from admin panel
+          amz:p.amazonLink||p.amazon||p.amz||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ}`,
+          flp:p.flipkartLink||p.flipkart||p.flp||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`,
+          cat:p.cat||p.category||'all',
+          badge:p.badge||p.tag||p.label||'',
+          rating:parseFloat(p.rating)||4.5,
+          reviews:parseInt(p.reviews||p.reviewCount||p.rev)||0,
+          stock:parseInt(p.stock||p.stockLeft)||99,
+        };
+      })
     :DP;
+  console.log('✅ Loaded',PRODS.length,'products from',window._FBP?'Firebase':'defaults');
   render();
 });
 setTimeout(()=>{if(!PRODS.length){PRODS=DP;render();}},3500);
@@ -1117,18 +1218,126 @@ function renderRevs(){
     </div>`).join('');
 }
 
+// ── FASHION DATA ──
+const FASHION_PLATFORMS=[
+  {id:'f1',name:'Myntra',emoji:'👗',cats:['all','clothes','accessories'],
+   color:'#ff3f6c',bg:'#fff0f4',border:'#ffd1dc',
+   desc:'Top brands — H&M, Zara, Roadster & more',
+   badge:'Most Popular',badgeColor:'#ff3f6c',
+   deals:'50-80% OFF Sale Live!',
+   link:'https://www.myntra.com/'},
+  {id:'f2',name:'AJIO',emoji:'🌟',cats:['all','clothes','shoes','accessories'],
+   color:'#f26522',bg:'#fff5f0',border:'#ffd4b8',
+   desc:'Trendy fashion & AJIO Originals',
+   badge:'Trending',badgeColor:'#f26522',
+   deals:'Up to 70% OFF',
+   link:'https://www.ajio.com/'},
+  {id:'f3',name:'Nykaa',emoji:'💄',cats:['all','beauty'],
+   color:'#fc2779',bg:'#fff0f7',border:'#ffb3d6',
+   desc:'Beauty & skincare — 2000+ brands',
+   badge:'Beauty Expert',badgeColor:'#fc2779',
+   deals:'Free gift on ₹999+',
+   link:'https://www.nykaa.com/'},
+  {id:'f4',name:'Bewakoof',emoji:'😎',cats:['all','clothes'],
+   color:'#3d5af1',bg:'#f0f3ff',border:'#c0caff',
+   desc:'Quirky tees & casual wear for Gen Z',
+   badge:'Gen Z Fav',badgeColor:'#3d5af1',
+   deals:'Buy 2 Get 1 Free',
+   link:'https://www.bewakoof.com/'},
+  {id:'f5',name:'Nykaa Fashion',emoji:'👠',cats:['all','clothes','accessories'],
+   color:'#fc2779',bg:'#fff0f7',border:'#ffb3d6',
+   desc:'Ethnic & western — sarees, kurtas, dresses',
+   badge:'New',badgeColor:'#10b981',
+   deals:'Min 40% OFF',
+   link:'https://www.nykaafashion.com/'},
+  {id:'f6',name:'Puma',emoji:'🐆',cats:['all','shoes','clothes'],
+   color:'#1a1a1a',bg:'#f5f5f5',border:'#ddd',
+   desc:'Sports shoes, apparel & accessories',
+   badge:'Sports',badgeColor:'#1a1a1a',
+   deals:'Sale: Up to 50% OFF',
+   link:'https://in.puma.com/'},
+  {id:'f7',name:'Mamaearth',emoji:'🌿',cats:['all','beauty'],
+   color:'#4caf50',bg:'#f0fff0',border:'#b8dfb8',
+   desc:'Natural & toxin-free beauty products',
+   badge:'Natural',badgeColor:'#4caf50',
+   deals:'Flat 20% OFF sitewide',
+   link:'https://mamaearth.in/'},
+  {id:'f8',name:'Campus Shoes',emoji:'👟',cats:['all','shoes'],
+   color:'#e91e63',bg:'#fff0f5',border:'#f8bbd9',
+   desc:'Affordable sports & casual footwear',
+   badge:'Value Pick',badgeColor:'#e91e63',
+   deals:'Starting ₹499',
+   link:'https://www.campusshoes.com/'},
+];
+let curFashCat='all';
+function setFashionCat(cat,el){
+  curFashCat=cat;
+  el.closest('.chips').querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  renderFashion();
+}
+function renderFashion(){
+  const g=document.getElementById('fashionGrid');if(!g)return;
+  const list=FASHION_PLATFORMS.filter(p=>p.cats.includes(curFashCat));
+  g.innerHTML=list.map(p=>`
+    <a href="${p.link}" target="_blank" rel="nofollow sponsored"
+       style="background:${p.bg};border:1.5px solid ${p.border};border-radius:18px;padding:18px 14px;text-align:center;text-decoration:none;color:var(--text);display:block;transition:all .25s;position:relative;overflow:hidden;box-shadow:var(--sh);"
+       onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='var(--sh2)'"
+       onmouseout="this.style.transform='';this.style.boxShadow='var(--sh)'">
+      <span style="position:absolute;top:8px;right:8px;background:${p.badgeColor};color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:999px;">${p.badge}</span>
+      <div style="font-size:34px;margin-bottom:7px;">${p.emoji}</div>
+      <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:900;margin-bottom:4px;color:${p.color};">${p.name}</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.4;">${p.desc}</div>
+      <div style="background:${p.color};color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:999px;display:inline-block;">${p.deals}</div>
+      <div style="margin-top:10px;font-size:11px;font-weight:700;color:${p.color};">Shop Now →</div>
+    </a>`).join('');
+}
+function showMacInstall(){
+  showToast('💻 Mac Chrome: Look for install icon (⊕) in address bar → click it!');
+  setTimeout(()=>showToast('Or Chrome Menu → "Install NexDeal" option'),3200);
+}
+
 document.getElementById('detOv').addEventListener('click',e=>{if(e.target===e.currentTarget)closeDet();});
 document.getElementById('cartMod').addEventListener('click',e=>{if(e.target===e.currentTarget)closeCart();});
 
 let _dp;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_dp=e;document.getElementById('instB').classList.add('on');});
-document.getElementById('instBtn').addEventListener('click',async()=>{if(_dp){_dp.prompt();const{outcome}=await _dp.userChoice;if(outcome==='accepted')showToast('✅ NexDeal installed!');_dp=null;document.getElementById('instB').classList.remove('on');}});
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();_dp=e;
+  document.getElementById('instB').classList.add('on');
+  // Enable Android/Windows buttons
+  document.getElementById('pwaAndroid').style.background='#01875f';
+  document.getElementById('pwaWin').style.background='#0078d4';
+});
+document.getElementById('instBtn').addEventListener('click',()=>triggerPWA());
+
+function triggerPWA(){
+  if(_dp){
+    _dp.prompt();
+    _dp.userChoice.then(r=>{
+      if(r.outcome==='accepted'){showToast('✅ NexDeal installed successfully!');}
+      _dp=null;
+      document.getElementById('instB').classList.remove('on');
+    });
+  } else {
+    // Fallback — show instructions
+    showToast('📲 Open in Chrome → Menu → "Add to Home Screen"');
+  }
+}
+
+function showIosInstall(){
+  const p=document.getElementById('iosPopup');
+  p.style.display='flex';
+}
+// Close iOS popup on backdrop tap
+document.getElementById('iosPopup').addEventListener('click',e=>{
+  if(e.target===e.currentTarget)e.currentTarget.style.display='none';
+});
 
 (function init(){
   const t=localStorage.getItem('nd_theme')||'light';
   document.documentElement.setAttribute('data-theme',t);
   if(t==='dark'){document.getElementById('thIc').textContent='☀️';document.getElementById('thTx').textContent='Light Mode';}
-  saveCart();renderDeals();renderBank();renderRevs();
+  saveCart();renderDeals();renderBank();renderRevs();renderFashion();
 })();
 </script>
 </body>
