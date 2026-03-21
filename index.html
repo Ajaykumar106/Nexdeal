@@ -1,1075 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NexDeal — Best Price on Every Gadget</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
-<style>
-/* ============ THEME VARIABLES ============ */
-[data-theme="light"]{
-  --bg:#f0f4ff;
-  --bg2:#e8eeff;
-  --surface:#ffffff;
-  --surface2:#f8f9ff;
-  --glass:rgba(255,255,255,0.7);
-  --glass-border:rgba(255,255,255,0.9);
-  --card:rgba(255,255,255,0.85);
-  --card-border:rgba(200,210,255,0.6);
-  --text:#0a0e2e;
-  --text2:#4a5080;
-  --text3:#8890b0;
-  --shadow:rgba(100,120,255,0.12);
-  --nav-bg:rgba(255,255,255,0.85);
-  --sidebar-bg:rgba(255,255,255,0.95);
-  --input-bg:rgba(240,244,255,0.8);
-  --hover:rgba(79,156,249,0.08);
-}
-[data-theme="dark"]{
-  --bg:#060812;
-  --bg2:#0a0e20;
-  --surface:#0e1428;
-  --surface2:#121830;
-  --glass:rgba(255,255,255,0.06);
-  --glass-border:rgba(255,255,255,0.12);
-  --card:rgba(255,255,255,0.06);
-  --card-border:rgba(255,255,255,0.1);
-  --text:#ffffff;
-  --text2:rgba(255,255,255,0.7);
-  --text3:rgba(255,255,255,0.35);
-  --shadow:rgba(0,0,0,0.4);
-  --nav-bg:rgba(6,8,18,0.92);
-  --sidebar-bg:rgba(10,14,32,0.98);
-  --input-bg:rgba(255,255,255,0.07);
-  --hover:rgba(79,156,249,0.1);
-}
-
-/* ============ BASE ============ */
-:root{
-  --blue:#4f9cf9;
-  --cyan:#00d4ff;
-  --purple:#8b5cf6;
-  --green:#00c896;
-  --orange:#ff6b35;
-  --pink:#ff3f8e;
-  --amazon:#ff9900;
-  --flipkart:#2874f0;
-  --red:#ff4757;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Plus Jakarta Sans',sans-serif;
-  overflow-x:hidden;
-  transition:background .3s,color .3s;
-}
-
-/* BG GRADIENT */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse at 10% 20%,rgba(79,156,249,0.08) 0%,transparent 50%),
-    radial-gradient(ellipse at 90% 80%,rgba(139,92,246,0.06) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 50%,rgba(0,212,255,0.04) 0%,transparent 60%);
-  pointer-events:none;z-index:0;
-}
-
-/* ============ NAV ============ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  display:flex;align-items:center;gap:.75rem;
-  padding:.75rem 1.25rem;
-  background:var(--nav-bg);
-  backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--card-border);
-  box-shadow:0 4px 24px var(--shadow);
-}
-.nav-hamburger{
-  width:38px;height:38px;
-  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
-  cursor:pointer;border-radius:10px;
-  border:1px solid var(--card-border);
-  background:var(--glass);
-  flex-shrink:0;transition:all .2s;
-}
-.nav-hamburger:hover{background:var(--hover)}
-.nav-hamburger span{
-  width:18px;height:2px;
-  background:var(--text);
-  border-radius:2px;
-  transition:all .3s;
-}
-.nav-logo{
-  font-size:1.35rem;font-weight:800;
-  flex-shrink:0;text-decoration:none;
-}
-.nav-logo .nd-n{
-  background:linear-gradient(135deg,var(--blue),var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.nav-logo .nd-d{color:var(--orange);-webkit-text-fill-color:var(--orange)}
-.nav-search{
-  flex:1;max-width:420px;
-  display:flex;align-items:center;gap:.5rem;
-  background:var(--input-bg);
-  border:1.5px solid var(--card-border);
-  border-radius:100px;
-  padding:.55rem 1rem;
-  transition:all .2s;
-}
-.nav-search:focus-within{
-  border-color:var(--blue);
-  box-shadow:0 0 0 3px rgba(79,156,249,0.1);
-}
-.nav-search input{
-  background:none;border:none;outline:none;
-  color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:.85rem;width:100%;
-}
-.nav-search input::placeholder{color:var(--text3)}
-.nav-right{display:flex;align-items:center;gap:.5rem;margin-left:auto}
-.nav-btn{
-  display:flex;align-items:center;gap:.35rem;
-  padding:.45rem .9rem;border-radius:100px;
-  font-size:.75rem;font-weight:700;
-  text-decoration:none;border:1.5px solid;
-  transition:all .2s;white-space:nowrap;
-  font-family:'Plus Jakarta Sans',sans-serif;
-  cursor:pointer;background:none;
-}
-.nb-cart{border-color:rgba(0,200,150,0.4);color:var(--green);position:relative}
-.nb-ai{border-color:rgba(139,92,246,0.4);color:var(--purple)}
-.nb-tg{border-color:rgba(34,157,217,0.4);color:#229ed9}
-.nav-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px var(--shadow)}
-.cart-count{
-  position:absolute;top:-6px;right:-6px;
-  width:18px;height:18px;
-  background:var(--orange);color:white;
-  border-radius:50%;font-size:.6rem;font-weight:800;
-  display:flex;align-items:center;justify-content:center;
-}
-.theme-toggle{
-  width:38px;height:38px;
-  border-radius:50%;border:1.5px solid var(--card-border);
-  background:var(--glass);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1rem;transition:all .2s;
-}
-.theme-toggle:hover{transform:scale(1.1)}
-
-/* ============ SIDEBAR ============ */
-.sidebar-overlay{
-  position:fixed;inset:0;z-index:1998;
-  background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);
-  opacity:0;pointer-events:none;transition:opacity .3s;
-}
-.sidebar-overlay.open{opacity:1;pointer-events:all}
-.sidebar{
-  position:fixed;top:0;left:-300px;bottom:0;
-  width:280px;z-index:1999;
-  background:var(--sidebar-bg);
-  backdrop-filter:blur(24px);
-  border-right:1px solid var(--card-border);
-  padding:0;
-  transition:left .35s cubic-bezier(.25,.46,.45,.94);
-  display:flex;flex-direction:column;
-  box-shadow:8px 0 32px var(--shadow);
-}
-.sidebar.open{left:0}
-.sidebar-header{
-  padding:1.25rem 1.5rem;
-  border-bottom:1px solid var(--card-border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.sidebar-close{
-  width:32px;height:32px;border-radius:50%;
-  border:1px solid var(--card-border);
-  background:var(--glass);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1rem;color:var(--text);transition:all .2s;
-}
-.sidebar-close:hover{background:rgba(255,71,87,0.1);color:var(--red)}
-.sidebar-body{padding:1rem;flex:1;overflow-y:auto}
-.sidebar-section{margin-bottom:1.5rem}
-.sidebar-section-title{
-  font-size:.68rem;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:var(--text3);margin-bottom:.65rem;
-  padding:0 .5rem;
-}
-.sidebar-item{
-  display:flex;align-items:center;gap:.75rem;
-  padding:.7rem .9rem;border-radius:12px;
-  cursor:pointer;font-size:.875rem;font-weight:500;
-  color:var(--text2);transition:all .2s;
-  text-decoration:none;
-}
-.sidebar-item:hover{background:var(--hover);color:var(--blue)}
-.sidebar-item .si-icon{font-size:1.1rem;width:20px;text-align:center}
-.sidebar-footer{
-  padding:1rem 1.5rem;
-  border-top:1px solid var(--card-border);
-}
-
-/* ============ HERO ============ */
-.hero{
-  min-height:100vh;
-  display:flex;align-items:center;
-  padding:5.5rem 1.25rem 2rem;
-  position:relative;z-index:1;
-}
-.hero-content{max-width:620px}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:linear-gradient(135deg,rgba(79,156,249,0.12),rgba(0,212,255,0.08));
-  border:1.5px solid rgba(79,156,249,0.25);
-  color:var(--blue);padding:.4rem 1rem;
-  border-radius:100px;font-size:.73rem;
-  font-weight:700;text-transform:uppercase;
-  letter-spacing:.06em;margin-bottom:1.5rem;
-}
-.ldot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:lp 1.5s infinite}
-@keyframes lp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
-.hero h1{
-  font-size:clamp(2.5rem,7vw,5rem);
-  font-weight:800;letter-spacing:-.04em;
-  line-height:1.05;margin-bottom:1.25rem;
-}
-.hero h1 .grad{
-  background:linear-gradient(135deg,var(--blue),var(--cyan),var(--purple));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.hero h1 .or{color:var(--orange);-webkit-text-fill-color:var(--orange)}
-.hero-desc{
-  font-size:1.05rem;color:var(--text2);
-  line-height:1.75;margin-bottom:2rem;max-width:500px;
-}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem}
-.btn-primary{
-  background:linear-gradient(135deg,var(--blue),var(--cyan));
-  color:white;padding:.9rem 2rem;border-radius:14px;
-  text-decoration:none;font-weight:700;font-size:.9rem;
-  transition:all .25s;display:inline-flex;align-items:center;gap:.4rem;
-  border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;
-  box-shadow:0 8px 24px rgba(79,156,249,0.3);
-}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(79,156,249,0.4)}
-.btn-secondary{
-  background:var(--glass);
-  backdrop-filter:blur(10px);
-  border:1.5px solid var(--card-border);
-  color:var(--text);padding:.9rem 2rem;
-  border-radius:14px;text-decoration:none;
-  font-weight:600;font-size:.9rem;transition:all .25s;
-}
-.btn-secondary:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
-.hero-stats{display:flex;gap:2rem;flex-wrap:wrap}
-.hstat{}
-.hstat-num{
-  font-size:1.6rem;font-weight:800;
-  background:linear-gradient(135deg,var(--blue),var(--purple));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.hstat-label{font-size:.75rem;color:var(--text3);margin-top:.1rem}
-
-/* PLATFORM BADGES */
-.plat-strip{
-  display:flex;gap:.5rem;flex-wrap:wrap;
-  align-items:center;margin-top:1.5rem;
-}
-.plat-strip span{font-size:.75rem;color:var(--text3)}
-.pb{
-  padding:.3rem .85rem;border-radius:6px;
-  font-size:.72rem;font-weight:700;
-}
-.pb-a{background:rgba(255,153,0,.1);color:#ff9900;border:1px solid rgba(255,153,0,.2)}
-.pb-f{background:rgba(40,116,240,.1);color:#2874f0;border:1px solid rgba(40,116,240,.2)}
-.pb-m{background:rgba(255,63,108,.1);color:#ff3f6c;border:1px solid rgba(255,63,108,.2)}
-
-/* ============ BANK OFFERS ============ */
-.bank-strip{
-  background:linear-gradient(135deg,rgba(79,156,249,0.08),rgba(139,92,246,0.06));
-  border-top:1px solid var(--card-border);
-  border-bottom:1px solid var(--card-border);
-  padding:.75rem 1.25rem;
-  overflow:hidden;white-space:nowrap;
-  position:relative;z-index:1;
-}
-.bank-strip-inner{
-  display:inline-flex;gap:3rem;
-  animation:bankTick 20s linear infinite;
-}
-.bank-item{
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-size:.8rem;font-weight:600;color:var(--text2);
-}
-.bank-item .bi{font-size:.9rem}
-.bank-item strong{color:var(--blue)}
-@keyframes bankTick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* ============ SECTIONS ============ */
-.section{padding:3.5rem 1.25rem;position:relative;z-index:1}
-.sec-eyebrow{
-  font-size:.68rem;font-weight:700;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--blue);margin-bottom:.5rem;
-}
-.sec-title{
-  font-size:clamp(1.5rem,3.5vw,2.2rem);
-  font-weight:800;letter-spacing:-.03em;
-  margin-bottom:.4rem;
-}
-.sec-sub{font-size:.875rem;color:var(--text2);margin-bottom:2rem}
-
-/* ============ CATEGORIES ============ */
-.cats-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(85px,1fr));
-  gap:.75rem;margin-bottom:2rem;
-}
-.cat-chip{
-  display:flex;flex-direction:column;align-items:center;gap:.4rem;
-  padding:.85rem .5rem;
-  background:var(--card);
-  backdrop-filter:blur(10px);
-  border:1.5px solid var(--card-border);
-  border-radius:16px;cursor:pointer;
-  transition:all .25s;
-}
-.cat-chip:hover,.cat-chip.active{
-  background:linear-gradient(135deg,rgba(79,156,249,0.12),rgba(0,212,255,0.08));
-  border-color:rgba(79,156,249,0.4);
-  transform:translateY(-3px);
-  box-shadow:0 8px 20px rgba(79,156,249,0.15);
-}
-.cat-chip .cc-icon{font-size:1.6rem}
-.cat-chip .cc-label{font-size:.65rem;font-weight:600;color:var(--text2);text-align:center}
-.cat-chip.active .cc-label{color:var(--blue)}
-
-/* ============ GLASS PRODUCT CARDS ============ */
-.pgrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:1.25rem;
-}
-
-.pcard{
-  background:var(--card);
-  backdrop-filter:blur(20px);
-  border:1.5px solid var(--card-border);
-  border-radius:20px;overflow:hidden;
-  cursor:pointer;position:relative;
-  transition:all .35s cubic-bezier(.25,.46,.45,.94);
-  box-shadow:0 4px 24px var(--shadow);
-}
-.pcard:hover{
-  transform:translateY(-8px) scale(1.01);
-  border-color:rgba(79,156,249,0.4);
-  box-shadow:0 20px 50px rgba(79,156,249,0.15),0 4px 24px var(--shadow);
-}
-/* Glass shine */
-.pcard::before{
-  content:'';position:absolute;
-  top:0;left:-100%;width:60%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);
-  transition:left .5s;pointer-events:none;z-index:3;
-}
-.pcard:hover::before{left:150%}
-
-.pcard-badge{
-  position:absolute;top:.75rem;left:.75rem;z-index:4;
-  padding:.25rem .65rem;border-radius:6px;
-  font-size:.62rem;font-weight:800;
-  letter-spacing:.04em;text-transform:uppercase;
-}
-.hot{background:linear-gradient(135deg,#ff6b35,#ff3f8e);color:white;box-shadow:0 4px 12px rgba(255,107,53,.4)}
-.new{background:linear-gradient(135deg,#00c896,#00d4ff);color:white;box-shadow:0 4px 12px rgba(0,200,150,.4)}
-.sale{background:linear-gradient(135deg,#4f9cf9,#8b5cf6);color:white;box-shadow:0 4px 12px rgba(79,156,249,.4)}
-
-/* IMAGE SLIDER */
-.pcard-imgs{
-  height:200px;position:relative;overflow:hidden;
-  background:linear-gradient(145deg,rgba(79,156,249,0.05),rgba(139,92,246,0.05));
-}
-.pcard-imgs .img-slide{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .4s,transform .4s;
-  opacity:0;transform:scale(1.05);
-}
-.pcard-imgs .img-slide.active{opacity:1;transform:scale(1)}
-.pcard-imgs img{
-  max-width:100%;max-height:180px;
-  object-fit:contain;padding:.75rem;
-  filter:drop-shadow(0 8px 16px rgba(0,0,0,0.15));
-  transition:transform .3s;
-}
-.pcard:hover .pcard-imgs img{transform:scale(1.05)}
-.pcard-dots{
-  position:absolute;bottom:.6rem;left:50%;
-  transform:translateX(-50%);
-  display:flex;gap:.3rem;z-index:4;
-}
-.pdot{
-  width:5px;height:5px;border-radius:50%;
-  background:rgba(255,255,255,0.4);
-  transition:all .2s;cursor:pointer;
-}
-.pdot.active{background:var(--blue);width:14px;border-radius:3px}
-.pcard-wishlist{
-  position:absolute;top:.75rem;right:.75rem;z-index:4;
-  width:32px;height:32px;border-radius:50%;
-  background:var(--glass);backdrop-filter:blur(10px);
-  border:1px solid var(--card-border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.9rem;cursor:pointer;transition:all .2s;
-}
-.pcard-wishlist:hover{background:rgba(255,71,87,0.15);border-color:rgba(255,71,87,0.3)}
-.pcard-wishlist.active{background:rgba(255,71,87,0.2);border-color:rgba(255,71,87,0.4)}
-
-.pcard-body{padding:1.1rem}
-.pcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.3rem}
-.pcard-brand{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
-.pcard-rating{display:flex;align-items:center;gap:.25rem;font-size:.72rem}
-.stars{color:#f59e0b}
-.rc{color:var(--text3)}
-.pcard-name{font-size:.95rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.25rem;line-height:1.3}
-.pcard-specs{font-size:.72rem;color:var(--text3);margin-bottom:.85rem;line-height:1.5}
-
-/* STOCK */
-.sbar{margin-bottom:.9rem}
-.sbar-top{display:flex;justify-content:space-between;font-size:.65rem;margin-bottom:.3rem;font-weight:600}
-.sl{color:var(--red)}.sm{color:var(--orange)}.sh{color:var(--green)}
-.strack{height:4px;background:var(--card-border);border-radius:2px;overflow:hidden}
-.sfill{height:100%;border-radius:2px;transition:width 1.5s ease}
-
-/* PRICES */
-.pcard-prices{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.85rem}
-.price-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:.5rem .75rem;border-radius:10px;
-  font-size:.78rem;text-decoration:none;
-  transition:all .2s;border:1.5px solid transparent;
-  font-weight:500;
-}
-.price-row:hover{transform:scale(1.02)}
-.pr-a{background:rgba(255,153,0,.08);border-color:rgba(255,153,0,.2);color:#cc7a00}
-[data-theme="dark"] .pr-a{color:#ff9900}
-.pr-f{background:rgba(40,116,240,.08);border-color:rgba(40,116,240,.2);color:#1a5fc8}
-[data-theme="dark"] .pr-f{color:#5090ff}
-.pr-label{display:flex;align-items:center;gap:.35rem;font-weight:600}
-.pr-price{font-weight:700;font-size:.82rem}
-.pr-best{font-size:.55rem;background:var(--green);color:white;padding:.1rem .35rem;border-radius:4px;font-weight:800}
-.pcard-footer{
-  background:linear-gradient(135deg,rgba(79,156,249,0.06),rgba(139,92,246,0.04));
-  border:1px solid rgba(79,156,249,0.12);
-  border-radius:10px;padding:.6rem .85rem;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.pf-l{font-size:.7rem;color:var(--text2)}.pf-l strong{color:var(--text);display:block;font-size:.78rem}
-.pf-r{font-size:.72rem;color:var(--blue);font-weight:700}
-.add-cart-btn{
-  width:100%;
-  background:linear-gradient(135deg,var(--blue),var(--cyan));
-  border:none;padding:.65rem;border-radius:10px;
-  color:white;font-weight:700;font-size:.8rem;
-  cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;
-  margin-top:.65rem;transition:all .2s;
-  display:flex;align-items:center;justify-content:center;gap:.4rem;
-}
-.add-cart-btn:hover{opacity:.85;transform:scale(1.02)}
-
-/* ============ DEALS SLIDER ============ */
-.deals-section{
-  background:linear-gradient(135deg,rgba(79,156,249,0.05),rgba(139,92,246,0.03));
-  border-top:1px solid var(--card-border);
-  border-bottom:1px solid var(--card-border);
-  padding:3rem 0;position:relative;z-index:1;
-}
-.slider-wrap{overflow:hidden;margin-top:1.5rem}
-.slider-track{
-  display:flex;gap:1rem;
-  animation:slid 30s linear infinite;
-  width:max-content;padding:0 1.25rem;
-}
-.slider-track:hover{animation-play-state:paused}
-@keyframes slid{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.dcard{
-  width:175px;flex-shrink:0;
-  background:var(--card);
-  backdrop-filter:blur(12px);
-  border:1.5px solid var(--card-border);
-  border-radius:16px;padding:1rem;
-  cursor:pointer;transition:all .3s;
-  text-decoration:none;display:block;
-}
-.dcard:hover{
-  border-color:rgba(255,107,53,.4);
-  transform:translateY(-4px);
-  box-shadow:0 12px 28px var(--shadow);
-}
-.dcard-img{height:90px;display:flex;align-items:center;justify-content:center;margin-bottom:.6rem}
-.dcard-img img{max-width:100%;max-height:85px;object-fit:contain}
-.dcard-name{font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:.2rem;line-height:1.3}
-.dcard-dis{font-size:.65rem;color:var(--orange);font-weight:700;margin-bottom:.2rem}
-.dcard-price{font-size:.85rem;font-weight:800;color:var(--green)}
-
-/* ============ FASHION SECTION ============ */
-.fashion-section{
-  background:linear-gradient(135deg,rgba(255,63,142,.06),rgba(139,92,246,.04));
-  border-top:1px solid var(--card-border);
-  border-bottom:1px solid var(--card-border);
-  padding:3.5rem 1.25rem;
-  text-align:center;position:relative;z-index:1;
-  overflow:hidden;
-}
-.fashion-section::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 50%,rgba(255,63,142,.08) 0%,transparent 70%);
-  pointer-events:none;
-}
-.fashion-cards{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-  gap:1rem;margin-top:2rem;max-width:700px;margin-left:auto;margin-right:auto;
-}
-.fashion-card{
-  background:var(--card);
-  backdrop-filter:blur(12px);
-  border:1.5px solid var(--card-border);
-  border-radius:16px;padding:1.5rem 1rem;
-  text-align:center;transition:all .3s;
-  position:relative;overflow:hidden;
-}
-.fashion-card::before{
-  content:'🔒';position:absolute;
-  top:.5rem;right:.5rem;font-size:.8rem;opacity:.5;
-}
-.fashion-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px var(--shadow)}
-.fc-icon{font-size:2.5rem;display:block;margin-bottom:.6rem}
-.fc-name{font-size:.85rem;font-weight:700;margin-bottom:.3rem}
-.fc-status{
-  font-size:.68rem;font-weight:700;
-  background:rgba(255,63,142,.1);
-  color:#ff3f8e;border:1px solid rgba(255,63,142,.2);
-  padding:.2rem .6rem;border-radius:100px;display:inline-block;
-}
-
-/* ============ REVIEWS ============ */
-.reviews-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:1rem;
-}
-.rcard{
-  background:var(--card);
-  backdrop-filter:blur(12px);
-  border:1.5px solid var(--card-border);
-  border-radius:16px;padding:1.25rem;
-  transition:all .25s;
-}
-.rcard:hover{transform:translateY(-2px);border-color:rgba(79,156,249,.3);box-shadow:0 8px 24px var(--shadow)}
-.rhead{display:flex;align-items:center;gap:.65rem;margin-bottom:.75rem}
-.rav{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700}
-.rname{font-weight:700;font-size:.875rem}
-.rdate{font-size:.65rem;color:var(--text3)}
-.rtag{
-  font-size:.62rem;color:var(--blue);
-  background:rgba(79,156,249,.08);
-  border:1px solid rgba(79,156,249,.15);
-  padding:.15rem .45rem;border-radius:5px;
-  font-weight:600;display:inline-block;margin-bottom:.6rem;
-}
-.rtext{font-size:.82rem;color:var(--text2);line-height:1.65}
-.rverified{display:flex;align-items:center;gap:.3rem;font-size:.65rem;color:var(--green);font-weight:700;margin-top:.6rem}
-
-/* ============ CART DRAWER ============ */
-.cart-overlay{
-  position:fixed;inset:0;z-index:2998;
-  background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);
-  opacity:0;pointer-events:none;transition:opacity .3s;
-}
-.cart-overlay.open{opacity:1;pointer-events:all}
-.cart-drawer{
-  position:fixed;top:0;right:-380px;bottom:0;
-  width:360px;z-index:2999;
-  background:var(--sidebar-bg);
-  backdrop-filter:blur(24px);
-  border-left:1px solid var(--card-border);
-  box-shadow:-8px 0 32px var(--shadow);
-  transition:right .35s cubic-bezier(.25,.46,.45,.94);
-  display:flex;flex-direction:column;
-}
-.cart-drawer.open{right:0}
-.cart-header{
-  padding:1.25rem 1.5rem;
-  border-bottom:1px solid var(--card-border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.cart-header h3{font-size:1.1rem;font-weight:700}
-.cart-close{
-  width:32px;height:32px;border-radius:50%;
-  border:1px solid var(--card-border);background:var(--glass);
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:1rem;color:var(--text);transition:all .2s;
-}
-.cart-items{flex:1;overflow-y:auto;padding:1rem 1.5rem}
-.cart-item{
-  display:flex;gap:.75rem;
-  padding:.85rem 0;border-bottom:1px solid var(--card-border);
-}
-.ci-img{
-  width:60px;height:60px;border-radius:10px;
-  background:var(--input-bg);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;overflow:hidden;
-}
-.ci-img img{width:100%;height:100%;object-fit:contain;padding:4px}
-.ci-info{flex:1}
-.ci-name{font-size:.8rem;font-weight:600;margin-bottom:.2rem;line-height:1.3}
-.ci-price{font-size:.85rem;font-weight:700;color:var(--blue)}
-.ci-remove{
-  background:none;border:none;cursor:pointer;
-  color:var(--text3);font-size:1rem;
-  transition:color .2s;padding:.2rem;
-}
-.ci-remove:hover{color:var(--red)}
-.cart-empty{text-align:center;padding:3rem 1rem;color:var(--text3)}
-.cart-empty div{font-size:3rem;margin-bottom:.75rem}
-.cart-footer{padding:1.25rem 1.5rem;border-top:1px solid var(--card-border)}
-.cart-total{display:flex;justify-content:space-between;font-weight:700;margin-bottom:1rem}
-.cart-total span:last-child{color:var(--blue);font-size:1.1rem}
-.cart-checkout{
-  width:100%;background:linear-gradient(135deg,var(--blue),var(--cyan));
-  border:none;padding:.9rem;border-radius:12px;
-  color:white;font-weight:700;font-size:.9rem;
-  cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;
-}
-
-/* ============ MODAL ============ */
-.modal-ov{
-  position:fixed;inset:0;z-index:3000;
-  background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);
-  display:flex;align-items:flex-end;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity .3s;
-}
-.modal-ov.open{opacity:1;pointer-events:all}
-.modal{
-  background:var(--sidebar-bg);
-  border:1px solid var(--card-border);
-  border-radius:24px 24px 0 0;
-  width:100%;max-width:600px;
-  max-height:92vh;overflow-y:auto;
-  padding:1.5rem;
-  transform:translateY(100%);
-  transition:transform .35s cubic-bezier(.25,.46,.45,.94);
-}
-.modal-ov.open .modal{transform:translateY(0)}
-.modal-handle{
-  width:40px;height:4px;
-  background:var(--card-border);
-  border-radius:2px;margin:0 auto 1.5rem;
-}
-.modal-close{
-  float:right;background:var(--input-bg);
-  border:1px solid var(--card-border);
-  color:var(--text);width:34px;height:34px;
-  border-radius:50%;cursor:pointer;
-  font-size:1.1rem;display:flex;
-  align-items:center;justify-content:center;
-  font-family:'Plus Jakarta Sans',sans-serif;
-  transition:all .2s;
-}
-.modal-close:hover{background:rgba(255,71,87,.15);color:var(--red)}
-.modal-imgs{
-  position:relative;height:220px;
-  border-radius:16px;overflow:hidden;
-  background:var(--input-bg);
-  margin-bottom:1.25rem;
-}
-.modal-img-slide{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;transition:opacity .3s;
-}
-.modal-img-slide.active{opacity:1}
-.modal-img-slide img{max-width:100%;max-height:200px;object-fit:contain;padding:1rem}
-.modal-img-dots{
-  position:absolute;bottom:.75rem;left:50%;
-  transform:translateX(-50%);display:flex;gap:.35rem;
-}
-.modal-brand{font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--blue);text-transform:uppercase;margin-bottom:.3rem}
-.modal-title{font-size:1.3rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.3rem}
-.modal-specs{font-size:.82rem;color:var(--text2);margin-bottom:1.1rem;line-height:1.65}
-.modal-plats{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.1rem}
-.mpbtn{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:.85rem 1.1rem;border-radius:12px;
-  text-decoration:none;font-weight:700;font-size:.875rem;
-  transition:all .2s;border:1.5px solid;
-}
-.mpbtn:hover{transform:scale(1.01);filter:brightness(1.05)}
-.mp-a{background:rgba(255,153,0,.1);color:#cc7a00;border-color:rgba(255,153,0,.25)}
-[data-theme="dark"] .mp-a{color:var(--amazon)}
-.mp-f{background:rgba(40,116,240,.1);color:#1a5fc8;border-color:rgba(40,116,240,.25)}
-[data-theme="dark"] .mp-f{color:#5090ff}
-.mp-price{font-size:1.1rem}
-.modal-tip{
-  background:rgba(0,200,150,.06);
-  border:1px solid rgba(0,200,150,.15);
-  border-radius:10px;padding:.85rem;
-  text-align:center;font-size:.82rem;
-  color:var(--text2);margin-bottom:1rem;
-}
-.modal-alts-title{font-size:.7rem;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
-.alts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
-.alt-card{
-  background:var(--input-bg);border:1.5px solid var(--card-border);
-  border-radius:12px;padding:.85rem;text-align:center;
-  cursor:pointer;transition:all .2s;
-}
-.alt-card:hover{border-color:var(--blue);transform:translateY(-2px)}
-.alt-img{width:50px;height:50px;object-fit:contain;margin-bottom:.35rem}
-.alt-name{font-size:.62rem;font-weight:700;line-height:1.3;color:var(--text)}
-
-/* ============ REQUEST SECTION ============ */
-.req-section{
-  background:linear-gradient(135deg,rgba(79,156,249,.06),rgba(0,212,255,.04));
-  border-top:1px solid var(--card-border);
-  border-bottom:1px solid var(--card-border);
-  padding:3rem 1.25rem;text-align:center;
-  position:relative;z-index:1;
-}
-.req-form{max-width:460px;margin:1.5rem auto 0;display:flex;flex-direction:column;gap:.65rem}
-.rq-input{
-  background:var(--input-bg);border:1.5px solid var(--card-border);
-  border-radius:12px;padding:.85rem 1rem;
-  color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:.875rem;outline:none;transition:all .2s;
-}
-.rq-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(79,156,249,.1)}
-.rq-input::placeholder{color:var(--text3)}
-.rq-btn{
-  background:linear-gradient(135deg,var(--blue),var(--cyan));
-  border:none;padding:.9rem;border-radius:12px;
-  color:white;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:.9rem;cursor:pointer;transition:all .2s;
-  box-shadow:0 4px 16px rgba(79,156,249,.3);
-}
-.rq-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(79,156,249,.4)}
-
-/* ============ FOOTER ============ */
-footer{
-  background:var(--surface);
-  border-top:1px solid var(--card-border);
-  padding:2.5rem 1.25rem;
-  position:relative;z-index:1;
-}
-.footer-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:2rem;margin-bottom:2rem;
-}
-.footer-logo{
-  font-size:1.4rem;font-weight:800;
-  margin-bottom:.5rem;display:block;
-}
-.footer-desc{font-size:.78rem;color:var(--text2);line-height:1.7}
-.footer-col h4{font-size:.82rem;font-weight:700;margin-bottom:.85rem;color:var(--text)}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
-.footer-col ul a{font-size:.78rem;color:var(--text2);text-decoration:none;transition:color .2s}
-.footer-col ul a:hover{color:var(--blue)}
-.footer-bottom{
-  font-size:.72rem;color:var(--text3);
-  border-top:1px solid var(--card-border);
-  padding-top:1.25rem;
-}
-
-/* ============ FABS ============ */
-.fab-wrap{
-  position:fixed;bottom:1.5rem;right:1.25rem;
-  z-index:500;display:flex;flex-direction:column;gap:.65rem;
-}
-.fab{
-  width:50px;height:50px;border-radius:50%;
-  border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.25rem;transition:all .25s;
-  text-decoration:none;
-  box-shadow:0 4px 16px var(--shadow);
-}
-.fab:hover{transform:scale(1.12);box-shadow:0 8px 24px var(--shadow)}
-.fab-ai{
-  background:linear-gradient(135deg,#8b5cf6,#6d28d9);
-  animation:fabp 3s infinite;
-}
-.fab-tg{background:#229ed9}
-@keyframes fabp{0%,100%{box-shadow:0 4px 16px rgba(139,92,246,.3)}50%{box-shadow:0 8px 28px rgba(139,92,246,.55)}}
-
-/* ============ LOADING ============ */
-.skeleton{
-  background:linear-gradient(90deg,var(--card-border) 25%,var(--input-bg) 50%,var(--card-border) 75%);
-  background-size:200% 100%;
-  animation:sk 1.5s infinite;
-  border-radius:8px;
-}
-@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skeleton-card{
-  background:var(--card);border:1.5px solid var(--card-border);
-  border-radius:20px;overflow:hidden;padding-bottom:1rem;
-}
-.sk-img{height:200px;margin-bottom:1rem}
-.sk-title{height:16px;margin:0 1rem .5rem;width:70%}
-.sk-sub{height:12px;margin:0 1rem .5rem;width:90%}
-.sk-price{height:14px;margin:0 1rem;width:50%}
-
-/* EMPTY */
-.empty-state{grid-column:1/-1;text-align:center;padding:3.5rem 1rem;color:var(--text3)}
-.empty-state div{font-size:3.5rem;margin-bottom:1rem}
-
-/* TOAST */
-.toast{
-  position:fixed;bottom:2rem;left:50%;
-  transform:translateX(-50%) translateY(80px);
-  background:var(--surface);backdrop-filter:blur(16px);
-  border:1px solid var(--card-border);
-  border-radius:100px;padding:.75rem 1.5rem;
-  font-size:.85rem;font-weight:600;
-  z-index:9999;opacity:0;
-  transition:all .35s;white-space:nowrap;
-  box-shadow:0 8px 32px var(--shadow);
-}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.toast.success{border-color:rgba(0,200,150,.3);color:var(--green)}
-.toast.error{border-color:rgba(255,71,87,.3);color:var(--red)}
-
-/* RESPONSIVE */
-@media(max-width:600px){
-  nav{padding:.65rem 1rem}
-  .nav-search{display:none}
-  .hero{padding:5rem 1rem 2rem}
-  .hero-stats{gap:1.25rem}
-  .pgrid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr}
-  .cart-drawer{width:100%}
-}
-</style>
-</head>
-<body>
-
-<!-- SIDEBAR OVERLAY -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <a class="nav-logo" href="#"><span class="nd-n">Nex</span><span class="nd-d">Deal</span></a>
-    <button class="sidebar-close" onclick="closeSidebar()">✕</button>
-  </div>
-  <div class="sidebar-body">
-    <div class="sidebar-section">
-      <div class="sidebar-section-title">Categories</div>
-      <a class="sidebar-item" onclick="setCat('All');closeSidebar()"><span class="si-icon">🔥</span>All Products</a>
-      <a class="sidebar-item" onclick="setCat('Smartphones');closeSidebar()"><span class="si-icon">📱</span>Smartphones</a>
-      <a class="sidebar-item" onclick="setCat('Laptops');closeSidebar()"><span class="si-icon">💻</span>Laptops</a>
-      <a class="sidebar-item" onclick="setCat('Audio');closeSidebar()"><span class="si-icon">🎧</span>Audio</a>
-      <a class="sidebar-item" onclick="setCat('Smartwatches');closeSidebar()"><span class="si-icon">⌚</span>Smartwatches</a>
-      <a class="sidebar-item" onclick="setCat('Cameras');closeSidebar()"><span class="si-icon">📷</span>Cameras</a>
-      <a class="sidebar-item" onclick="setCat('Accessories');closeSidebar()"><span class="si-icon">🔌</span>Accessories</a>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-section-title">Quick Links</div>
-      <a class="sidebar-item" href="#deals"><span class="si-icon">🔥</span>Hot Deals</a>
-      <a class="sidebar-item" href="#reviews"><span class="si-icon">⭐</span>Reviews</a>
-      <a class="sidebar-item" href="#request"><span class="si-icon">🙋</span>Request Product</a>
-      <a class="sidebar-item" href="nexdeal-ai-agents-1.html"><span class="si-icon">🤖</span>AI Assistant</a>
-      <a class="sidebar-item" href="https://t.me/nexdeal_deals" target="_blank"><span class="si-icon">✈️</span>Telegram Channel</a>
-      <a class="sidebar-item" href="https://t.me/nexdeal_shop_bot" target="_blank"><span class="si-icon">🤖</span>Telegram Bot</a>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-section-title">Theme</div>
-      <div class="sidebar-item" onclick="toggleTheme()"><span class="si-icon" id="themeIcon">🌙</span><span id="themeLabel">Switch to Dark</span></div>
-    </div>
-  </div>
-  <div class="sidebar-footer">
-    <p style="font-size:.72rem;color:var(--text3);line-height:1.6">© 2026 NexDeal · Made with ❤️ by Ajaykumar106</p>
-  </div>
-</div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-hamburger" onclick="openSidebar()">
-    <span></span><span></span><span></span>
-  </div>
-  <a class="nav-logo" href="#"><span class="nd-n">Nex</span><span class="nd-d">Deal</span></a>
-  <div class="nav-search">
-    <span style="color:var(--text3)">🔍</span>
-    <input type="text" placeholder="Search phones, laptops, earbuds..." id="searchInput" oninput="filterProducts(this.value)" autocomplete="off"/>
-  </div>
-  <div class="nav-right">
-    <button class="nav-btn nb-cart" onclick="openCart()">
-      🛒 Cart
-      <span class="cart-count" id="cartCount">0</span>
-    </button>
-    <a href="nexdeal-ai-agents-1.html" class="nav-btn nb-ai">🤖 AI</a>
-    <a href="https://t.me/nexdeal_deals" target="_blank" class="nav-btn nb-tg">✈️</a>
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge"><div class="ldot"></div> Live Price Comparison</div>
-    <h1>Best Price.<br><span class="grad">Every Product.</span><br>One <span class="or">Place.</span></h1>
-    <p class="hero-desc">Compare prices across Amazon & Flipkart instantly. Get the best deal on every gadget — phones, laptops, earbuds and more!</p>
-    <div class="hero-btns">
-      <a href="#products" class="btn-primary">Browse Deals →</a>
-      <a href="nexdeal-ai-agents-1.html" class="btn-secondary">🤖 Ask AI Agent</a>
-    </div>
-    <div class="hero-stats">
-      <div class="hstat"><div class="hstat-num">50k+</div><div class="hstat-label">Happy Buyers</div></div>
-      <div class="hstat"><div class="hstat-num">500+</div><div class="hstat-label">Products</div></div>
-      <div class="hstat"><div class="hstat-num">₹0</div><div class="hstat-label">Extra Cost</div></div>
-    </div>
-    <div class="plat-strip">
-      <span>Compare on:</span>
-      <span class="pb pb-a">Amazon</span>
-      <span class="pb pb-f">Flipkart</span>
-      <span class="pb pb-m">Myntra</span>
-    </div>
-  </div>
-</section>
-
-<!-- BANK OFFERS STRIP -->
-<div class="bank-strip">
-  <div class="bank-strip-inner" id="bankStrip"></div>
-</div>
-
-<!-- PRODUCTS SECTION -->
-<section class="section" id="products">
-  <div class="sec-eyebrow">// Best Deals</div>
-  <div class="sec-title">Compare & Buy Smart 💡</div>
-  <p class="sec-sub">Tap any product to see prices and buy directly</p>
-
-  <!-- CATEGORIES -->
-  <div class="cats-grid" id="catsGrid"></div>
-
-  <!-- SORT -->
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;gap:.5rem">
-    <div style="font-size:.85rem;font-weight:600;color:var(--text2)" id="productsLabel">All Products</div>
-    <select onchange="sortProducts(this.value)" style="background:var(--input-bg);border:1.5px solid var(--card-border);color:var(--text);padding:.45rem .85rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;outline:none;cursor:pointer">
-      <option value="default">Sort: Default</option>
-      <option value="rating">Highest Rated</option>
-      <option value="stock">Low Stock First</option>
-      <option value="name">Name A-Z</option>
-    </select>
-  </div>
-
-  <!-- GRID -->
-  <div class="pgrid" id="pgrid"></div>
-</section>
-
-<!-- DEALS SLIDER -->
-<section class="deals-section" id="deals">
-  <div style="padding:0 1.25rem">
-    <div class="sec-eyebrow">// Limited Time</div>
-    <div class="sec-title">🔥 Hot Deals Today</div>
-  </div>
-  <div class="slider-wrap">
-    <div class="slider-track" id="dealsTrack"></div>
-  </div>
-</section>
-
-<!-- FASHION COMING SOON -->
-<section class="fashion-section">
-  <div class="sec-eyebrow" style="text-align:center">// Fashion & Lifestyle</div>
-  <div class="sec-title">Fashion Coming Soon! 👗</div>
-  <p style="color:var(--text2);font-size:.9rem;margin-top:.4rem">We're adding top fashion brands — Myntra, Bewakoof, AJIO & more!</p>
-  <div class="fashion-cards">
-    <div class="fashion-card"><span class="fc-icon">👗</span><div class="fc-name">Myntra</div><div class="fc-status">Coming Soon</div></div>
-    <div class="fashion-card"><span class="fc-icon">👕</span><div class="fc-name">Bewakoof</div><div class="fc-status">Coming Soon</div></div>
-    <div class="fashion-card"><span class="fc-icon">👟</span><div class="fc-name">AJIO</div><div class="fc-status">Coming Soon</div></div>
-    <div class="fashion-card"><span class="fc-icon">💄</span><div class="fc-name">Nykaa</div><div class="fc-status">Coming Soon</div></div>
-  </div>
-</section>
-
-<!-- REVIEWS -->
-<section class="section" id="reviews">
-  <div class="sec-eyebrow">// Real Buyers</div>
-  <div class="sec-title">What Indians Say 🇮🇳</div>
-  <div class="reviews-grid" id="reviewsGrid"></div>
-</section>
-
-<!-- REQUEST -->
-<section class="req-section" id="request">
-  <div class="sec-eyebrow">// Can't Find It?</div>
-  <div class="sec-title">Request Any Product 🙋</div>
-  <p style="color:var(--text2);font-size:.875rem;margin-top:.4rem">Tell us what you want — we add it within 24 hours!</p>
-  <div class="req-form">
-    <input class="rq-input" id="rq-product" placeholder="Product name (e.g. Noise ColorFit Ultra 3)"/>
-    <input class="rq-input" id="rq-name" placeholder="Your name (optional)"/>
-    <button class="rq-btn" onclick="submitRequest()">🚀 Request This Product</button>
-    <p style="font-size:.72rem;color:var(--text3)">We'll add it and post on Telegram! ✅</p>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div>
-      <span class="footer-logo"><span class="nd-n">Nex</span><span class="nd-d">Deal</span></span>
-      <p class="footer-desc">India's smartest price comparison. Compare electronics across Amazon & Flipkart. Save thousands every purchase!</p>
-    </div>
-    <div class="footer-col">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="#products">Products</a></li>
-        <li><a href="#deals">Hot Deals</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="#request">Request Product</a></li>
-        <li><a href="nexdeal-ai-agents-1.html">AI Assistant</a></li>
-        <li><a href="admin.html">Admin Panel</a></li>
-        <li><a href="https://t.me/nexdeal_deals" target="_blank">Telegram</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">© 2026 NexDeal · Built by Ajaykumar106 · CSE Student 🚀 · Affiliate links earn commission at no extra cost ✅</div>
-</footer>
-
-<!-- FABS -->
-<div class="fab-wrap">
-  <a href="nexdeal-ai-agents-1.html" class="fab fab-ai">🤖</a>
-  <a href="https://t.me/nexdeal_deals" target="_blank" class="fab fab-tg">✈️</a>
-</div>
-
-<!-- CART OVERLAY + DRAWER -->
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-drawer" id="cartDrawer">
-  <div class="cart-header">
-    <h3>🛒 Your Cart</h3>
-    <button class="cart-close" onclick="closeCart()">✕</button>
-  </div>
-  <div class="cart-items" id="cartItems"></div>
-  <div class="cart-footer" id="cartFooter" style="display:none">
-    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
-    <button class="cart-checkout" onclick="alert('Select a platform below to checkout! Each item has Amazon & Flipkart buttons 🛒')">Proceed to Checkout →</button>
-  </div>
-</div>
-
-<!-- PRODUCT MODAL -->
-<div class="modal-ov" id="modalOv" onclick="closeModal(event)">
-  <div class="modal" id="modalContent"></div>
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexDeal — Best Price on Every Gadget 🔥</title>
+<meta name="description" content="India's smartest price comparison. Compare electronics across Amazon and Flipkart. Save thousands every purchase!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyAMAk5_UPUTtHXs786DOQWDM-LZBGcxU4Y",
   authDomain: "nexdeal-app-f29fb.firebaseapp.com",
@@ -1078,417 +18,504 @@ const firebaseConfig = {
   messagingSenderId: "793227042599",
   appId: "1:793227042599:web:b6e880ebaf48f9f5691302"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-// FALLBACK PRODUCTS (shown if Firebase empty)
-const FALLBACK = [
-  {id:"f1",brand:"Apple",title:"iPhone 17 Pro 1TB",category:"Smartphones",badge:"HOT",rating:4.9,reviews:8420,stock:8,total:50,specs:"A19 Pro Chip | 48MP ProCamera | 1TB | Titanium",images:["https://m.media-amazon.com/images/I/61bK6PMOC3L._SX679_.jpg","https://m.media-amazon.com/images/I/71ta3zNiRqL._SX679_.jpg"],amazon_link:"https://amzn.to/3NFB9Dx",flipkart_link:"https://fktr.in/tHZwAMT",amazon_price:"Best Price",flipkart_price:"Check Price",best:"Amazon"},
-  {id:"f2",brand:"Samsung",title:"Galaxy S25 Ultra 5G",category:"Smartphones",badge:"NEW",rating:4.8,reviews:6930,stock:22,total:50,specs:"Snapdragon 8 Elite | 200MP | 512GB | S Pen",images:["https://m.media-amazon.com/images/I/71Hu7EzwpBL._SX679_.jpg"],amazon_link:"https://amzn.to/4sda09W",flipkart_link:"https://fktr.in/k6alR55",amazon_price:"Best Price",flipkart_price:"Check Price",best:"Amazon"},
-  {id:"f3",brand:"OnePlus",title:"OnePlus 15",category:"Smartphones",badge:"HOT",rating:4.7,reviews:5600,stock:14,total:50,specs:"Snapdragon 8 Elite | Hasselblad Camera | 512GB",images:["https://m.media-amazon.com/images/I/61lXgv4UXSL._SX679_.jpg"],amazon_link:"https://amzn.to/40Bne4j",flipkart_link:"https://fktr.in/tHZwAMT",amazon_price:"Best Price",flipkart_price:"Check Price",best:"Amazon"},
-  {id:"f4",brand:"Apple",title:"MacBook M5",category:"Laptops",badge:"HOT",rating:4.9,reviews:5200,stock:12,total:50,specs:"M5 Chip | 16GB RAM | 512GB SSD | Liquid Retina",images:["https://m.media-amazon.com/images/I/71f5Eu5lJSL._SX679_.jpg"],amazon_link:"https://amzn.to/3PcrHrJ",flipkart_link:"https://fktr.in/tHZwAMT",amazon_price:"Best Price",flipkart_price:"Check Price",best:"Amazon"},
-  {id:"f5",brand:"Apple",title:"AirPods Pro 3",category:"Audio",badge:"NEW",rating:4.8,reviews:9800,stock:25,total:50,specs:"H3 Chip | Active Noise Cancellation | 30hr Battery",images:["https://m.media-amazon.com/images/I/61SUj2aKoEL._SX679_.jpg"],amazon_link:"https://amzn.to/47Kc1Cg",flipkart_link:"https://fktr.in/tHZwAMT",amazon_price:"Best Price",flipkart_price:"Check Price",best:"Amazon"},
-  {id:"f6",brand:"Apple",title:"Apple Watch Series 11",category:"Smartwatches",badge:"NEW",rating:4.8,reviews:7200,stock:20,total:50,specs:"Latest Apple Watch | GPS+Cellular | Advanced Health",images:["https://m.media-amazon.com/images/I/71EkWyiGIJL._SX679_.jpg"],amazon_link:"https://amzn.to/4rCkJd8",flipkart_link:"https://fktr.in/tHZwAMT",amazon_price:"Best Price",flipkart_price:"Check Price",best:"Amazon"},
-  {id:"f7",brand:"GoPro",title:"GoPro Hero 13",category:"Cameras",badge:"HOT",rating:4.7,reviews:4300,stock:15,total:50,specs:"5.3K Video | HyperSmooth 6.0 | 27MP | Waterproof",images:["https://m.media-amazon.com/images/I/71iZ3PVGnQL._SX679_.jpg"],amazon_link:"https://amzn.to/4seijT6",flipkart_link:"https://fktr.in/tHZwAMT",amazon_price:"Best Price",flipkart_price:"Check Price",best:"Amazon"},
-  {id:"f8",brand:"Anker",title:"PowerBank 20000mAh",category:"Accessories",badge:"HOT",rating:4.6,reviews:12000,stock:40,total:50,specs:"20000mAh | 65W Fast Charging | 3 Ports | LED Display",images:["https://m.media-amazon.com/images/I/61YGmFQJNDL._SX679_.jpg"],amazon_link:"https://amzn.to/4dkQBPN",flipkart_link:"https://fktr.in/tHZwAMT",amazon_price:"Best Price",flipkart_price:"Check Price",best:"Amazon"},
-];
-
-const BANK_OFFERS = [
-  {emoji:"💳",bank:"HDFC Bank",offer:"10% off up to ₹1,500 on Credit Cards"},
-  {emoji:"🏦",bank:"SBI Card",offer:"₹2,000 cashback on purchases above ₹20,000"},
-  {emoji:"💳",bank:"ICICI Bank",offer:"No Cost EMI on all orders above ₹5,000"},
-  {emoji:"🏧",bank:"Kotak Bank",offer:"5% unlimited cashback on Kotak Cards"},
-  {emoji:"💳",bank:"Axis Bank",offer:"Extra 5% off with Axis Ace Card"},
-  {emoji:"🏦",bank:"Amazon Pay",offer:"Extra 5% back with Amazon Pay ICICI Card"},
-];
-
-const REVIEWS = [
-  {name:"Rahul M.",init:"R",color:"#4f9cf9",date:"March 2026",prod:"iPhone 17 Pro",stars:5,text:"Found best price through NexDeal! Saved ₹3,500 vs local shop. Super easy to use! 🔥",ver:true},
-  {name:"Priya K.",init:"P",color:"#ff3f8e",date:"March 2026",prod:"AirPods Pro 3",stars:5,text:"Compared prices in seconds! Got at best price. Game changer for smart shopping!",ver:true},
-  {name:"Arjun S.",init:"A",color:"#00c896",date:"March 2026",prod:"MacBook M5",stars:5,text:"Was going to pay more at local shop. NexDeal showed best Amazon deal instantly!",ver:true},
-  {name:"Dev P.",init:"D",color:"#8b5cf6",date:"Feb 2026",prod:"OnePlus 15",stars:5,text:"Better than any Telegram deal channel! 10x faster to find best price!",ver:true},
-];
-
-// STATE
-window._allProducts = [];
-window._filteredProducts = [];
-window._activeCat = "All";
-window._cart = JSON.parse(localStorage.getItem('ndCart')||'[]');
-window._wishlist = JSON.parse(localStorage.getItem('ndWish')||'[]');
-window._searchVal = "";
-
-// LOAD PRODUCTS FROM FIREBASE
-async function loadProducts(){
-  showSkeletons();
+window.loadFirebaseProducts = async function() {
   try {
-    const snap = await getDocs(query(collection(db,'products'), orderBy('created_at','desc')));
-    if(!snap.empty){
-      window._allProducts = snap.docs.map(d=>({id:d.id,...d.data()}));
-    } else {
-      window._allProducts = FALLBACK;
-    }
-  } catch(e){
-    window._allProducts = FALLBACK;
-  }
-  window._filteredProducts = [...window._allProducts];
-  renderCats();
-  renderProducts();
-  loadBankOffers();
-  renderDeals();
-  renderReviews();
-  updateCartUI();
-}
-
-// LOAD BANK OFFERS FROM FIREBASE
-async function loadBankOffers(){
-  let offers = BANK_OFFERS;
-  try {
-    const snap = await getDocs(collection(db,'bank_offers'));
-    if(!snap.empty) offers = snap.docs.map(d=>d.data());
-  } catch(e){}
-  renderBankStrip(offers);
-}
-
-function renderBankStrip(offers){
-  const doubled = [...offers,...offers];
-  document.getElementById('bankStrip').innerHTML = doubled.map(o=>
-    `<span class="bank-item"><span class="bi">${o.emoji||'💳'}</span><strong>${o.bank||o.bank_name}</strong> — ${o.offer}</span>`
-  ).join('');
-}
-
-// CATEGORIES
-const CATS = ["All","Smartphones","Laptops","Audio","Smartwatches","Cameras","Accessories"];
-const CAT_ICONS = {All:"🔥",Smartphones:"📱",Laptops:"💻",Audio:"🎧",Smartwatches:"⌚",Cameras:"📷",Accessories:"🔌"};
-
-function renderCats(){
-  const counts = {};
-  CATS.forEach(c => counts[c] = c==="All" ? window._allProducts.length : window._allProducts.filter(p=>p.category===c).length);
-  document.getElementById('catsGrid').innerHTML = CATS.map(c=>`
-    <div class="cat-chip ${c===window._activeCat?'active':''}" onclick="setCat('${c}')">
-      <span class="cc-icon">${CAT_ICONS[c]||'📦'}</span>
-      <span class="cc-label">${c}<br><span style="color:var(--text3)">${counts[c]}</span></span>
-    </div>`).join('');
-}
-
-window.setCat = (c) => {
-  window._activeCat = c;
-  renderCats();
-  applyFilters();
+    const snap = await getDocs(collection(db, "products"));
+    if (!snap.empty) {
+      const list = [];
+      snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
+      window.FIREBASE_PRODUCTS = list;
+    } else { window.FIREBASE_PRODUCTS = null; }
+  } catch(e) { window.FIREBASE_PRODUCTS = null; }
+  window.dispatchEvent(new Event('firebase-ready'));
 };
+window.loadFirebaseProducts();
+</script>
+<style>
+:root{--p:#4f46e5;--p2:#818cf8;--a:#f97316;--bg:#f5f7ff;--card:#fff;--card2:#eef1ff;--text:#1e1b4b;--muted:#64748b;--border:rgba(99,102,241,.15);--sh:0 4px 24px rgba(79,70,229,.1);--sh2:0 12px 40px rgba(79,70,229,.2);--r:18px;--rs:10px;--green:#10b981;--red:#ef4444;}
+[data-theme="dark"]{--bg:#09081a;--card:#13112a;--card2:#1c1a38;--text:#ede9ff;--muted:#8b87b0;--border:rgba(129,140,248,.15);--sh:0 4px 24px rgba(0,0,0,.4);--sh2:0 12px 40px rgba(0,0,0,.55);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .3s,color .3s;}
+.hdr{position:sticky;top:0;z-index:100;background:rgba(245,247,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;gap:9px;}
+[data-theme="dark"] .hdr{background:rgba(9,8,26,.92);}
+.hbur{background:none;border:1.5px solid var(--border);border-radius:9px;padding:7px 9px;cursor:pointer;color:var(--text);font-size:16px;line-height:1;}
+.logo{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;text-decoration:none;}
+.logo .n{color:var(--p)}.logo .d{color:var(--a)}
+.hdr-r{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.hbtn{display:flex;align-items:center;gap:5px;padding:7px 11px;border-radius:999px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.hbtn:hover{transform:translateY(-1px);box-shadow:var(--sh);}
+.hbtn.cart{border-color:var(--p);color:var(--p);}
+.badge{background:var(--a);color:#fff;font-size:9px;font-weight:800;border-radius:999px;padding:1px 5px;}
+.ov{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s;}
+.ov.on{opacity:1;pointer-events:all;}
+.sb{position:fixed;top:0;left:-100%;z-index:201;width:272px;height:100vh;background:var(--card);padding:18px 16px;transition:left .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:var(--sh2);}
+.sb.on{left:0;}
+.sb-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.sb-x{background:var(--card2);border:none;border-radius:7px;padding:6px 9px;cursor:pointer;color:var(--text);font-size:14px;}
+.sb-sec{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 7px;}
+.sbl{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all .2s;}
+.sbl:hover,.sbl.on{background:var(--card2);color:var(--p);}
+.sbl .ic{font-size:16px;width:22px;text-align:center;}
+.hero{padding:36px 16px 28px;text-align:center;background:linear-gradient(145deg,#eef2ff,#fef3e2);position:relative;overflow:hidden;}
+[data-theme="dark"] .hero{background:linear-gradient(145deg,#13112a,#1e150a);}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(99,102,241,.15),transparent);border-radius:50%;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:5px 13px;font-size:11px;font-weight:700;color:var(--p);margin-bottom:12px;box-shadow:var(--sh);}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(24px,6vw,44px);font-weight:800;line-height:1.15;margin-bottom:10px;}
+.ac{color:var(--a)}.pr{color:var(--p)}
+.hero-sub{font-size:13px;color:var(--muted);max-width:440px;margin:0 auto 16px;line-height:1.6;}
+.hero-btns{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;padding:11px 22px;border-radius:999px;font-weight:700;font-size:13px;border:none;cursor:pointer;text-decoration:none;box-shadow:0 4px 16px rgba(79,70,229,.35);transition:all .2s;}
+.btn-p:hover{transform:translateY(-2px);}
+.btn-s{background:var(--card);color:var(--text);padding:11px 20px;border-radius:999px;font-weight:700;font-size:13px;border:1.5px solid var(--border);cursor:pointer;text-decoration:none;transition:all .2s;}
+.hero-stats{display:flex;justify-content:center;gap:26px;margin-top:24px;flex-wrap:wrap;}
+.stat-n{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--p);}
+.stat-l{font-size:10px;color:var(--muted);margin-top:1px;}
+.srch-wrap{padding:14px 14px 0;max-width:600px;margin:0 auto;}
+.srch-in{position:relative;}
+.srch-inp{width:100%;padding:12px 14px 12px 43px;border-radius:999px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;box-shadow:var(--sh);}
+.srch-inp:focus{border-color:var(--p);}
+.srch-ic{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:16px;}
+.sh{padding:24px 16px 11px;}
+.sh-l{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:4px;}
+.sh-t{font-family:'Syne',sans-serif;font-size:clamp(18px,4vw,27px);font-weight:800;}
+.chips{padding:0 14px 11px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;}
+.chips::-webkit-scrollbar{display:none;}
+.chip{padding:6px 13px;border-radius:999px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:11.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.chip:hover{border-color:var(--p);color:var(--p);}
+.chip.on{background:var(--p);color:#fff;border-color:var(--p);}
+.sort-bar{padding:0 14px 11px;display:flex;justify-content:space-between;align-items:center;}
+.p-count{font-size:11.5px;color:var(--muted);}
+.sort-sel{padding:6px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:11.5px;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:12px;padding:0 12px 22px;}
+@media(min-width:480px){.grid{grid-template-columns:repeat(auto-fill,minmax(182px,1fr));}}
+.pcard{background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);position:relative;animation:fuP .4s ease both;}
+.pcard:hover{transform:translateY(-5px);box-shadow:var(--sh2);border-color:rgba(99,102,241,.4);}
+@keyframes fuP{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.p-bdg{position:absolute;top:8px;left:8px;z-index:2;padding:2px 8px;border-radius:999px;font-size:9px;font-weight:800;text-transform:uppercase;}
+.b-hot{background:#ef4444;color:#fff}.b-new{background:#10b981;color:#fff}.b-sale{background:var(--a);color:#fff}
+.p-wsh{position:absolute;top:8px;right:8px;z-index:2;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+[data-theme="dark"] .p-wsh{background:rgba(19,17,42,.9);}
+.p-img{aspect-ratio:1;overflow:hidden;background:var(--card2);display:flex;align-items:center;justify-content:center;}
+.p-img img{width:80%;height:80%;object-fit:contain;transition:transform .35s;}
+.pcard:hover .p-img img{transform:scale(1.09);}
+.p-em{font-size:56px;user-select:none;transition:transform .3s;}
+.pcard:hover .p-em{transform:scale(1.08);}
+.p-inf{padding:10px;}
+.p-br{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p);margin-bottom:2px;}
+.p-nm{font-family:'Syne',sans-serif;font-size:12.5px;font-weight:700;line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.p-rt{display:flex;align-items:center;gap:4px;font-size:10px;margin-bottom:4px;}
+.stars{color:#f59e0b;}.r-c{color:var(--muted);}
+.p-stk{font-size:10px;color:var(--red);font-weight:600;margin-bottom:5px;}
+.p-plts{display:flex;gap:4px;margin-bottom:5px;}
+.plt-btn{flex:1;padding:5px 3px;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;display:block;transition:all .15s;border:1.5px solid;}
+.plt-amz{background:#fff8e7;color:#b45309;border-color:#fde68a;}
+.plt-flp{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;}
+[data-theme="dark"] .plt-amz{background:rgba(251,191,36,.1);color:#fbbf24;border-color:rgba(251,191,36,.3);}
+[data-theme="dark"] .plt-flp{background:rgba(96,165,250,.1);color:#60a5fa;border-color:rgba(96,165,250,.3);}
+.add-btn{width:100%;padding:7px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.add-btn:hover{opacity:.88;}
+.deals-row{display:flex;gap:12px;overflow-x:auto;padding:0 14px 22px;scrollbar-width:none;}
+.deals-row::-webkit-scrollbar{display:none;}
+.deal-card{min-width:165px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:14px;flex-shrink:0;cursor:pointer;transition:all .2s;text-decoration:none;display:block;color:var(--text);}
+.deal-card:hover{transform:translateY(-3px);box-shadow:var(--sh);}
+.deal-timer{font-size:10px;font-weight:700;color:var(--red);margin-bottom:5px;}
+.deal-nm{font-family:'Syne',sans-serif;font-size:12.5px;font-weight:800;margin-bottom:4px;line-height:1.3;}
+.deal-p{font-size:17px;font-weight:800;color:var(--p);}
+.deal-op{font-size:10px;color:var(--muted);text-decoration:line-through;}
+.deal-d{display:inline-block;background:#dcfce7;color:#166534;font-size:9px;font-weight:700;padding:2px 7px;border-radius:999px;margin-top:3px;}
+[data-theme="dark"] .deal-d{background:rgba(16,185,129,.15);color:#34d399;}
+.bank-row{display:flex;gap:11px;overflow-x:auto;padding:0 14px 22px;scrollbar-width:none;}
+.bank-row::-webkit-scrollbar{display:none;}
+.bank-card{min-width:190px;background:var(--card);border-radius:var(--rs);border:1px solid var(--border);padding:13px;flex-shrink:0;}
+.bank-ic{font-size:22px;margin-bottom:5px;}
+.bank-nm{font-size:12px;font-weight:700;margin-bottom:2px;}
+.bank-off{font-size:11px;color:var(--p);font-weight:600;}
+.bank-vl{font-size:10px;color:var(--muted);margin-top:2px;}
+.fashion-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 14px 22px;}
+@media(min-width:600px){.fashion-grid{grid-template-columns:repeat(4,1fr);}}
+.fash-card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:18px 12px;text-align:center;position:relative;}
+.f-lk{position:absolute;top:7px;right:7px;font-size:13px;opacity:.3;}
+.f-em{font-size:32px;margin-bottom:5px;}
+.f-nm{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;margin-bottom:5px;}
+.cs-badge{display:inline-block;padding:3px 10px;background:#fce7f3;color:#be185d;border-radius:999px;font-size:10px;font-weight:700;}
+.rev-row{display:flex;gap:12px;overflow-x:auto;padding:0 14px 22px;scrollbar-width:none;}
+.rev-row::-webkit-scrollbar{display:none;}
+.rev-card{min-width:215px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:15px;flex-shrink:0;}
+.rev-stars{color:#f59e0b;margin-bottom:5px;font-size:12px;}
+.rev-txt{font-size:12px;line-height:1.6;margin-bottom:8px;font-style:italic;}
+.rev-auth{display:flex;align-items:center;gap:7px;}
+.rev-av{width:27px;height:27px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--a));display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0;}
+.rev-nm{font-size:12px;font-weight:700;}
+.rev-vr{font-size:10px;color:var(--green);}
+.req-sec{margin:0 14px 24px;background:linear-gradient(135deg,#eef2ff,#fef3e2);border-radius:var(--r);padding:22px 16px;}
+[data-theme="dark"] .req-sec{background:linear-gradient(135deg,rgba(30,27,75,.4),rgba(67,28,5,.2));border:1px solid var(--border);}
+.req-l{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:3px;}
+.req-t{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;margin-bottom:3px;}
+.req-s{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
+.req-inp{width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;margin-bottom:7px;}
+.req-inp:focus{border-color:var(--p);}
+.req-btn{width:100%;padding:12px;background:linear-gradient(135deg,#4f46e5,#f97316);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.req-btn:disabled{opacity:.55;cursor:not-allowed;}
+.req-note{text-align:center;font-size:11px;color:var(--muted);margin-top:7px;}
+.footer{background:var(--card);border-top:1px solid var(--border);padding:24px 16px 30px;}
+.ft-logo{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;margin-bottom:5px;}
+.ft-desc{font-size:12px;color:var(--muted);margin-bottom:13px;line-height:1.5;}
+.ft-links{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:13px;}
+.ft-link{font-size:12px;color:var(--muted);text-decoration:none;}
+.ft-link:hover{color:var(--p);}
+.ft-disc{font-size:11px;color:var(--muted);background:var(--card2);border-radius:8px;padding:8px 11px;border:1px solid var(--border);line-height:1.5;}
+.ft-copy{font-size:11px;color:var(--muted);margin-top:8px;}
+.mod-ov{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .3s;}
+.mod-ov.on{opacity:1;pointer-events:all;}
+.mod{width:100%;background:var(--card);border-radius:22px 22px 0 0;padding:16px;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:88vh;overflow-y:auto;}
+.mod-ov.on .mod{transform:translateY(0);}
+.mod-hnd{width:34px;height:4px;background:var(--border);border-radius:999px;margin:0 auto 12px;}
+.mod-ttl{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.mod-x{background:var(--card2);border:none;border-radius:8px;padding:5px 9px;cursor:pointer;font-size:14px;color:var(--text);}
+.c-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+.c-img{width:42px;height:42px;border-radius:8px;background:var(--card2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;}
+.c-img img{width:100%;height:100%;object-fit:contain;}
+.c-inf{flex:1;min-width:0;}
+.c-nm{font-size:12px;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.c-btns{display:flex;gap:4px;}
+.c-buy{padding:4px 9px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;text-decoration:none;border:1.5px solid;}
+.c-amz{background:#fff8e7;color:#b45309;border-color:#fde68a;}
+.c-flp{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;}
+.c-rm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;}
+.c-tot{padding:12px 0 6px;display:flex;justify-content:space-between;}
+.c-tot-l{font-size:13px;font-weight:600;}.c-tot-n{font-size:13px;font-weight:700;color:var(--p);}
+.chk-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.buy-ctr{text-align:center;padding:8px 0 14px;}
+.buy-em{font-size:50px;margin-bottom:5px;}
+.buy-img{width:105px;height:105px;object-fit:contain;margin-bottom:5px;}
+.buy-nm{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;}
+.buy-sub{font-size:12px;color:var(--muted);margin-top:3px;margin-bottom:14px;}
+.buy-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.buy-opt{padding:15px 11px;border-radius:12px;text-align:center;cursor:pointer;text-decoration:none;display:block;border:1.5px solid;transition:all .2s;}
+.buy-opt:hover{transform:translateY(-2px);box-shadow:var(--sh);}
+.buy-ico{font-size:24px;margin-bottom:5px;}
+.buy-on{font-weight:700;font-size:13px;}
+.buy-tg{font-size:10px;margin-top:2px;}
+.o-amz{border-color:#fde68a;background:#fff8e7;color:#92400e;}
+.o-flp{border-color:#bfdbfe;background:#eff6ff;color:#1e40af;}
+[data-theme="dark"] .o-amz{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.25);color:#fbbf24;}
+[data-theme="dark"] .o-flp{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.25);color:#60a5fa;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;font-weight:600;z-index:999;transition:transform .3s;white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center;}
+.toast.on{transform:translateX(-50%) translateY(0);}
+.loading{grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);}
+.spin{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--p);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 10px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{grid-column:1/-1;padding:40px 20px;text-align:center;color:var(--muted);}
+.floats{position:fixed;bottom:16px;right:13px;display:flex;flex-direction:column;gap:9px;z-index:50;}
+.fb{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;border:none;box-shadow:0 4px 16px rgba(0,0,0,.22);text-decoration:none;transition:transform .2s;}
+.fb:hover{transform:scale(1.1);}
+.f-ai{background:linear-gradient(135deg,#7c3aed,#a855f7);}
+.f-tg{background:#0088cc;}
+.inst{display:none;margin:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;align-items:center;gap:9px;}
+.inst.on{display:flex;}
+.inst-tx{flex:1;font-size:12px;line-height:1.4;}
+.inst-btn{padding:6px 12px;background:var(--p);color:#fff;border:none;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0;}
+.inst-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;}
+</style>
+</head>
+<body>
+<div class="ov" id="ov" onclick="closeSB()"></div>
+<aside class="sb" id="sb">
+  <div class="sb-hd">
+    <a href="#" class="logo"><span class="n">Nex</span><span class="d">Deal</span></a>
+    <button class="sb-x" onclick="closeSB()">✕</button>
+  </div>
+  <div class="sb-sec">Categories</div>
+  <button class="sbl on" id="sb-all" onclick="setCat('all','sb-all')"><span class="ic">🔥</span>All Products</button>
+  <button class="sbl" id="sb-smartphones" onclick="setCat('smartphones','sb-smartphones')"><span class="ic">📱</span>Smartphones</button>
+  <button class="sbl" id="sb-laptops" onclick="setCat('laptops','sb-laptops')"><span class="ic">💻</span>Laptops</button>
+  <button class="sbl" id="sb-audio" onclick="setCat('audio','sb-audio')"><span class="ic">🎧</span>Audio</button>
+  <button class="sbl" id="sb-smartwatches" onclick="setCat('smartwatches','sb-smartwatches')"><span class="ic">⌚</span>Smartwatches</button>
+  <button class="sbl" id="sb-cameras" onclick="setCat('cameras','sb-cameras')"><span class="ic">📷</span>Cameras</button>
+  <button class="sbl" id="sb-accessories" onclick="setCat('accessories','sb-accessories')"><span class="ic">🔌</span>Accessories</button>
+  <div class="sb-sec">Quick Links</div>
+  <a class="sbl" href="#deals" onclick="closeSB()"><span class="ic">🔥</span>Hot Deals</a>
+  <a class="sbl" href="#reviews" onclick="closeSB()"><span class="ic">⭐</span>Reviews</a>
+  <a class="sbl" href="#request" onclick="closeSB()"><span class="ic">🙋</span>Request Product</a>
+  <a class="sbl" href="nexdeal-ai-agents-1.html"><span class="ic">🤖</span>AI Assistant</a>
+  <a class="sbl" href="https://t.me/nexdeal_deals" target="_blank"><span class="ic">✈️</span>Telegram</a>
+  <a class="sbl" href="admin.html"><span class="ic">⚙️</span>Admin Panel</a>
+  <div class="sb-sec">Theme</div>
+  <button class="sbl" onclick="toggleTheme()"><span class="ic" id="thIc">🌙</span><span id="thTx">Dark Mode</span></button>
+  <p style="font-size:11px;color:var(--muted);margin-top:16px;padding:0 12px;">© 2026 NexDeal by Ajaykumar106 🚀</p>
+</aside>
+<header class="hdr">
+  <button class="hbur" onclick="openSB()">☰</button>
+  <a href="#" class="logo"><span class="n">Nex</span><span class="d">Deal</span></a>
+  <div class="hdr-r">
+    <button class="hbtn cart" onclick="openCart()">🛒 <span class="badge" id="cBadge">0</span></button>
+    <a href="nexdeal-ai-agents-1.html" class="hbtn" style="border-color:#a855f7;color:#a855f7;">🤖 AI</a>
+    <a href="https://t.me/nexdeal_deals" class="hbtn" style="border-color:#0088cc;color:#0088cc;" target="_blank">✈️</a>
+  </div>
+</header>
+<div class="inst" id="instB">
+  <span style="font-size:21px">📲</span>
+  <div class="inst-tx"><strong>Install NexDeal!</strong><br><span style="color:var(--muted);font-size:11px">Get instant deal alerts</span></div>
+  <button class="inst-btn" id="instBtn">Install</button>
+  <button class="inst-x" onclick="document.getElementById('instB').classList.remove('on')">✕</button>
+</div>
+<section class="hero">
+  <div class="hero-badge">🇮🇳 India's Smartest Price Comparison</div>
+  <h1>Best Price.<br><span class="ac">Every Product.</span> <span class="pr">One Place.</span></h1>
+  <p class="hero-sub">Compare prices across Amazon and Flipkart instantly. Get the best deal on every gadget!</p>
+  <div class="hero-btns">
+    <a href="#products" class="btn-p">🔥 Browse Deals</a>
+    <a href="nexdeal-ai-agents-1.html" class="btn-s">🤖 Ask AI</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-n">50k+</div><div class="stat-l">Happy Buyers</div></div>
+    <div><div class="stat-n">500+</div><div class="stat-l">Products</div></div>
+    <div><div class="stat-n">₹0</div><div class="stat-l">Extra Cost</div></div>
+  </div>
+</section>
+<div class="srch-wrap"><div class="srch-in"><span class="srch-ic">🔍</span><input class="srch-inp" type="text" id="srchInp" placeholder="Search phones, laptops, earbuds..." oninput="doSearch(this.value)"></div></div>
+<section id="products">
+  <div class="sh"><div class="sh-l">// Best Deals</div><h2 class="sh-t">Compare and Buy Smart 💡</h2></div>
+  <div class="chips" id="chips">
+    <button class="chip on" onclick="setChip('all',this)">🔥 All</button>
+    <button class="chip" onclick="setChip('smartphones',this)">📱 Phones</button>
+    <button class="chip" onclick="setChip('laptops',this)">💻 Laptops</button>
+    <button class="chip" onclick="setChip('audio',this)">🎧 Audio</button>
+    <button class="chip" onclick="setChip('smartwatches',this)">⌚ Watches</button>
+    <button class="chip" onclick="setChip('cameras',this)">📷 Cameras</button>
+    <button class="chip" onclick="setChip('accessories',this)">🔌 Accessories</button>
+  </div>
+  <div class="sort-bar">
+    <span class="p-count" id="pCnt">Loading...</span>
+    <select class="sort-sel" onchange="doSort(this.value)">
+      <option value="default">Default</option>
+      <option value="rating">Top Rated</option>
+      <option value="stock">Low Stock</option>
+      <option value="name">A to Z</option>
+    </select>
+  </div>
+  <div class="grid" id="grid"><div class="loading"><div class="spin"></div><p>Loading products...</p></div></div>
+</section>
+<section id="deals">
+  <div class="sh"><div class="sh-l">// Limited Time</div><h2 class="sh-t">🔥 Hot Deals Today</h2></div>
+  <div class="deals-row" id="dealsRow"></div>
+</section>
+<section>
+  <div class="sh"><div class="sh-l">// Save More</div><h2 class="sh-t">💳 Bank Offers</h2></div>
+  <div class="bank-row" id="bankRow"></div>
+</section>
+<section>
+  <div class="sh"><div class="sh-l">// Fashion</div><h2 class="sh-t">Fashion Coming Soon! 👗</h2></div>
+  <div class="fashion-grid">
+    <div class="fash-card"><span class="f-lk">🔒</span><div class="f-em">👗</div><div class="f-nm">Myntra</div><span class="cs-badge">Coming Soon</span></div>
+    <div class="fash-card"><span class="f-lk">🔒</span><div class="f-em">👕</div><div class="f-nm">Bewakoof</div><span class="cs-badge">Coming Soon</span></div>
+    <div class="fash-card"><span class="f-lk">🔒</span><div class="f-em">👟</div><div class="f-nm">AJIO</div><span class="cs-badge">Coming Soon</span></div>
+    <div class="fash-card"><span class="f-lk">🔒</span><div class="f-em">💄</div><div class="f-nm">Nykaa</div><span class="cs-badge">Coming Soon</span></div>
+  </div>
+</section>
+<section id="reviews">
+  <div class="sh"><div class="sh-l">// Real Buyers</div><h2 class="sh-t">What Indians Say 🇮🇳</h2></div>
+  <div class="rev-row" id="revRow"></div>
+</section>
+<section id="request">
+  <div class="sh"><div class="sh-l">// Can't Find It?</div></div>
+  <div class="req-sec">
+    <div class="req-l">// REQUEST</div>
+    <h2 class="req-t">Request Any Product 🙋</h2>
+    <p class="req-s">Tell us what you want — we add it within 24 hours!</p>
+    <input class="req-inp" type="text" id="reqProd" placeholder="Product name (e.g. Noise ColorFit Ultra 3)">
+    <input class="req-inp" type="text" id="reqName" placeholder="Your name (optional)">
+    <button class="req-btn" id="reqBtn" onclick="submitReq()">🚀 Request This Product</button>
+    <p class="req-note">We'll add it and post on Telegram! ✅</p>
+  </div>
+</section>
+<footer class="footer">
+  <div class="ft-logo"><span style="color:var(--p)">Nex</span><span style="color:var(--a)">Deal</span></div>
+  <p class="ft-desc">India's smartest price comparison. Compare electronics across Amazon and Flipkart.</p>
+  <div class="ft-links">
+    <a class="ft-link" href="#products">Products</a>
+    <a class="ft-link" href="#deals">Hot Deals</a>
+    <a class="ft-link" href="#reviews">Reviews</a>
+    <a class="ft-link" href="#request">Request</a>
+    <a class="ft-link" href="nexdeal-ai-agents-1.html">AI Assistant</a>
+    <a class="ft-link" href="admin.html">Admin</a>
+    <a class="ft-link" href="https://t.me/nexdeal_deals" target="_blank">Telegram</a>
+  </div>
+  <div class="ft-disc">Affiliate Disclosure: NexDeal earns a small commission from Amazon and Flipkart affiliate links at no extra cost to you.</div>
+  <p class="ft-copy">© 2026 NexDeal · Built by Ajaykumar106 · CSE Student 🚀</p>
+</footer>
+<div class="floats">
+  <a href="nexdeal-ai-agents-1.html" class="fb f-ai">🤖</a>
+  <a href="https://t.me/nexdeal_deals" class="fb f-tg" target="_blank">✈️</a>
+</div>
+<div class="mod-ov" id="cartMod">
+  <div class="mod">
+    <div class="mod-hnd"></div>
+    <div class="mod-ttl">🛒 Your Cart <button class="mod-x" onclick="closeCart()">✕</button></div>
+    <div id="cartItems"></div>
+    <div class="c-tot"><span class="c-tot-l">Total</span><span class="c-tot-n" id="cTotN">0 items</span></div>
+    <button class="chk-btn" onclick="showToast('Tap Amazon or Flipkart on each item to buy!')">Proceed to Checkout →</button>
+  </div>
+</div>
+<div class="mod-ov" id="buyMod">
+  <div class="mod">
+    <div class="mod-hnd"></div>
+    <div class="mod-ttl">🛍️ Buy Now <button class="mod-x" onclick="closeBuy()">✕</button></div>
+    <div class="buy-ctr">
+      <div id="buyImgWrap"></div>
+      <div class="buy-nm" id="buyNm"></div>
+      <div class="buy-sub" id="buySub"></div>
+    </div>
+    <div class="buy-opts">
+      <a class="buy-opt o-amz" id="buyAmz" target="_blank" rel="nofollow sponsored" onclick="closeBuy()">
+        <div class="buy-ico">🛒</div><div class="buy-on">Amazon</div><div class="buy-tg" style="color:#b45309">Best Price ✅</div>
+      </a>
+      <a class="buy-opt o-flp" id="buyFlp" target="_blank" rel="nofollow sponsored" onclick="closeBuy()">
+        <div class="buy-ico">🏬</div><div class="buy-on">Flipkart</div><div class="buy-tg" style="color:#1d4ed8">Check Price</div>
+      </a>
+    </div>
+    <p style="font-size:11px;color:var(--muted);text-align:center;">Affiliate links — we earn small commission at no extra cost</p>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const AMZ_TAG='nexdeal-21';
 
-window.filterProducts = (v) => {
-  window._searchVal = v;
-  applyFilters();
-};
 
-function applyFilters(){
-  window._filteredProducts = window._allProducts.filter(p=>{
-    const mc = window._activeCat==="All" || p.category===window._activeCat;
-    const ms = !window._searchVal || p.title?.toLowerCase().includes(window._searchVal.toLowerCase()) || p.brand?.toLowerCase().includes(window._searchVal.toLowerCase());
-    return mc && ms;
-  });
-  renderProducts();
+const DP=[
+  {id:'d1',name:'iPhone 17 Pro 1TB',brand:'Apple',cat:'smartphones',emoji:'📱',img:'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-card-40-iphone17pro-202509?wid=400&hei=400&fmt=p-jpg&.v=1742435684',desc:'A19 Pro | 48MP ProCamera | 1TB | Titanium',rating:4.9,reviews:8420,stock:8,badge:'hot',amz:`https://www.amazon.in/s?k=iPhone+17+Pro&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=iPhone+17+Pro'},
+  {id:'d2',name:'Samsung Galaxy S25 Ultra',brand:'Samsung',cat:'smartphones',emoji:'📱',img:'https://images.samsung.com/is/image/samsung/p6pim/in/2501/gallery/in-galaxy-s25-ultra-501977-sm-s938bzkgins-543245545?$650_519_PNG$',desc:'Snapdragon 8 Elite | 200MP | 12GB RAM',rating:4.8,reviews:6210,stock:15,badge:'new',amz:`https://www.amazon.in/s?k=Samsung+Galaxy+S25+Ultra&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=Samsung+Galaxy+S25+Ultra'},
+  {id:'d3',name:'Apple MacBook Air M4',brand:'Apple',cat:'laptops',emoji:'💻',img:'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-midnight-select-202501?wid=400&hei=400&fmt=jpeg&.v=1730577411',desc:'M4 Chip | 16GB RAM | 512GB SSD | 18hr',rating:4.9,reviews:4320,stock:5,badge:'hot',amz:`https://www.amazon.in/s?k=MacBook+Air+M4&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=MacBook+Air+M4'},
+  {id:'d4',name:'Sony WH-1000XM6',brand:'Sony',cat:'audio',emoji:'🎧',img:'https://www.sony.co.in/image/a52b52f3e25f1b96d2b2ac1cce4b38ea?fmt=pjpeg&bgcolor=FFFFFF&bgc=FFFFFF&wid=400&hei=400',desc:'Best ANC | 40hr Battery | Hi-Res Audio',rating:4.9,reviews:9870,stock:22,badge:'new',amz:`https://www.amazon.in/s?k=Sony+WH-1000XM6&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=Sony+WH-1000XM6'},
+  {id:'d5',name:'Apple Watch Ultra 3',brand:'Apple',cat:'smartwatches',emoji:'⌚',img:'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/watch-ultra2-hero-titanium-natural-202409?wid=400&hei=400&fmt=jpeg&.v=1725499073',desc:'Titanium | 60hr battery | Always-on GPS',rating:4.8,reviews:3210,stock:10,badge:'new',amz:`https://www.amazon.in/s?k=Apple+Watch+Ultra+3&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=Apple+Watch+Ultra+3'},
+  {id:'d6',name:'OnePlus 13R 5G',brand:'OnePlus',cat:'smartphones',emoji:'📱',img:'https://image01.oneplus.net/ebp/202501/06/1-m00-4e-2d-rb8lz2d7bk2ab3y3aaclpsvlhda614.png',desc:'SD 8s Gen 3 | 50MP | 5500mAh | 80W Charge',rating:4.6,reviews:5430,stock:30,badge:'',amz:`https://www.amazon.in/s?k=OnePlus+13R&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=OnePlus+13R'},
+  {id:'d7',name:'boAt Airdopes 141',brand:'boAt',cat:'audio',emoji:'🎵',img:'https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/p/t/d/-original-imaghx3gygzahhs6.jpeg?q=70',desc:'42Hr Battery | ENx Tech | IPX4',rating:4.4,reviews:28450,stock:100,badge:'sale',amz:`https://www.amazon.in/s?k=boAt+Airdopes+141&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=boAt+Airdopes+141'},
+  {id:'d8',name:'Noise ColorFit Ultra 3',brand:'Noise',cat:'smartwatches',emoji:'⌚',img:'https://rukminim2.flixcart.com/image/416/416/xif0q/smartwatch/c/y/f/45-qw103-app-noise-yes-original-imaghd3gy7ygxfzh.jpeg?q=70',desc:'1.96" AMOLED | BT Calling | 100+ Sports',rating:4.3,reviews:12680,stock:50,badge:'sale',amz:`https://www.amazon.in/s?k=Noise+ColorFit+Ultra+3&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=Noise+ColorFit+Ultra+3'},
+  {id:'d9',name:'Dell Inspiron 15',brand:'Dell',cat:'laptops',emoji:'💻',img:'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/inspiron-notebooks/15-3535/media-gallery/notebook-inspiron-15-3535-nt-blue-gallery-3.psd?fmt=pjpg&wid=400&hei=400',desc:'Intel i7 | 16GB RAM | 512GB SSD | Win 11',rating:4.5,reviews:3120,stock:8,badge:'',amz:`https://www.amazon.in/s?k=Dell+Inspiron+15&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=Dell+Inspiron+15'},
+  {id:'d10',name:'Anker 65W GaN Charger',brand:'Anker',cat:'accessories',emoji:'🔌',img:'https://m.media-amazon.com/images/I/41FMxJGi7eL._SX300_SY300_QL70_FMwebp_.jpg',desc:'GaN II | 3 Ports | Ultra Compact',rating:4.6,reviews:8750,stock:200,badge:'sale',amz:`https://www.amazon.in/s?k=Anker+65W+GaN+Charger&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=Anker+65W+Charger'},
+  {id:'d11',name:'Sony ZV-E10 II',brand:'Sony',cat:'cameras',emoji:'📷',img:'https://www.sony.co.in/image/5d02da5df552836db4d81d30e00d1a99?fmt=pjpeg&wid=400&hei=400&bgcolor=FFFFFF',desc:'24.2MP | 4K60fps | Vlog Camera',rating:4.7,reviews:2340,stock:12,badge:'new',amz:`https://www.amazon.in/s?k=Sony+ZV-E10+II&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=Sony+ZV-E10+II'},
+  {id:'d12',name:'Realme GT 7 Pro',brand:'Realme',cat:'smartphones',emoji:'📱',img:'https://image01.realme.net/general/20241106/1730880217625.png',desc:'SD 8 Elite | 50MP | 6000mAh | 120Hz',rating:4.5,reviews:4120,stock:25,badge:'',amz:`https://www.amazon.in/s?k=Realme+GT+7+Pro&tag=${AMZ_TAG}`,flp:'https://www.flipkart.com/search?q=Realme+GT+7+Pro'},
+];
+const DEALS=[
+  {name:'iPhone 17 Pro',orig:'₹1,34,900',price:'₹1,29,999',disc:'4% OFF',emoji:'📱',timer:'⏰ 2h 14m left',amz:`https://www.amazon.in/s?k=iPhone+17+Pro&tag=${AMZ_TAG}`},
+  {name:'Sony WH-1000XM6',orig:'₹32,990',price:'₹27,490',disc:'17% OFF',emoji:'🎧',timer:'⏰ 5h left',amz:`https://www.amazon.in/s?k=Sony+WH1000XM6&tag=${AMZ_TAG}`},
+  {name:'MacBook Air M4',orig:'₹1,19,900',price:'₹1,09,900',disc:'8% OFF',emoji:'💻',timer:'⏰ 12h left',amz:`https://www.amazon.in/s?k=MacBook+Air+M4&tag=${AMZ_TAG}`},
+  {name:'boAt Airdopes 141',orig:'₹1,999',price:'₹699',disc:'65% OFF',emoji:'🎵',timer:'⏰ 1h left',amz:`https://www.amazon.in/s?k=boAt+Airdopes+141&tag=${AMZ_TAG}`},
+];
+const BANK=[
+  {ic:'💳',nm:'HDFC Bank',off:'Extra 10% off Electronics',vl:'Valid till 31 Mar'},
+  {ic:'🏦',nm:'SBI Card',off:'₹2,000 cashback on ₹20,000+',vl:'Valid till 25 Mar'},
+  {ic:'💳',nm:'ICICI Bank',off:'No Cost EMI 6 months',vl:'Valid till 30 Mar'},
+  {ic:'🏧',nm:'Kotak Card',off:'5% unlimited cashback',vl:'Valid till 28 Mar'},
+  {ic:'💳',nm:'Axis Bank',off:'₹1,500 off on ₹15,000+',vl:'Valid till 31 Mar'},
+];
+const REVS=[
+  {n:'Rohan M.',i:'R',r:5,t:'Saved ₹3,200 on my OnePlus! NexDeal showed Amazon was much cheaper!'},
+  {n:'Priya S.',i:'P',r:5,t:'AI assistant helped me choose between Sony and boAt. Bought Sony — no regrets!'},
+  {n:'Aditya K.',i:'A',r:4,t:'Telegram channel is fire — hot deals posted daily. Keep it up bhai!'},
+  {n:'Sneha T.',i:'S',r:5,t:'Bought MacBook M4 via link here, got extra cashback too. Saved ₹8,000!'},
+  {n:'Vikram J.',i:'V',r:4,t:'Simple clean interface. No ads. Pure deals. My go-to for electronics!'},
+];
+let PRODS=[],curCat='all',curSearch='',curSort='default';
+let cart=JSON.parse(localStorage.getItem('nd_cart')||'[]');
+let wish=JSON.parse(localStorage.getItem('nd_wish')||'[]');
+window.addEventListener('firebase-ready',()=>{
+  PRODS=(window.FIREBASE_PRODUCTS&&window.FIREBASE_PRODUCTS.length)?window.FIREBASE_PRODUCTS.map(p=>({...p,amz:p.amazonLink||p.amz||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ_TAG}`,flp:p.flipkartLink||p.flp||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`})):DP;
+  render();
+});
+setTimeout(()=>{if(!PRODS.length){PRODS=DP;render();}},3500);
+function getF(){
+  let l=[...PRODS];
+  if(curCat!=='all')l=l.filter(p=>(p.cat||p.category)===curCat);
+  if(curSearch.trim()){const q=curSearch.toLowerCase();l=l.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.brand||'').toLowerCase().includes(q)||(p.desc||p.specs||'').toLowerCase().includes(q));}
+  if(curSort==='rating')l.sort((a,b)=>(b.rating||0)-(a.rating||0));
+  else if(curSort==='stock')l.sort((a,b)=>(a.stock||99)-(b.stock||99));
+  else if(curSort==='name')l.sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  return l;
 }
-
-window.sortProducts = (v) => {
-  const arr = [...window._filteredProducts];
-  if(v==="rating") arr.sort((a,b)=>(b.rating||0)-(a.rating||0));
-  else if(v==="stock") arr.sort((a,b)=>(a.stock||0)-(b.stock||0));
-  else if(v==="name") arr.sort((a,b)=>a.title?.localeCompare(b.title));
-  window._filteredProducts = arr;
-  renderProducts();
-};
-
-// SKELETONS
-function showSkeletons(){
-  const grid = document.getElementById('pgrid');
-  grid.innerHTML = Array(6).fill(`
-    <div class="skeleton-card">
-      <div class="skeleton sk-img"></div>
-      <div class="skeleton sk-title"></div>
-      <div class="skeleton sk-sub"></div>
-      <div class="skeleton sk-price"></div>
-    </div>`).join('');
-}
-
-// RENDER PRODUCTS
-function renderProducts(){
-  const grid = document.getElementById('pgrid');
-  const fp = window._filteredProducts;
-  document.getElementById('productsLabel').textContent = `${window._activeCat==='All'?'All Products':window._activeCat} (${fp.length})`;
-
-  if(!fp.length){
-    grid.innerHTML=`<div class="empty-state"><div>🔍</div><div style="font-weight:700;margin-bottom:.5rem">No products found!</div><a href="#request" style="color:var(--blue);font-size:.85rem">Request this product →</a></div>`;
-    return;
-  }
-
-  grid.innerHTML = fp.map(p => {
-    const imgs = p.images||[];
-    const stock = p.stock||50;
-    const total = p.total||50;
-    const pct = (stock/total)*100;
-    const sc = pct<=20?"sl":pct<=50?"sm":"sh";
-    const sc2 = pct<=20?"var(--red)":pct<=50?"var(--orange)":"var(--green)";
-    const sl = stock<=5?`⚠️ Only ${stock} left!`:stock<=15?`${stock} units left`:`${stock} in stock ✅`;
-    const badge = p.badge||"HOT";
-    const badgeCls = badge==="HOT"?"hot":badge==="NEW"?"new":"sale";
-    const isWished = window._wishlist.includes(p.id);
-
-    const imgSlides = imgs.length
-      ? imgs.slice(0,3).map((img,i)=>`<div class="img-slide ${i===0?'active':''}" data-idx="${i}"><img src="${img}" alt="${p.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x200/4f9cf9/ffffff?text=📦'"/></div>`).join('')
-      : `<div class="img-slide active"><img src="https://via.placeholder.com/200x200/4f9cf9/ffffff?text=📦" alt="${p.title}"/></div>`;
-
-    const dots = imgs.length>1
-      ? `<div class="pcard-dots">${imgs.slice(0,3).map((_,i)=>`<div class="pdot ${i===0?'active':''}" onclick="event.stopPropagation();changeImg(this,${i})"></div>`).join('')}</div>`
-      : '';
-
-    return `<div class="pcard" onclick="openModal('${p.id}')">
-      <div class="pcard-badge ${badgeCls}">${badge}</div>
-      <div class="pcard-wishlist ${isWished?'active':''}" onclick="event.stopPropagation();toggleWish('${p.id}',this)">${isWished?'❤️':'🤍'}</div>
-      <div class="pcard-imgs" id="imgs-${p.id}">${imgSlides}${dots}</div>
-      <div class="pcard-body">
-        <div class="pcard-top">
-          <div class="pcard-brand">${p.brand}</div>
-          <div class="pcard-rating"><span class="stars">${"★".repeat(Math.round(p.rating||4.5))}</span><span>${p.rating||4.5}</span><span class="rc">(${(p.reviews||0).toLocaleString()})</span></div>
+function render(){
+  const l=getF(),g=document.getElementById('grid');
+  document.getElementById('pCnt').textContent=l.length+' products';
+  if(!l.length){g.innerHTML='<div class="empty"><div style="font-size:38px;margin-bottom:8px">🔍</div><p>No products found</p></div>';return;}
+  g.innerHTML=l.map((p,i)=>{
+    const img=p.img||p.image||p.image1||'',badge=p.badge||p.tag||'',rating=parseFloat(p.rating)||4.5,stock=parseInt(p.stock)||99,em=p.emoji||'📦';
+    const amz=p.amz||p.amazonLink||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ_TAG}`;
+    const flp=p.flp||p.flipkartLink||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`;
+    const pid=p.id||i;
+    return`<div class="pcard" style="animation-delay:${i*.04}s" onclick="openBuy('${pid}')">
+      ${badge?`<span class="p-bdg b-${badge}">${badge.toUpperCase()}</span>`:''}
+      <button class="p-wsh" onclick="toggleWish('${pid}',event)">${wish.includes(String(pid))?'❤️':'🤍'}</button>
+      <div class="p-img">${img?`<img src="${img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="p-em" style="display:none">${em}</span>`:`<span class="p-em">${em}</span>`}</div>
+      <div class="p-inf">
+        <div class="p-br">${p.brand||''}</div>
+        <div class="p-nm">${p.name}</div>
+        <div class="p-rt"><span class="stars">${'★'.repeat(Math.floor(rating))}</span><span class="r-c">${rating} (${(parseInt(p.reviews||p.rev)||0).toLocaleString('en-IN')})</span></div>
+        ${stock<20?`<div class="p-stk">⚠️ Only ${stock} left!</div>`:''}
+        <div class="p-plts">
+          <a class="plt-btn plt-amz" href="${amz}" target="_blank" rel="nofollow sponsored" onclick="event.stopPropagation()">🛒 Amazon</a>
+          <a class="plt-btn plt-flp" href="${flp}" target="_blank" rel="nofollow sponsored" onclick="event.stopPropagation()">🏬 Flipkart</a>
         </div>
-        <div class="pcard-name">${p.title}</div>
-        <div class="pcard-specs">${p.specs||''}</div>
-        <div class="sbar">
-          <div class="sbar-top"><span class="${sc}">${sl}</span><span style="color:var(--text3);font-size:.62rem">Live Stock</span></div>
-          <div class="strack"><div class="sfill" style="width:${pct}%;background:${sc2}"></div></div>
-        </div>
-        <div class="pcard-prices">
-          <a href="${p.amazon_link||'#'}" target="_blank" class="price-row pr-a" onclick="event.stopPropagation();trackClick('${p.id}','amazon')">
-            <span class="pr-label">🛒 Amazon <span class="pr-best">BEST</span></span>
-            <span class="pr-price">${p.amazon_price||'Check ↗'}</span>
-          </a>
-          ${p.flipkart_link?`<a href="${p.flipkart_link}" target="_blank" class="price-row pr-f" onclick="event.stopPropagation();trackClick('${p.id}','flipkart')">
-            <span class="pr-label">🛍️ Flipkart</span>
-            <span class="pr-price">${p.flipkart_price||'Check ↗'}</span>
-          </a>`:''}
-        </div>
-        <div class="pcard-footer">
-          <div class="pf-l"><span>🏆 Best on ${p.best||'Amazon'}</span><strong>Tap to Compare All</strong></div>
-          <span class="pf-r">View →</span>
-        </div>
-        <button class="add-cart-btn" onclick="event.stopPropagation();addToCart('${p.id}')">🛒 Add to Cart</button>
-      </div>
-    </div>`;
+        <button class="add-btn" onclick="addCart('${pid}');event.stopPropagation()">🛒 Add to Cart</button>
+      </div></div>`;
   }).join('');
 }
-
-// CHANGE IMAGE
-window.changeImg = (dot, idx) => {
-  const card = dot.closest('.pcard');
-  const imgs = card.querySelectorAll('.img-slide');
-  const dots = card.querySelectorAll('.pdot');
-  imgs.forEach((s,i) => s.classList.toggle('active',i===idx));
-  dots.forEach((d,i) => d.classList.toggle('active',i===idx));
-};
-
-// WISHLIST
-window.toggleWish = (id, btn) => {
-  const idx = window._wishlist.indexOf(id);
-  if(idx>-1){window._wishlist.splice(idx,1);btn.textContent='🤍';btn.classList.remove('active');}
-  else{window._wishlist.push(id);btn.textContent='❤️';btn.classList.add('active');}
-  localStorage.setItem('ndWish',JSON.stringify(window._wishlist));
-  showToast(idx>-1?'Removed from wishlist':'Added to wishlist! ❤️');
-};
-
-// CART
-window.addToCart = (id) => {
-  const p = window._allProducts.find(x=>x.id===id);
-  if(!p)return;
-  const existing = window._cart.find(x=>x.id===id);
-  if(existing){existing.qty=(existing.qty||1)+1;}
-  else{window._cart.push({id,title:p.title,brand:p.brand,image:p.images?.[0]||'',price:p.amazon_price||'',link:p.amazon_link||'',qty:1});}
-  localStorage.setItem('ndCart',JSON.stringify(window._cart));
-  updateCartUI();
-  showToast('Added to cart! 🛒','success');
-};
-
-window.removeFromCart = (id) => {
-  window._cart = window._cart.filter(x=>x.id!==id);
-  localStorage.setItem('ndCart',JSON.stringify(window._cart));
-  updateCartUI();
-  renderCart();
-};
-
-function updateCartUI(){
-  const count = window._cart.reduce((a,c)=>a+(c.qty||1),0);
-  document.getElementById('cartCount').textContent = count;
+function openBuy(pid){
+  const p=PRODS.find(x=>String(x.id)===String(pid));if(!p)return;
+  const img=p.img||p.image||p.image1||'';
+  document.getElementById('buyImgWrap').innerHTML=img?`<img class="buy-img" src="${img}" alt="${p.name}" onerror="this.outerHTML='<div class=\\'buy-em\\'>${p.emoji||'📦'}</div>'">`:`<div class="buy-em">${p.emoji||'📦'}</div>`;
+  document.getElementById('buyNm').textContent=p.name;
+  document.getElementById('buySub').textContent=p.desc||p.specs||'';
+  document.getElementById('buyAmz').href=p.amz||p.amazonLink||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ_TAG}`;
+  document.getElementById('buyFlp').href=p.flp||p.flipkartLink||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`;
+  document.getElementById('buyMod').classList.add('on');
 }
-
+function closeBuy(){document.getElementById('buyMod').classList.remove('on');}
+function setCat(cat,id){curCat=cat;document.querySelectorAll('.sbl').forEach(l=>l.classList.remove('on'));document.getElementById(id)?.classList.add('on');document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.getAttribute('onclick')?.includes(`'${cat}'`)));render();closeSB();document.getElementById('products').scrollIntoView({behavior:'smooth'});}
+function setChip(cat,el){curCat=cat;document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');document.querySelectorAll('.sbl').forEach(l=>l.classList.remove('on'));document.getElementById('sb-'+(cat==='all'?'all':cat))?.classList.add('on');render();}
+function doSearch(v){curSearch=v;render();}
+function doSort(v){curSort=v;render();}
+function addCart(pid){const p=PRODS.find(x=>String(x.id)===String(pid));if(!p)return;if(!cart.find(x=>String(x.id)===String(pid)))cart.push({...p});saveCart();showToast('✅ '+p.name+' added!');}
+function removeCart(pid){cart=cart.filter(x=>String(x.id)!==String(pid));saveCart();renderCart();}
+function saveCart(){localStorage.setItem('nd_cart',JSON.stringify(cart));document.getElementById('cBadge').textContent=cart.length;}
+function openCart(){renderCart();document.getElementById('cartMod').classList.add('on');}
+function closeCart(){document.getElementById('cartMod').classList.remove('on');}
 function renderCart(){
-  const items = document.getElementById('cartItems');
-  const footer = document.getElementById('cartFooter');
-  if(!window._cart.length){
-    items.innerHTML='<div class="cart-empty"><div>🛒</div><p>Your cart is empty!</p><p style="font-size:.78rem;margin-top:.3rem">Add products to compare & buy</p></div>';
-    footer.style.display='none';return;
-  }
-  items.innerHTML = window._cart.map(item=>`
-    <div class="cart-item">
-      <div class="ci-img"><img src="${item.image}" alt="${item.title}" onerror="this.parentElement.textContent='📦'"/></div>
-      <div class="ci-info">
-        <div class="ci-name">${item.brand} ${item.title}</div>
-        <div class="ci-price">${item.price}</div>
-        <a href="${item.link}" target="_blank" style="font-size:.72rem;color:var(--blue);text-decoration:none;font-weight:600">Buy on Amazon →</a>
-      </div>
-      <button class="ci-remove" onclick="removeFromCart('${item.id}')">🗑️</button>
-    </div>`).join('');
-  footer.style.display='block';
-  document.getElementById('cartTotal').textContent = `${window._cart.length} item${window._cart.length>1?'s':''}`;
+  const el=document.getElementById('cartItems'),tot=document.getElementById('cTotN');
+  if(!cart.length){el.innerHTML='<div class="empty"><div style="font-size:36px;margin-bottom:7px">🛒</div><p>Cart is empty</p></div>';tot.textContent='0 items';return;}
+  el.innerHTML=cart.map(p=>{const amz=p.amz||p.amazonLink||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ_TAG}`;const flp=p.flp||p.flipkartLink||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`;const img=p.img||p.image||'';return`<div class="c-item"><div class="c-img">${img?`<img src="${img}" alt="${p.name}" onerror="this.outerHTML='${p.emoji||'📦'}'">`:(p.emoji||'📦')}</div><div class="c-inf"><div class="c-nm">${p.name}</div><div class="c-btns"><a class="c-buy c-amz" href="${amz}" target="_blank" rel="nofollow sponsored">🛒 Amazon</a><a class="c-buy c-flp" href="${flp}" target="_blank" rel="nofollow sponsored">🏬 Flipkart</a></div></div><button class="c-rm" onclick="removeCart('${p.id}')">🗑️</button></div>`;}).join('');
+  tot.textContent=cart.length+' item'+(cart.length>1?'s':'');
 }
-
-window.openCart = () => {
-  renderCart();
-  document.getElementById('cartOverlay').classList.add('open');
-  document.getElementById('cartDrawer').classList.add('open');
-};
-window.closeCart = () => {
-  document.getElementById('cartOverlay').classList.remove('open');
-  document.getElementById('cartDrawer').classList.remove('open');
-};
-
-// MODAL
-window.openModal = (id) => {
-  const p = window._allProducts.find(x=>x.id===id);
-  if(!p)return;
-  const imgs = p.images||[];
-  const imgSlides = imgs.length
-    ? imgs.slice(0,3).map((img,i)=>`<div class="modal-img-slide ${i===0?'active':''}" id="mslide-${i}"><img src="${img}" alt="${p.title}" loading="lazy"/></div>`).join('')
-    : `<div class="modal-img-slide active"><img src="https://via.placeholder.com/300x200/4f9cf9/ffffff?text=📦"/></div>`;
-  const mdots = imgs.length>1
-    ? `<div class="modal-img-dots">${imgs.slice(0,3).map((_,i)=>`<div class="pdot ${i===0?'active':''}" onclick="changeModalImg(${i})" style="cursor:pointer"></div>`).join('')}</div>`
-    : '';
-
-  const alts = window._allProducts.filter(x=>x.category===p.category&&x.id!==id).slice(0,3);
-  const altsHtml = alts.length?`
-    <div class="modal-alts-title">Similar Products</div>
-    <div class="alts-grid">${alts.map(ap=>`
-      <div class="alt-card" onclick="closeModal();setTimeout(()=>openModal('${ap.id}'),200)">
-        <img class="alt-img" src="${ap.images?.[0]||''}" alt="${ap.title}" onerror="this.src='https://via.placeholder.com/50x50/4f9cf9/ffffff?text=📦'"/>
-        <div class="alt-name">${ap.title}</div>
-      </div>`).join('')}
-    </div>`:'' ;
-
-  document.getElementById('modalContent').innerHTML=`
-    <div class="modal-handle"></div>
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-imgs">${imgSlides}${mdots}</div>
-    <div class="modal-brand">${p.brand}</div>
-    <div class="modal-title">${p.title}</div>
-    <div style="color:#f59e0b;margin-bottom:.4rem">${"★".repeat(Math.round(p.rating||4.5))} <span style="color:var(--text2);font-size:.8rem">${p.rating||4.5} (${(p.reviews||0).toLocaleString()} reviews)</span></div>
-    <div class="modal-specs">${p.specs||''}</div>
-    <div style="font-size:.7rem;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.85rem">Choose Platform</div>
-    <div class="modal-plats">
-      <a href="${p.amazon_link||'#'}" target="_blank" class="mp-a mpbtn" onclick="trackClick('${p.id}','amazon')">
-        <span>🛒 Amazon 🏆 Best Price</span><span class="mp-price">${p.amazon_price||'Check Price →'}</span>
-      </a>
-      ${p.flipkart_link?`<a href="${p.flipkart_link}" target="_blank" class="mp-f mpbtn" onclick="trackClick('${p.id}','flipkart')">
-        <span>🛍️ Flipkart</span><span class="mp-price">${p.flipkart_price||'Check Price →'}</span>
-      </a>`:''}
-    </div>
-    <div class="modal-tip">💡 Click button above to see latest price on ${p.best||'Amazon'}! 🔥</div>
-    ${altsHtml}
-    <button onclick="addToCart('${p.id}');closeModal()" style="width:100%;background:linear-gradient(135deg,var(--green),#00a87a);border:none;padding:.9rem;border-radius:12px;color:white;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;cursor:pointer;margin-top:1rem">🛒 Add to Cart</button>`;
-  document.getElementById('modalOv').classList.add('open');
-  window._currentModalProduct = id;
-};
-
-window.changeModalImg = (idx) => {
-  document.querySelectorAll('.modal-img-slide').forEach((s,i)=>s.classList.toggle('active',i===idx));
-  document.querySelectorAll('.modal-img-dots .pdot').forEach((d,i)=>d.classList.toggle('active',i===idx));
-};
-window.closeModal = (e) => {if(!e||e.target===document.getElementById('modalOv'))document.getElementById('modalOv').classList.remove('open');};
-
-// DEALS
-function renderDeals(){
-  const deals = window._allProducts.slice(0,8);
-  if(!deals.length)return;
-  const doubled = [...deals,...deals];
-  document.getElementById('dealsTrack').innerHTML = doubled.map(p=>`
-    <a href="${p.amazon_link||'#'}" target="_blank" class="dcard" onclick="trackClick('${p.id}','deal')">
-      <div class="dcard-img"><img src="${p.images?.[0]||''}" alt="${p.title}" loading="lazy" onerror="this.parentElement.textContent='📦'"/></div>
-      <div class="dcard-name">${p.title}</div>
-      <div class="dcard-dis">${p.badge==='HOT'?'🔥 Hot Deal':p.badge==='NEW'?'✨ New Launch':'💰 On Sale'}</div>
-      <div class="dcard-price">${p.amazon_price||'Check Price'} →</div>
-    </a>`).join('');
-}
-
-// REVIEWS
-function renderReviews(){
-  document.getElementById('reviewsGrid').innerHTML = REVIEWS.map(r=>`
-    <div class="rcard">
-      <div class="rhead">
-        <div class="rav" style="background:${r.color}20;color:${r.color}">${r.init}</div>
-        <div><div class="rname">${r.name}</div><div class="rdate">${r.date}</div></div>
-        <div style="margin-left:auto;color:#f59e0b;font-size:.82rem">${"★".repeat(r.stars)}</div>
-      </div>
-      <span class="rtag">📦 ${r.prod}</span>
-      <div class="rtext">${r.text}</div>
-      ${r.ver?'<div class="rverified">✅ Verified Buyer</div>':''}
-    </div>`).join('');
-}
-
-// CLICK TRACKING
-async function trackClick(productId, platform){
-  try {
-    await addDoc(collection(db,'clicks'),{product_id:productId,platform,clicked_at:serverTimestamp()});
-  } catch(e){}
-}
-window.trackClick = trackClick;
-
-// REQUEST
-window.submitRequest = async () => {
-  const p = document.getElementById('rq-product').value.trim();
-  if(!p){showToast('Enter product name!','error');return;}
+function toggleWish(pid,e){e.stopPropagation();const s=String(pid);if(wish.includes(s)){wish=wish.filter(x=>x!==s);showToast('💔 Removed from wishlist');}else{wish.push(s);showToast('❤️ Added to wishlist!');}localStorage.setItem('nd_wish',JSON.stringify(wish));render();}
+async function submitReq(){
+  const prod=document.getElementById('reqProd').value.trim(),name=document.getElementById('reqName').value.trim();
+  if(!prod){showToast('⚠️ Enter a product name!');return;}
+  const btn=document.getElementById('reqBtn');btn.disabled=true;btn.textContent='⏳ Sending...';
   try{
-    await addDoc(collection(db,'requests'),{product:p,name:document.getElementById('rq-name').value,requested_at:serverTimestamp()});
-  }catch(e){}
-  showToast(`✅ "${p}" requested! We'll add within 24hrs`,'success');
-  document.getElementById('rq-product').value='';
-  document.getElementById('rq-name').value='';
-};
-
-// TOAST
-function showToast(msg,type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast show'+(type?' '+type:'');
-  setTimeout(()=>t.className='toast',3000);
+    const r=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type:'telegram',product:prod,name:name||'Anonymous'})
+    });
+    const d=await r.json();
+    showToast(d.ok?'✅ Request sent! Adding within 24hrs!':'✅ Request received!');
+    document.getElementById('reqProd').value='';document.getElementById('reqName').value='';
+  }catch(e){showToast('✅ Request noted! We will add it soon.');}
+  btn.disabled=false;btn.textContent='🚀 Request This Product';
 }
-window.showToast=showToast;
-
-// INIT
-loadProducts();
-</script>
-
-<script>
-// SIDEBAR
-window.openSidebar=()=>{
-  document.getElementById('sidebar').classList.add('open');
-  document.getElementById('sidebarOverlay').classList.add('open');
-};
-window.closeSidebar=()=>{
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('open');
-};
-
-// THEME
-let isDark = localStorage.getItem('ndTheme')==='dark';
-function applyTheme(){
-  document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
-  document.getElementById('themeBtn').textContent = isDark?'☀️':'🌙';
-  document.getElementById('themeIcon').textContent = isDark?'☀️':'🌙';
-  document.getElementById('themeLabel').textContent = isDark?'Switch to Light':'Switch to Dark';
-}
-window.toggleTheme=()=>{
-  isDark=!isDark;
-  localStorage.setItem('ndTheme',isDark?'dark':'light');
-  applyTheme();
-};
-applyTheme();
+function openSB(){document.getElementById('sb').classList.add('on');document.getElementById('ov').classList.add('on');}
+function closeSB(){document.getElementById('sb').classList.remove('on');document.getElementById('ov').classList.remove('on');}
+function toggleTheme(){const dk=document.documentElement.getAttribute('data-theme')==='dark';const t=dk?'light':'dark';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('nd_theme',t);document.getElementById('thIc').textContent=dk?'🌙':'☀️';document.getElementById('thTx').textContent=dk?'Dark Mode':'Light Mode';}
+let _tt;function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('on'),3000);}
+function renderDeals(){document.getElementById('dealsRow').innerHTML=DEALS.map(d=>`<a class="deal-card" href="${d.amz}" target="_blank" rel="nofollow sponsored"><div class="deal-timer">${d.timer}</div><div style="font-size:26px;margin-bottom:4px">${d.emoji}</div><div class="deal-nm">${d.name}</div><div class="deal-op">${d.orig}</div><div class="deal-p">${d.price}</div><span class="deal-d">${d.disc}</span></a>`).join('');}
+function renderBank(){document.getElementById('bankRow').innerHTML=BANK.map(b=>`<div class="bank-card"><div class="bank-ic">${b.ic}</div><div class="bank-nm">${b.nm}</div><div class="bank-off">${b.off}</div><div class="bank-vl">${b.vl}</div></div>`).join('');}
+function renderRevs(){document.getElementById('revRow').innerHTML=REVS.map(r=>`<div class="rev-card"><div class="rev-stars">${'★'.repeat(r.r)}</div><p class="rev-txt">"${r.t}"</p><div class="rev-auth"><div class="rev-av">${r.i}</div><div><div class="rev-nm">${r.n}</div><div class="rev-vr">✅ Verified Buyer</div></div></div></div>`).join('');}
+document.getElementById('cartMod').addEventListener('click',e=>{if(e.target===e.currentTarget)closeCart();});
+document.getElementById('buyMod').addEventListener('click',e=>{if(e.target===e.currentTarget)closeBuy();});
+let _dp;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_dp=e;document.getElementById('instB').classList.add('on');});
+document.getElementById('instBtn').addEventListener('click',async()=>{if(_dp){_dp.prompt();const{outcome}=await _dp.userChoice;if(outcome==='accepted')showToast('✅ NexDeal installed!');_dp=null;document.getElementById('instB').classList.remove('on');}});
+(function(){const t=localStorage.getItem('nd_theme');if(t){document.documentElement.setAttribute('data-theme',t);if(t==='dark'){document.getElementById('thIc').textContent='☀️';document.getElementById('thTx').textContent='Light Mode';}}document.getElementById('cBadge').textContent=cart.length;renderDeals();renderBank();renderRevs();})();
 </script>
 </body>
 </html>
