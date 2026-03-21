@@ -2,32 +2,27 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>NexDeal — Best Price on Every Gadget 🔥</title>
-<meta name="description" content="India's smartest price comparison. Compare electronics across Amazon and Flipkart.">
+<meta name="description" content="India's smartest price comparison. Compare electronics across Amazon and Flipkart. Save thousands every purchase!">
+<meta name="keywords" content="price comparison India, Amazon Flipkart compare, best deals electronics India, NexDeal">
+<meta name="author" content="Ajaykumar106">
 <meta name="theme-color" content="#4f46e5">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="NexDeal">
+<meta property="og:title" content="NexDeal — Best Price on Every Gadget">
+<meta property="og:description" content="Compare Amazon vs Flipkart prices instantly. 100% honest — no fake prices!">
+<meta property="og:url" content="https://nexdeal-ten.vercel.app">
 <link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="https://placehold.co/192x192/4f46e5/ffffff?text=ND">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-const fb = initializeApp({
-  apiKey:"AIzaSyAMAk5_UPUTtHXs786DOQWDM-LZBGcxU4Y",
-  authDomain:"nexdeal-app-f29fb.firebaseapp.com",
-  projectId:"nexdeal-app-f29fb",
-  storageBucket:"nexdeal-app-f29fb.firebasestorage.app",
-  messagingSenderId:"793227042599",
-  appId:"1:793227042599:web:b6e880ebaf48f9f5691302"
-});
-const db = getFirestore(fb);
-window._loadFB = async()=>{
-  try{
-    const snap = await getDocs(collection(db,'products'));
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import{getFirestore,collection,getDocs}from"https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+const fb=initializeApp({apiKey:"AIzaSyAMAk5_UPUTtHXs786DOQWDM-LZBGcxU4Y",authDomain:"nexdeal-app-f29fb.firebaseapp.com",projectId:"nexdeal-app-f29fb",storageBucket:"nexdeal-app-f29fb.firebasestorage.app",messagingSenderId:"793227042599",appId:"1:793227042599:web:b6e880ebaf48f9f5691302"});
+const db=getFirestore(fb);
+window._loadFB=async()=>{
+  try{const snap=await getDocs(collection(db,'products'));
     if(!snap.empty){const l=[];snap.forEach(d=>l.push({id:d.id,...d.data()}));window._FBP=l;}
     else window._FBP=null;
   }catch(e){window._FBP=null;}
@@ -36,725 +31,546 @@ window._loadFB = async()=>{
 window._loadFB();
 </script>
 <style>
-/* ── TOKENS ── */
+/* ===== TOKENS ===== */
 :root{
   --p:#4f46e5;--p2:#818cf8;--a:#f97316;--a2:#fb923c;
-  --bg:#f8f9ff;--bg2:#f0f2ff;--bg3:#fff;
-  --card:#fff;--card2:#f4f6ff;
+  --bg:#f8f9ff;--card:#fff;--card2:#f0f2ff;
   --text:#1a1840;--muted:#64748b;--muted2:#94a3b8;
   --border:rgba(79,70,229,.12);--border2:rgba(79,70,229,.28);
-  --sh:0 2px 16px rgba(79,70,229,.1);
-  --sh2:0 12px 48px rgba(79,70,229,.18);
-  --sh3:0 24px 80px rgba(79,70,229,.28);
+  --sh:0 2px 12px rgba(79,70,229,.08);
+  --sh2:0 8px 32px rgba(79,70,229,.16);
   --green:#10b981;--red:#ef4444;--yellow:#f59e0b;
-  --r:20px;--rs:12px;
+  --r:16px;--rs:10px;
 }
 [data-theme="dark"]{
-  --bg:#07060f;--bg2:#0e0c1e;--bg3:#13112a;
-  --card:#13112a;--card2:#1c1a38;
-  --text:#f0eeff;--muted:#8b87b0;--muted2:#6b6890;
-  --border:rgba(129,140,248,.12);--border2:rgba(129,140,248,.3);
-  --sh:0 2px 16px rgba(0,0,0,.3);
-  --sh2:0 12px 48px rgba(0,0,0,.5);
-  --sh3:0 24px 80px rgba(0,0,0,.6);
+  --bg:#08070f;--card:#111028;--card2:#1a1838;
+  --text:#ede9ff;--muted:#8b87b0;--muted2:#6b6890;
+  --border:rgba(129,140,248,.12);--border2:rgba(129,140,248,.28);
+  --sh:0 2px 12px rgba(0,0,0,.3);--sh2:0 8px 32px rgba(0,0,0,.5);
 }
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .3s,color .3s;}
 
-/* ── SIDEBAR ── */
-.sidebar{
-  position:fixed;top:0;left:0;width:250px;height:100vh;
-  background:var(--card);border-right:1px solid var(--border);
-  padding:20px 14px;z-index:100;overflow-y:auto;
-  display:flex;flex-direction:column;
-  box-shadow:var(--sh);transition:transform .3s cubic-bezier(.4,0,.2,1),background .3s;
-}
-.sidebar::-webkit-scrollbar{width:3px;}
-.sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
-.sb-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:900;text-decoration:none;display:flex;align-items:center;gap:8px;padding:6px 10px;margin-bottom:18px;}
-.sb-logo .n{color:var(--p)}.sb-logo .d{color:var(--a)}
-.sb-live{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--green);padding:4px 10px;background:rgba(16,185,129,.08);border-radius:999px;border:1px solid rgba(16,185,129,.2);}
-.sb-live::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.sb-sec{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);padding:14px 10px 6px;}
-.sbl{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:11px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all .2s;}
-.sbl:hover{background:var(--card2);color:var(--text);}
-.sbl.on{background:rgba(79,70,229,.1);color:var(--p);font-weight:700;}
-.sbl .ic{font-size:16px;width:22px;text-align:center;}
-.sb-cart-btn{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:8px;font-family:'DM Sans',sans-serif;transition:all .2s;}
-.sb-cart-btn:hover{opacity:.9;transform:translateY(-1px);}
-.badge{background:var(--a);color:#fff;font-size:9px;font-weight:800;border-radius:999px;padding:2px 7px;min-width:18px;text-align:center;}
+/* ===== MOBILE HEADER ===== */
+.hdr{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;gap:8px;box-shadow:var(--sh);}
+.hbur{background:none;border:1.5px solid var(--border);border-radius:8px;padding:7px 9px;cursor:pointer;color:var(--text);font-size:16px;line-height:1;flex-shrink:0;}
+.logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:900;text-decoration:none;flex-shrink:0;}
+.logo .n{color:var(--p)}.logo .d{color:var(--a)}
+.hdr-r{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.cart-btn{display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:999px;border:1.5px solid var(--p);color:var(--p);background:rgba(79,70,229,.06);font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.badge{background:var(--a);color:#fff;font-size:9px;font-weight:800;border-radius:999px;padding:1px 5px;min-width:16px;text-align:center;}
+.ai-btn{padding:7px 11px;border-radius:999px;border:1.5px solid rgba(168,85,247,.3);color:#a855f7;background:rgba(168,85,247,.06);font-size:12px;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:4px;}
 
-/* ── MAIN ── */
-.main{margin-left:250px;min-height:100vh;}
-
-/* ── MOBILE HEADER ── */
-.mob-hdr{display:none;position:sticky;top:0;z-index:100;background:rgba(248,249,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:10px 14px;align-items:center;gap:10px;}
-[data-theme="dark"] .mob-hdr{background:rgba(7,6,15,.95);}
-.mob-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:900;text-decoration:none;}
-.mob-logo .n{color:var(--p)}.mob-logo .d{color:var(--a)}
-.mob-r{margin-left:auto;display:flex;gap:7px;align-items:center;}
-.hbtn{display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:999px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif;white-space:nowrap;}
-.hbtn.cart{border-color:var(--p);color:var(--p);}
-.hbur{background:none;border:1.5px solid var(--border);border-radius:9px;padding:7px 9px;cursor:pointer;color:var(--text);font-size:16px;line-height:1;}
-
-/* ── OVERLAY ── */
-.ov{position:fixed;inset:0;z-index:99;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);}
+/* ===== SIDEBAR ===== */
+.ov{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s;}
 .ov.on{opacity:1;pointer-events:all;}
+.sb{position:fixed;top:0;left:-100%;z-index:201;width:260px;height:100vh;background:var(--card);padding:18px 14px;transition:left .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:var(--sh2);}
+.sb.on{left:0;}
+.sb-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.sb-x{background:var(--card2);border:none;border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--text);font-size:14px;}
+.sb-sec{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);padding:12px 10px 5px;}
+.sbl{display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:10px;text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:500;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all .18s;}
+.sbl:hover,.sbl.on{background:var(--card2);color:var(--p);}
+.sbl .ic{font-size:17px;width:22px;text-align:center;}
 
-/* ── HERO ── */
-.hero{padding:48px 40px 36px;background:linear-gradient(145deg,#eef2ff 0%,#fff7f0 60%,#f0fff8 100%);position:relative;overflow:hidden;}
-[data-theme="dark"] .hero{background:linear-gradient(145deg,#0e0c1e,#180d0a);}
-.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(79,70,229,.12),transparent);border-radius:50%;}
-.hero::after{content:'';position:absolute;bottom:-60px;left:10%;width:240px;height:240px;background:radial-gradient(circle,rgba(249,115,22,.08),transparent);border-radius:50%;}
-.hero-inner{max-width:700px;position:relative;z-index:1;}
-.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(79,70,229,.08);border:1px solid var(--border2);border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;color:var(--p);margin-bottom:16px;}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(28px,4.5vw,58px);font-weight:900;line-height:1.08;margin-bottom:14px;letter-spacing:-.02em;}
+/* ===== HERO — MOBILE FIRST ===== */
+.hero{padding:24px 16px 20px;background:linear-gradient(160deg,#eef2ff 0%,#fff8f4 100%);position:relative;overflow:hidden;}
+[data-theme="dark"] .hero{background:linear-gradient(160deg,#111028,#1a0e08);}
+.hero::after{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(79,70,229,.1),transparent);border-radius:50%;pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border2);border-radius:999px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--p);margin-bottom:12px;}
+.hero-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:900;line-height:1.12;margin-bottom:10px;letter-spacing:-.02em;}
 .hero h1 .gr{background:linear-gradient(135deg,var(--p),var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-sub{font-size:15px;color:var(--muted);max-width:520px;line-height:1.7;margin-bottom:24px;}
-.hero-btns{display:flex;gap:11px;flex-wrap:wrap;}
-.btn-p{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;padding:13px 26px;border-radius:14px;font-weight:700;font-size:13.5px;border:none;cursor:pointer;text-decoration:none;box-shadow:0 4px 20px rgba(79,70,229,.35);transition:all .25s;font-family:'DM Sans',sans-serif;}
-.btn-p:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(79,70,229,.45);}
-.btn-s{background:var(--card);color:var(--text);padding:13px 24px;border-radius:14px;font-weight:700;font-size:13.5px;border:1.5px solid var(--border);cursor:pointer;text-decoration:none;transition:all .25s;font-family:'DM Sans',sans-serif;}
-.btn-s:hover{background:var(--card2);transform:translateY(-2px);}
-.hero-stats{display:flex;gap:0;margin-top:32px;flex-wrap:wrap;}
-.stat{padding:14px 24px;border-right:1px solid var(--border);text-align:center;}
-.stat:first-child{padding-left:0;}
+.hero-sub{font-size:13.5px;color:var(--muted);line-height:1.65;margin-bottom:18px;}
+.hero-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;font-size:13px;border:none;cursor:pointer;text-decoration:none;box-shadow:0 4px 16px rgba(79,70,229,.3);transition:all .2s;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:6px;}
+.btn-p:active{transform:scale(.97);}
+.btn-s{background:var(--card);color:var(--text);padding:12px 18px;border-radius:12px;font-weight:700;font-size:13px;border:1.5px solid var(--border);cursor:pointer;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:6px;}
+.hero-stats{display:flex;gap:0;margin-top:18px;border-top:1px solid var(--border);padding-top:14px;overflow-x:auto;scrollbar-width:none;}
+.hero-stats::-webkit-scrollbar{display:none;}
+.stat{text-align:center;flex:1;min-width:70px;padding:0 8px;border-right:1px solid var(--border);}
 .stat:last-child{border-right:none;}
-.stat-n{font-family:'Syne',sans-serif;font-size:22px;font-weight:900;color:var(--p);}
-.stat-l{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.06em;}
+.stat-n{font-family:'Syne',sans-serif;font-size:17px;font-weight:900;color:var(--p);}
+.stat-l{font-size:9px;color:var(--muted);margin-top:1px;text-transform:uppercase;letter-spacing:.05em;}
 
-/* ── TRUST BAR ── */
-.trust-bar{display:flex;align-items:center;gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--card);overflow-x:auto;scrollbar-width:none;}
-.trust-bar::-webkit-scrollbar{display:none;}
-.trust-item{display:flex;align-items:center;gap:8px;padding:12px 20px;border-right:1px solid var(--border);white-space:nowrap;font-size:12px;font-weight:600;color:var(--muted);flex-shrink:0;}
-.trust-item:last-child{border-right:none;}
-.trust-item .ti{font-size:18px;}
+/* ===== TRUST BAR ===== */
+.trust{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;background:var(--card);border-bottom:1px solid var(--border);}
+.trust::-webkit-scrollbar{display:none;}
+.trust-i{display:flex;align-items:center;gap:6px;padding:10px 14px;border-right:1px solid var(--border);white-space:nowrap;font-size:11px;font-weight:600;color:var(--muted);flex-shrink:0;}
+.trust-i:last-child{border-right:none;}
 
-/* ── SEARCH ── */
-.srch-wrap{padding:20px 40px 0;}
-.srch-in{max-width:680px;position:relative;}
-.srch-inp{width:100%;padding:14px 18px 14px 48px;border-radius:14px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:all .25s;box-shadow:var(--sh);}
-.srch-inp:focus{border-color:var(--border2);box-shadow:0 0 0 4px rgba(79,70,229,.08);}
+/* ===== SEARCH ===== */
+.srch{padding:14px 14px 0;}
+.srch-in{position:relative;}
+.srch-inp{width:100%;padding:12px 14px 12px 42px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;box-shadow:var(--sh);}
+.srch-inp:focus{border-color:var(--border2);box-shadow:0 0 0 3px rgba(79,70,229,.08);}
 .srch-inp::placeholder{color:var(--muted2);}
-.srch-ic{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:18px;}
+.srch-ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;}
 
-/* ── SECTION ── */
-.sec{padding:28px 40px;}
-.sec-hd{margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-end;}
-.sec-lbl{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--p);margin-bottom:4px;}
-.sec-t{font-family:'Syne',sans-serif;font-size:clamp(18px,2.5vw,26px);font-weight:900;letter-spacing:-.02em;}
+/* ===== SECTION ===== */
+.sec{padding:22px 14px;}
+.sec-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:4px;}
+.sec-t{font-family:'Syne',sans-serif;font-size:22px;font-weight:900;letter-spacing:-.02em;margin-bottom:14px;}
 .sec-t .gr{background:linear-gradient(135deg,var(--p),var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.see-all{font-size:12px;font-weight:700;color:var(--p);text-decoration:none;display:flex;align-items:center;gap:4px;}
-.see-all:hover{text-decoration:underline;}
 
-/* ── CHIPS ── */
-.chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin-bottom:16px;flex-wrap:wrap;}
-@media(max-width:600px){.chips{flex-wrap:nowrap;}}
+/* ===== CHIPS ===== */
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:14px;padding-bottom:2px;}
 .chips::-webkit-scrollbar{display:none;}
-.chip{padding:7px 15px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'DM Sans',sans-serif;}
-.chip:hover{border-color:var(--border2);color:var(--p);}
-.chip.on{background:var(--p);color:#fff;border-color:var(--p);box-shadow:0 4px 16px rgba(79,70,229,.3);}
+.chip{padding:7px 13px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .18s;font-family:'DM Sans',sans-serif;flex-shrink:0;}
+.chip.on{background:var(--p);color:#fff;border-color:var(--p);}
 
-/* ── SORT ── */
-.sort-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+/* ===== SORT BAR ===== */
+.sort-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
 .p-count{font-size:12px;color:var(--muted);}
-.sort-sel{padding:7px 12px;border-radius:9px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;}
+.sort-sel{padding:6px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;}
 
-/* ── PRODUCT GRID ── */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px;}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:11px;}}
-@media(min-width:1400px){.grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));}}
+/* ===== PRODUCT GRID — 2 columns on mobile ===== */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(min-width:480px){.grid{grid-template-columns:repeat(2,1fr);gap:12px;}}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:14px;}}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(4,1fr);gap:16px;}}
 
-/* ── PRODUCT CARD ── */
-.pcard{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r);overflow:hidden;cursor:pointer;
-  transition:all .35s cubic-bezier(.34,1.56,.64,1);
-  position:relative;animation:cardIn .4s ease both;
-  box-shadow:var(--sh);
-}
-.pcard:hover{transform:translateY(-8px) scale(1.01);box-shadow:var(--sh3);border-color:var(--border2);}
-@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* ===== PRODUCT CARD ===== */
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all .25s;position:relative;animation:cardIn .4s ease both;box-shadow:var(--sh);}
+.pcard:active{transform:scale(.98);}
+@media(min-width:700px){.pcard:hover{transform:translateY(-4px);box-shadow:var(--sh2);border-color:var(--border2);}}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 /* IMAGE CAROUSEL */
-.p-carousel{aspect-ratio:1;position:relative;overflow:hidden;background:linear-gradient(145deg,var(--bg2),var(--card2));}
-.p-slides{display:flex;width:100%;height:100%;transition:transform .4s cubic-bezier(.4,0,.2,1);}
-.p-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:14px;}
-.p-slide img{width:100%;height:100%;object-fit:contain;transition:transform .4s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 8px 20px rgba(79,70,229,.15));}
-.pcard:hover .p-slide img{transform:scale(1.08) translateY(-4px);}
-.p-slide .em{font-size:66px;user-select:none;transition:transform .4s;filter:drop-shadow(0 8px 20px rgba(79,70,229,.2));}
-.pcard:hover .p-slide .em{transform:scale(1.1) translateY(-6px);}
-/* DOT INDICATORS */
-.p-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:3;}
-.p-dot{width:5px;height:5px;border-radius:50%;background:rgba(79,70,229,.25);transition:all .25s;cursor:pointer;}
-.p-dot.on{background:var(--p);width:14px;border-radius:999px;}
-/* NAV ARROWS */
-.p-prev,.p-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.92);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;z-index:4;opacity:0;transition:opacity .2s;box-shadow:var(--sh);}
-[data-theme="dark"] .p-prev,[data-theme="dark"] .p-next{background:rgba(19,17,42,.92);}
-.p-prev{left:8px;}.p-next{right:8px;}
+.p-car{aspect-ratio:1;position:relative;overflow:hidden;background:var(--card2);}
+.p-slides{display:flex;height:100%;transition:transform .35s cubic-bezier(.4,0,.2,1);}
+.p-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:10px;}
+.p-slide img{width:100%;height:100%;object-fit:contain;transition:transform .3s;}
+.pcard:hover .p-slide img{transform:scale(1.06);}
+.p-slide .em{font-size:52px;user-select:none;}
+.p-dots{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:3;}
+.p-dot{width:5px;height:5px;border-radius:50%;background:rgba(79,70,229,.2);transition:all .2s;}
+.p-dot.on{background:var(--p);width:12px;border-radius:999px;}
+.p-prev,.p-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.9);border:1px solid var(--border);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;z-index:4;opacity:0;transition:opacity .2s;}
+[data-theme="dark"] .p-prev,[data-theme="dark"] .p-next{background:rgba(17,16,40,.9);}
+.p-prev{left:6px;}.p-next{right:6px;}
 .pcard:hover .p-prev,.pcard:hover .p-next{opacity:1;}
-
-/* BADGES */
-.p-bdg{position:absolute;top:10px;left:10px;z-index:5;padding:3px 9px;border-radius:999px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
-.b-hot{background:#ef4444;color:#fff;box-shadow:0 2px 12px rgba(239,68,68,.3);}
-.b-new{background:#10b981;color:#fff;box-shadow:0 2px 12px rgba(16,185,129,.3);}
-.b-sale{background:var(--a);color:#fff;box-shadow:0 2px 12px rgba(249,115,22,.3);}
-.p-wsh{position:absolute;top:10px;right:10px;z-index:5;background:rgba(255,255,255,.95);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:var(--sh);}
-[data-theme="dark"] .p-wsh{background:rgba(19,17,42,.95);}
-.p-wsh:hover{transform:scale(1.1);}
+.p-bdg{position:absolute;top:7px;left:7px;z-index:5;padding:2px 7px;border-radius:999px;font-size:9px;font-weight:800;text-transform:uppercase;}
+.b-hot{background:#ef4444;color:#fff;}.b-new{background:#10b981;color:#fff;}.b-sale{background:var(--a);color:#fff;}
+.p-wsh{position:absolute;top:7px;right:7px;z-index:5;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .18s;}
+[data-theme="dark"] .p-wsh{background:rgba(17,16,40,.9);}
 
 /* CARD INFO */
-.p-inf{padding:12px;}
-.p-br{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:3px;}
-.p-nm{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;line-height:1.3;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.p-rt{display:flex;align-items:center;gap:5px;font-size:10px;margin-bottom:5px;}
-.stars{color:var(--yellow);}
-.r-c{color:var(--muted);}
-.p-stk{font-size:10px;color:var(--red);font-weight:700;margin-bottom:4px;}
-.stk-bar{height:2px;border-radius:999px;background:var(--border);margin-bottom:8px;overflow:hidden;}
+.p-inf{padding:9px 9px 10px;}
+.p-br{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--p);margin-bottom:2px;}
+.p-nm{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.p-rt{display:flex;align-items:center;gap:3px;font-size:10px;margin-bottom:4px;}
+.stars{color:var(--yellow);font-size:10px;}.r-c{color:var(--muted);font-size:10px;}
+.p-stk{font-size:9px;color:var(--red);font-weight:700;margin-bottom:4px;}
+.stk-bar{height:2px;border-radius:999px;background:var(--border);margin-bottom:6px;overflow:hidden;}
 .stk-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--a));border-radius:999px;}
-.p-plts{display:flex;gap:5px;margin-bottom:7px;}
-.plt-btn{flex:1;padding:6px 4px;border-radius:9px;font-size:10px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;display:block;transition:all .2s;border:1.5px solid;}
+.p-plts{display:flex;gap:4px;margin-bottom:6px;}
+.plt-btn{flex:1;padding:5px 3px;border-radius:7px;font-size:9px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;display:block;border:1px solid;transition:all .15s;}
 .plt-amz{background:#fffbeb;color:#b45309;border-color:#fde68a;}
-.plt-amz:hover{background:#fef3c7;transform:translateY(-1px);}
 .plt-flp{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;}
-.plt-flp:hover{background:#dbeafe;transform:translateY(-1px);}
 [data-theme="dark"] .plt-amz{background:rgba(251,191,36,.08);color:#fbbf24;border-color:rgba(251,191,36,.2);}
 [data-theme="dark"] .plt-flp{background:rgba(96,165,250,.08);color:#60a5fa;border-color:rgba(96,165,250,.2);}
-.add-btn{width:100%;padding:9px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:10px;font-size:11.5px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
-.add-btn:hover{opacity:.9;transform:translateY(-1px);}
+.add-btn{width:100%;padding:7px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;}
 .add-btn:active{transform:scale(.97);}
 
-/* ── DEALS ── */
-.deals-row{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;}
-.deals-row::-webkit-scrollbar{display:none;}
-.deal-card{min-width:185px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:16px;flex-shrink:0;cursor:pointer;transition:all .25s;text-decoration:none;color:var(--text);position:relative;overflow:hidden;box-shadow:var(--sh);}
-.deal-card:hover{transform:translateY(-5px);box-shadow:var(--sh2);border-color:var(--border2);}
-.deal-card::before{content:'';position:absolute;top:-30px;right:-30px;width:80px;height:80px;background:radial-gradient(circle,rgba(79,70,229,.1),transparent);border-radius:50%;}
-.deal-timer{font-size:10px;font-weight:700;color:var(--red);margin-bottom:6px;}
-.deal-nm{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;margin-bottom:5px;line-height:1.3;}
-.deal-p{font-size:20px;font-weight:900;color:var(--p);}
-.deal-op{font-size:11px;color:var(--muted2);text-decoration:line-through;}
-.deal-d{display:inline-block;background:#dcfce7;color:#166534;font-size:9px;font-weight:800;padding:2px 8px;border-radius:999px;margin-top:4px;border:1px solid #bbf7d0;}
-[data-theme="dark"] .deal-d{background:rgba(16,185,129,.12);color:#34d399;border-color:rgba(16,185,129,.2);}
+/* ===== DEALS ROW ===== */
+.h-scroll{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;}
+.h-scroll::-webkit-scrollbar{display:none;}
+.deal-card{min-width:155px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:13px;flex-shrink:0;text-decoration:none;color:var(--text);display:block;transition:all .2s;box-shadow:var(--sh);}
+.deal-card:active{transform:scale(.97);}
+.deal-timer{font-size:10px;font-weight:700;color:var(--red);margin-bottom:5px;}
+.deal-nm{font-family:'Syne',sans-serif;font-size:12.5px;font-weight:800;margin-bottom:4px;line-height:1.3;}
+.deal-p{font-size:18px;font-weight:900;color:var(--p);}
+.deal-op{font-size:10px;color:var(--muted2);text-decoration:line-through;}
+.deal-d{display:inline-block;background:#dcfce7;color:#166534;font-size:9px;font-weight:800;padding:2px 7px;border-radius:999px;margin-top:3px;}
+[data-theme="dark"] .deal-d{background:rgba(16,185,129,.12);color:#34d399;}
 
-/* ── BANK OFFERS ── */
-.bank-row{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;}
-.bank-row::-webkit-scrollbar{display:none;}
-.bank-card{min-width:195px;background:var(--card);border-radius:var(--rs);border:1px solid var(--border);padding:14px;flex-shrink:0;transition:all .2s;box-shadow:var(--sh);}
-.bank-card:hover{transform:translateY(-3px);border-color:var(--border2);}
-.bank-ic{font-size:24px;margin-bottom:6px;}
-.bank-nm{font-size:12.5px;font-weight:700;margin-bottom:2px;}
-.bank-off{font-size:11.5px;color:var(--p);font-weight:600;line-height:1.4;}
-.bank-vl{font-size:10px;color:var(--muted2);margin-top:3px;}
+/* ===== BANK OFFERS ===== */
+.bank-card{min-width:175px;background:var(--card);border-radius:var(--rs);border:1px solid var(--border);padding:13px;flex-shrink:0;box-shadow:var(--sh);}
+.bank-ic{font-size:22px;margin-bottom:5px;}
+.bank-nm{font-size:12px;font-weight:700;margin-bottom:2px;}
+.bank-off{font-size:11px;color:var(--p);font-weight:600;line-height:1.4;}
+.bank-vl{font-size:10px;color:var(--muted2);margin-top:2px;}
 
-/* ── FASHION ── */
-.fashion-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-@media(max-width:700px){.fashion-grid{grid-template-columns:repeat(2,1fr);}}
-.fash-card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:20px 12px;text-align:center;position:relative;transition:all .25s;box-shadow:var(--sh);}
-.fash-card:hover{transform:translateY(-3px);border-color:rgba(255,105,180,.3);}
-.f-lk{position:absolute;top:8px;right:8px;font-size:13px;opacity:.25;}
-.f-em{font-size:34px;margin-bottom:6px;display:block;}
-.f-nm{font-family:'Syne',sans-serif;font-size:12.5px;font-weight:800;margin-bottom:6px;}
-.cs-badge{display:inline-block;padding:3px 11px;background:#fce7f3;color:#be185d;border-radius:999px;font-size:10px;font-weight:700;}
-[data-theme="dark"] .cs-badge{background:rgba(190,24,93,.12);color:#f472b6;}
+/* ===== FASHION ===== */
+.fashion-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(min-width:600px){.fashion-grid{grid-template-columns:repeat(4,1fr);}}
 
-/* ── REVIEWS ── */
-.rev-row{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;}
-.rev-row::-webkit-scrollbar{display:none;}
-.rev-card{min-width:235px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:18px;flex-shrink:0;transition:all .2s;box-shadow:var(--sh);}
-.rev-card:hover{transform:translateY(-3px);border-color:var(--border2);}
-.rev-stars{color:var(--yellow);margin-bottom:7px;font-size:14px;}
-.rev-txt{font-size:13px;color:var(--text);line-height:1.65;margin-bottom:10px;font-style:italic;}
-.rev-auth{display:flex;align-items:center;gap:9px;}
-.rev-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--a));display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;flex-shrink:0;}
-.rev-nm{font-size:12.5px;font-weight:700;}
+/* ===== REVIEWS ===== */
+.rev-card{min-width:225px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:15px;flex-shrink:0;box-shadow:var(--sh);}
+.rev-stars{color:var(--yellow);margin-bottom:6px;font-size:12px;}
+.rev-txt{font-size:12.5px;line-height:1.6;margin-bottom:8px;font-style:italic;color:var(--text);}
+.rev-auth{display:flex;align-items:center;gap:8px;}
+.rev-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--a));display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;flex-shrink:0;}
+.rev-nm{font-size:12px;font-weight:700;}
 .rev-vr{font-size:10px;color:var(--green);font-weight:600;}
 
-/* ── REQUEST ── */
-.req-sec{background:linear-gradient(135deg,#eef2ff,#fff7f0);border-radius:24px;padding:36px;position:relative;overflow:hidden;}
-[data-theme="dark"] .req-sec{background:linear-gradient(135deg,rgba(30,27,75,.4),rgba(67,28,5,.2));border:1px solid var(--border);}
-.req-sec::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(79,70,229,.12),transparent);border-radius:50%;}
-.req-l{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:6px;}
-.req-t{font-family:'Syne',sans-serif;font-size:clamp(20px,2.5vw,32px);font-weight:900;margin-bottom:6px;letter-spacing:-.02em;}
-.req-s{font-size:13.5px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
-.req-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:12px;}
-@media(max-width:580px){.req-grid{grid-template-columns:1fr;}}
-.req-inp{width:100%;padding:13px 15px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:all .25s;}
-.req-inp:focus{border-color:var(--border2);box-shadow:0 0 0 3px rgba(79,70,229,.08);}
+/* ===== REQUEST ===== */
+.req-sec{background:linear-gradient(135deg,#eef2ff,#fff8f4);border-radius:20px;padding:22px 16px;border:1px solid var(--border);}
+[data-theme="dark"] .req-sec{background:linear-gradient(135deg,rgba(30,27,75,.4),rgba(67,28,5,.2));}
+.req-t{font-family:'Syne',sans-serif;font-size:20px;font-weight:900;margin-bottom:4px;}
+.req-s{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+.req-inp{width:100%;padding:12px 13px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;margin-bottom:8px;}
+.req-inp:focus{border-color:var(--border2);}
 .req-inp::placeholder{color:var(--muted2);}
-.req-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--a));color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;}
-.req-btn:hover{transform:translateY(-2px);box-shadow:var(--sh2);}
-.req-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.req-note{text-align:center;font-size:11.5px;color:var(--muted);margin-top:9px;}
+.req-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--p),var(--a));color:#fff;border:none;border-radius:10px;font-size:13.5px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.req-btn:active{transform:scale(.98);}
+.req-btn:disabled{opacity:.5;cursor:not-allowed;}
+.req-note{text-align:center;font-size:11px;color:var(--muted);margin-top:8px;}
 
-/* ── FOOTER ── */
-.footer{background:var(--card);border-top:1px solid var(--border);padding:40px;}
-.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:28px;}
-@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr;gap:24px;}}
-@media(max-width:500px){.ft-grid{grid-template-columns:1fr;}}
-.ft-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:900;margin-bottom:10px;}
-.ft-desc{font-size:12.5px;color:var(--muted);line-height:1.7;max-width:280px;}
-.ft-head{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:12px;}
-.ft-link{display:block;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:8px;transition:color .2s;}
+/* ===== PWA INSTALL ===== */
+.pwa-sec{background:linear-gradient(135deg,#eef2ff,#f0fff8);border-radius:20px;padding:22px 16px;border:1px solid var(--border);}
+[data-theme="dark"] .pwa-sec{background:linear-gradient(135deg,rgba(17,16,40,.8),rgba(6,34,26,.5));}
+.pwa-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;}
+.pwa-btn{display:flex;align-items:center;gap:8px;padding:11px 12px;border:none;border-radius:11px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.pwa-btn:active{transform:scale(.97);}
+.pwa-ic{font-size:20px;}
+.pwa-lbl{text-align:left;}
+.pwa-sub{font-size:9px;font-weight:400;opacity:.8;display:block;}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--card);border-top:1px solid var(--border);padding:24px 16px 32px;}
+.ft-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:900;margin-bottom:6px;}
+.ft-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
+.ft-links{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-bottom:16px;}
+.ft-link{font-size:12px;color:var(--muted);text-decoration:none;padding:3px 0;}
 .ft-link:hover{color:var(--p);}
-.ft-disc{font-size:11px;color:var(--muted);background:var(--bg2);border-radius:10px;padding:10px 14px;border:1px solid var(--border);line-height:1.6;}
-.ft-copy{font-size:11px;color:var(--muted2);margin-top:10px;text-align:center;}
+.ft-disc{font-size:11px;color:var(--muted);background:var(--card2);border-radius:9px;padding:9px 12px;border:1px solid var(--border);line-height:1.55;margin-bottom:10px;}
+.ft-copy{font-size:11px;color:var(--muted2);text-align:center;}
 
-/* ── PRODUCT DETAIL MODAL (Flipkart style) ── */
-.det-ov{
-  position:fixed;inset:0;z-index:400;
-  background:rgba(0,0,0,.65);
-  opacity:0;pointer-events:none;
-  transition:opacity .3s;
-  backdrop-filter:blur(8px);
-  display:flex;align-items:flex-end;justify-content:center;
-}
-.det-ov.on{opacity:1;pointer-events:all;}
-/* MOBILE — slides up from bottom */
-.det-modal{
-  width:100%;
-  background:var(--bg);border-radius:28px 28px 0 0;
-  max-height:92vh;overflow-y:auto;
-  transform:translateY(100%);
-  transition:transform .4s cubic-bezier(.4,0,.2,1);
-  z-index:401;position:relative;
-}
-.det-ov.on .det-modal{transform:translateY(0);}
-/* DESKTOP — true center popup */
-@media(min-width:768px){
-  .det-ov{align-items:center;justify-content:center;}
-  .det-modal{
-    width:min(820px,92vw);
-    max-height:88vh;
-    border-radius:24px;
-    transform:scale(.9) translateY(0);
-    position:relative;
-    top:auto;left:auto;right:auto;bottom:auto;
-  }
-  .det-ov.on .det-modal{transform:scale(1) translateY(0);}
-}
-.det-handle{width:38px;height:4px;background:var(--border);border-radius:999px;margin:14px auto 0;}
-@media(min-width:768px){.det-handle{display:none;}}
-.det-inner{display:grid;grid-template-columns:1fr 1fr;min-height:400px;}
-@media(max-width:767px){.det-inner{grid-template-columns:1fr;}}
-
-/* LEFT — IMAGE GALLERY */
-.det-imgs{background:linear-gradient(145deg,var(--bg2),var(--card2));padding:24px;position:relative;}
-.det-main-img{aspect-ratio:1;display:flex;align-items:center;justify-content:center;margin-bottom:12px;position:relative;}
-.det-main-img img{max-width:80%;max-height:80%;object-fit:contain;filter:drop-shadow(0 12px 32px rgba(79,70,229,.2));transition:transform .4s cubic-bezier(.34,1.56,.64,1);animation:imgFloat 3s ease-in-out infinite;}
-@keyframes imgFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.02)}}
-.det-main-img .det-em{font-size:100px;animation:imgFloat 3s ease-in-out infinite;filter:drop-shadow(0 12px 32px rgba(79,70,229,.3));}
-/* THUMBNAIL ROW */
-.det-thumbs{display:flex;gap:8px;justify-content:center;}
-.det-thumb{width:52px;height:52px;border-radius:10px;border:2px solid var(--border);background:var(--card);cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:6px;}
-.det-thumb.on{border-color:var(--p);box-shadow:0 0 0 3px rgba(79,70,229,.15);}
-.det-thumb img{width:100%;height:100%;object-fit:contain;}
-.det-thumb .tem{font-size:24px;}
-
-/* RIGHT — PRODUCT INFO */
-.det-info{padding:24px;overflow-y:auto;}
-.det-br{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:4px;}
-.det-nm{font-family:'Syne',sans-serif;font-size:clamp(17px,2vw,22px);font-weight:900;line-height:1.25;margin-bottom:8px;letter-spacing:-.02em;}
-.det-rt{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
-.det-stars-box{display:flex;align-items:center;gap:4px;background:var(--green);color:#fff;padding:3px 9px;border-radius:7px;font-size:12px;font-weight:800;}
-.det-rev-count{font-size:12px;color:var(--muted);}
-.det-verified{font-size:10px;color:var(--green);font-weight:600;border:1px solid rgba(16,185,129,.3);padding:2px 8px;border-radius:999px;}
-/* PRICE BOX */
-.det-price-box{background:var(--bg2);border-radius:14px;padding:14px;margin-bottom:14px;border:1px solid var(--border);}
-.det-price-label{font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:600;}
-.det-best-price{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.det-price-tag{font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px;}
-.det-amz-tag{background:#fffbeb;color:#b45309;border:1.5px solid #fde68a;}
-.det-flp-tag{background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;}
-[data-theme="dark"] .det-amz-tag{background:rgba(251,191,36,.1);color:#fbbf24;border-color:rgba(251,191,36,.2);}
-[data-theme="dark"] .det-flp-tag{background:rgba(96,165,250,.1);color:#60a5fa;border-color:rgba(96,165,250,.2);}
-.det-honest{font-size:11px;color:var(--muted);line-height:1.5;margin-top:6px;}
-/* SPECS */
-.det-specs{margin-bottom:14px;}
-.det-specs-t{font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em;}
-.spec-row{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px;}
-.spec-row:last-child{border-bottom:none;}
-.spec-k{color:var(--muted);min-width:100px;font-weight:500;}
-.spec-v{color:var(--text);font-weight:600;}
-/* BUY BUTTONS */
-.det-buy-row{display:flex;gap:10px;margin-bottom:12px;}
-.det-buy-btn{flex:1;padding:13px;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .25s;font-family:'DM Sans',sans-serif;border:none;}
-.det-buy-btn:hover{transform:translateY(-2px);}
-.det-amz-btn{background:linear-gradient(135deg,#ff9900,#ffb700);color:#000;}
-.det-amz-btn:hover{box-shadow:0 8px 24px rgba(255,153,0,.4);}
-.det-flp-btn{background:linear-gradient(135deg,#2874f0,#1a5dc8);color:#fff;}
-.det-flp-btn:hover{box-shadow:0 8px 24px rgba(40,116,240,.4);}
-.det-cart-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;}
-.det-cart-btn:hover{opacity:.9;transform:translateY(-1px);}
-/* OFFERS IN DETAIL */
-.det-offers{background:var(--bg2);border-radius:12px;padding:12px;margin-top:12px;}
-.det-offers-t{font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em;}
-.offer-item{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;color:var(--muted);margin-bottom:6px;line-height:1.4;}
-.offer-item:last-child{margin-bottom:0;}
-.offer-ic{font-size:14px;flex-shrink:0;}
-/* PRODUCT REVIEWS IN DETAIL */
-.det-revs{padding:16px 0 0;border-top:1px solid var(--border);}
-.det-revs-t{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:12px;}
-.det-rev-item{background:var(--bg2);border-radius:12px;padding:12px;margin-bottom:10px;}
-.det-rev-stars{color:var(--yellow);font-size:12px;margin-bottom:5px;}
-.det-rev-txt{font-size:12.5px;color:var(--text);line-height:1.6;margin-bottom:6px;}
-.det-rev-auth{font-size:11px;color:var(--muted);font-weight:600;}
-/* CLOSE BTN */
-.det-close{position:absolute;top:16px;right:16px;background:var(--card);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;z-index:10;transition:all .2s;color:var(--text);}
-.det-close:hover{background:var(--card2);}
-
-/* ── CART MODAL ── */
-.mod-ov{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(6px);}
+/* ===== MODALS ===== */
+.mod-ov{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(6px);}
 .mod-ov.on{opacity:1;pointer-events:all;}
-@media(min-width:700px){.mod-ov{align-items:center;justify-content:center;}}
-.mod{width:100%;max-width:460px;background:var(--bg);border:1px solid var(--border2);border-radius:26px 26px 0 0;padding:18px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);max-height:88vh;overflow-y:auto;}
-@media(min-width:700px){.mod{border-radius:26px;transform:scale(.9);}}
+.mod{width:100%;background:var(--bg);border-radius:22px 22px 0 0;padding:16px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);max-height:90vh;overflow-y:auto;}
 .mod-ov.on .mod{transform:translateY(0);}
-@media(min-width:700px){.mod-ov.on .mod{transform:scale(1);}}
+/* DESKTOP — center popup */
+@media(min-width:700px){
+  .mod-ov{align-items:center;}
+  .mod{max-width:480px;border-radius:22px;transform:scale(.9);}
+  .mod-ov.on .mod{transform:scale(1);}
+}
 .mod-hnd{width:36px;height:4px;background:var(--border);border-radius:999px;margin:0 auto 14px;}
 @media(min-width:700px){.mod-hnd{display:none;}}
-.mod-ttl{font-family:'Syne',sans-serif;font-size:18px;font-weight:900;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.mod-ttl{font-family:'Syne',sans-serif;font-size:17px;font-weight:900;margin-bottom:13px;display:flex;justify-content:space-between;align-items:center;}
 .mod-x{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:5px 9px;cursor:pointer;font-size:14px;color:var(--text);}
-.c-item{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--border);}
-.c-img{width:46px;height:46px;border-radius:10px;background:var(--card2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;}
+
+/* DETAIL MODAL */
+.det-ov{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.65);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px);}
+.det-ov.on{opacity:1;pointer-events:all;}
+.det-modal{width:100%;background:var(--bg);border-radius:24px 24px 0 0;max-height:94vh;overflow-y:auto;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);}
+.det-ov.on .det-modal{transform:translateY(0);}
+@media(min-width:700px){
+  .det-ov{align-items:center;}
+  .det-modal{width:min(780px,94vw);border-radius:24px;max-height:88vh;transform:scale(.9);}
+  .det-ov.on .det-modal{transform:scale(1);}
+}
+.det-hnd{width:36px;height:4px;background:var(--border);border-radius:999px;margin:14px auto 0;}
+@media(min-width:700px){.det-hnd{display:none;}}
+.det-close{position:absolute;top:14px;right:14px;background:var(--card);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;z-index:10;color:var(--text);}
+.det-body{display:flex;flex-direction:column;}
+@media(min-width:700px){.det-body{flex-direction:row;}}
+
+/* DETAIL — IMAGE SIDE */
+.det-imgs{background:var(--card2);padding:20px;display:flex;flex-direction:column;align-items:center;position:relative;}
+@media(min-width:700px){.det-imgs{width:42%;flex-shrink:0;min-height:320px;}}
+.det-main{width:180px;height:180px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+@media(min-width:700px){.det-main{width:220px;height:220px;}}
+.det-main img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(79,70,229,.2));animation:imgFloat 3s ease-in-out infinite;}
+@keyframes imgFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.det-main .det-em{font-size:90px;animation:imgFloat 3s ease-in-out infinite;}
+.det-thumbs{display:flex;gap:7px;justify-content:center;}
+.det-thumb{width:48px;height:48px;border-radius:9px;border:2px solid var(--border);background:var(--card);cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:5px;transition:all .18s;}
+.det-thumb.on{border-color:var(--p);box-shadow:0 0 0 2px rgba(79,70,229,.15);}
+.det-thumb img{width:100%;height:100%;object-fit:contain;}
+
+/* DETAIL — INFO SIDE */
+.det-info{padding:18px;flex:1;}
+.det-br{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:3px;}
+.det-nm{font-family:'Syne',sans-serif;font-size:18px;font-weight:900;line-height:1.25;margin-bottom:8px;}
+.det-rt{display:flex;align-items:center;gap:7px;margin-bottom:12px;flex-wrap:wrap;}
+.det-star-box{background:var(--green);color:#fff;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:800;display:flex;align-items:center;gap:3px;}
+.det-rev-c{font-size:11px;color:var(--muted);}
+.det-ver{font-size:10px;color:var(--green);font-weight:700;border:1px solid rgba(16,185,129,.3);padding:2px 7px;border-radius:999px;}
+.det-price-box{background:var(--card2);border-radius:12px;padding:12px;margin-bottom:12px;border:1px solid var(--border);}
+.det-price-lbl{font-size:10px;color:var(--muted);font-weight:600;margin-bottom:6px;}
+.det-plat-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+.det-plat{padding:4px 11px;border-radius:999px;font-size:11px;font-weight:700;border:1.5px solid;}
+.det-amz{background:#fffbeb;color:#b45309;border-color:#fde68a;}
+.det-flp{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;}
+[data-theme="dark"] .det-amz{background:rgba(251,191,36,.1);color:#fbbf24;border-color:rgba(251,191,36,.25);}
+[data-theme="dark"] .det-flp{background:rgba(96,165,250,.1);color:#60a5fa;border-color:rgba(96,165,250,.25);}
+.det-honest{font-size:11px;color:var(--muted);line-height:1.5;}
+.det-stk-warn{background:#fff5f5;border:1px solid #fee2e2;border-radius:9px;padding:9px 12px;margin-bottom:12px;font-size:12px;color:var(--red);font-weight:700;}
+[data-theme="dark"] .det-stk-warn{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.2);}
+.det-buy-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.det-buy{padding:12px;border-radius:11px;font-size:12.5px;font-weight:800;cursor:pointer;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;font-family:'DM Sans',sans-serif;border:none;}
+.det-buy:active{transform:scale(.97);}
+.det-amz-btn{background:linear-gradient(135deg,#ff9900,#ffb700);color:#000;}
+.det-flp-btn{background:linear-gradient(135deg,#2874f0,#1a5dc8);color:#fff;}
+.det-cart{width:100%;padding:12px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:11px;font-size:13px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:12px;}
+.det-specs{margin-bottom:12px;}
+.det-specs-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:7px;}
+.spec-row{display:flex;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.spec-row:last-child{border-bottom:none;}
+.spec-k{color:var(--muted);width:100px;flex-shrink:0;}
+.spec-v{color:var(--text);font-weight:600;}
+.det-offers{background:var(--card2);border-radius:11px;padding:11px;margin-bottom:12px;}
+.det-offers-t{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
+.offer-item{display:flex;gap:7px;font-size:12px;color:var(--muted);margin-bottom:5px;line-height:1.4;}
+.offer-item:last-child{margin-bottom:0;}
+.det-revs-t{font-family:'Syne',sans-serif;font-size:15px;font-weight:900;margin-bottom:10px;}
+.det-rev-item{background:var(--card2);border-radius:10px;padding:11px;margin-bottom:8px;}
+.det-rev-stars{color:var(--yellow);font-size:11px;margin-bottom:4px;}
+.det-rev-txt{font-size:12px;line-height:1.6;margin-bottom:5px;}
+.det-rev-auth{font-size:11px;color:var(--muted);font-weight:600;}
+
+/* CART */
+.c-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+.c-img{width:44px;height:44px;border-radius:9px;background:var(--card2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;}
 .c-img img{width:100%;height:100%;object-fit:contain;}
 .c-inf{flex:1;min-width:0;}
-.c-nm{font-size:12.5px;font-weight:700;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.c-nm{font-size:12.5px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .c-btns{display:flex;gap:5px;}
-.c-buy{padding:5px 11px;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;text-decoration:none;border:1.5px solid;transition:all .2s;}
+.c-buy{padding:4px 10px;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;text-decoration:none;border:1.5px solid;}
 .c-amz{background:#fffbeb;color:#b45309;border-color:#fde68a;}
 .c-flp{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;}
-.c-rm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;transition:color .2s;}
-.c-rm:hover{color:var(--red);}
-.c-tot{padding:13px 0 8px;display:flex;justify-content:space-between;align-items:center;}
-.c-tot-l{font-size:14px;font-weight:600;}.c-tot-n{font-size:14px;font-weight:800;color:var(--p);}
-.chk-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.c-rm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:4px;}
+.c-tot{padding:12px 0 7px;display:flex;justify-content:space-between;}
+.c-tot-l{font-size:13px;font-weight:600;}.c-tot-n{font-size:13px;font-weight:800;color:var(--p);}
+.chk-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:11px;font-size:13.5px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;}
 
-/* ── TOAST ── */
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:var(--bg);padding:11px 22px;border-radius:999px;font-size:13px;font-weight:700;z-index:999;transition:transform .35s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center;}
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;font-weight:700;z-index:999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center;box-shadow:var(--sh2);}
 .toast.on{transform:translateX(-50%) translateY(0);}
 
-/* LOADING & EMPTY */
-.loading{grid-column:1/-1;text-align:center;padding:52px 20px;color:var(--muted);}
-.spin{width:38px;height:38px;border:2.5px solid var(--border);border-top-color:var(--p);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 12px;}
+/* LOADING */
+.loading{grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);}
+.spin{width:34px;height:34px;border:2.5px solid var(--border);border-top-color:var(--p);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 10px;}
 @keyframes sp{to{transform:rotate(360deg)}}
-.empty{grid-column:1/-1;padding:52px 20px;text-align:center;color:var(--muted);}
+.empty{grid-column:1/-1;padding:40px 20px;text-align:center;color:var(--muted);}
 
 /* FLOATS */
-.floats{position:fixed;bottom:18px;right:16px;display:flex;flex-direction:column;gap:9px;z-index:50;}
-.fb{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;cursor:pointer;border:none;box-shadow:var(--sh2);text-decoration:none;transition:all .25s;}
-.fb:hover{transform:scale(1.1);}
+.floats{position:fixed;bottom:16px;right:14px;display:flex;flex-direction:column;gap:8px;z-index:50;}
+.fb{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;border:none;box-shadow:var(--sh2);text-decoration:none;transition:transform .2s;}
+.fb:active{transform:scale(.92);}
 .f-ai{background:linear-gradient(135deg,#7c3aed,#a855f7);}
 .f-tg{background:#0088cc;}
 
-/* INSTALL */
-.inst{display:none;margin:12px 14px;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:11px 13px;align-items:center;gap:9px;box-shadow:var(--sh);}
+/* iOS POPUP */
+.ios-pop{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);}
+.ios-pop.on{display:flex;}
+.ios-inner{background:var(--bg);border-radius:22px 22px 0 0;padding:20px;width:100%;max-width:480px;}
+.ios-step{display:flex;align-items:center;gap:11px;background:var(--card2);border-radius:11px;padding:11px;margin-bottom:8px;font-size:13px;line-height:1.5;}
+.ios-n{font-size:22px;flex-shrink:0;}
+
+/* INSTALL BANNER */
+.inst{display:none;margin:10px 14px;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:11px 13px;align-items:center;gap:9px;box-shadow:var(--sh);}
 .inst.on{display:flex;}
 .inst-tx{flex:1;font-size:12px;line-height:1.4;}
 .inst-btn{padding:7px 13px;background:var(--p);color:#fff;border:none;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0;}
 .inst-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;}
-
-/* ── RESPONSIVE ── */
-@media(max-width:899px){
-  .sidebar{transform:translateX(-100%);}
-  .sidebar.on{transform:translateX(0);}
-  .main{margin-left:0;}
-  .mob-hdr{display:flex;}
-  .hero{padding:32px 18px 24px;}
-  .srch-wrap{padding:16px 16px 0;}
-  .sec{padding:20px 16px;}
-  .footer{padding:28px 16px;}
-  .req-sec{padding:24px 16px;}
-}
-@media(min-width:900px){
-  .mob-hdr{display:none!important;}
-  .ov{display:none!important;}
-}
 </style>
 </head>
 <body>
 
-<!-- MOBILE OVERLAY -->
+<!-- OVERLAY -->
 <div class="ov" id="ov" onclick="closeSB()"></div>
 
-<div style="display:flex;min-height:100vh;">
-
 <!-- SIDEBAR -->
-<aside class="sidebar" id="sb">
-  <a href="#" class="sb-logo"><span class="n">Nex</span><span class="d">Deal</span></a>
-  <div class="sb-live">🇮🇳 Live Price Comparison</div>
+<aside class="sb" id="sb">
+  <div class="sb-top">
+    <a href="#" class="logo"><span class="n">Nex</span><span class="d">Deal</span></a>
+    <button class="sb-x" onclick="closeSB()">✕</button>
+  </div>
   <div class="sb-sec">Categories</div>
-  <button class="sbl on" id="sb-all" onclick="setCat('all','sb-all')"><span class="ic">🔥</span><span>All Products</span></button>
-  <button class="sbl" id="sb-smartphones" onclick="setCat('smartphones','sb-smartphones')"><span class="ic">📱</span><span>Smartphones</span></button>
-  <button class="sbl" id="sb-laptops" onclick="setCat('laptops','sb-laptops')"><span class="ic">💻</span><span>Laptops</span></button>
-  <button class="sbl" id="sb-audio" onclick="setCat('audio','sb-audio')"><span class="ic">🎧</span><span>Audio</span></button>
-  <button class="sbl" id="sb-smartwatches" onclick="setCat('smartwatches','sb-smartwatches')"><span class="ic">⌚</span><span>Smartwatches</span></button>
-  <button class="sbl" id="sb-cameras" onclick="setCat('cameras','sb-cameras')"><span class="ic">📷</span><span>Cameras</span></button>
-  <button class="sbl" id="sb-accessories" onclick="setCat('accessories','sb-accessories')"><span class="ic">🔌</span><span>Accessories</span></button>
+  <button class="sbl on" id="sb-all" onclick="setCat('all','sb-all')"><span class="ic">🔥</span>All Products</button>
+  <button class="sbl" id="sb-smartphones" onclick="setCat('smartphones','sb-smartphones')"><span class="ic">📱</span>Smartphones</button>
+  <button class="sbl" id="sb-laptops" onclick="setCat('laptops','sb-laptops')"><span class="ic">💻</span>Laptops</button>
+  <button class="sbl" id="sb-audio" onclick="setCat('audio','sb-audio')"><span class="ic">🎧</span>Audio</button>
+  <button class="sbl" id="sb-smartwatches" onclick="setCat('smartwatches','sb-smartwatches')"><span class="ic">⌚</span>Smartwatches</button>
+  <button class="sbl" id="sb-cameras" onclick="setCat('cameras','sb-cameras')"><span class="ic">📷</span>Cameras</button>
+  <button class="sbl" id="sb-accessories" onclick="setCat('accessories','sb-accessories')"><span class="ic">🔌</span>Accessories</button>
   <div class="sb-sec">Explore</div>
-  <a class="sbl" href="#deals" onclick="closeSB()"><span class="ic">💥</span><span>Hot Deals</span></a>
-  <a class="sbl" href="#reviews" onclick="closeSB()"><span class="ic">⭐</span><span>Reviews</span></a>
-  <a class="sbl" href="#request" onclick="closeSB()"><span class="ic">🙋</span><span>Request Product</span></a>
-  <a class="sbl" href="nexdeal-ai-agents-1.html"><span class="ic">🤖</span><span>AI Assistant</span></a>
-  <a class="sbl" href="https://t.me/nexdeal_deals" target="_blank"><span class="ic">✈️</span><span>Telegram</span></a>
-  <a class="sbl" href="about.html"><span class="ic">ℹ️</span><span>About NexDeal</span></a>
+  <a class="sbl" href="#deals" onclick="closeSB()"><span class="ic">💥</span>Hot Deals</a>
+  <a class="sbl" href="#fashion" onclick="closeSB()"><span class="ic">👗</span>Fashion</a>
+  <a class="sbl" href="#reviews" onclick="closeSB()"><span class="ic">⭐</span>Reviews</a>
+  <a class="sbl" href="#request" onclick="closeSB()"><span class="ic">🙋</span>Request Product</a>
+  <a class="sbl" href="nexdeal-ai-agents-1.html"><span class="ic">🤖</span>AI Assistant</a>
+  <a class="sbl" href="https://t.me/nexdeal_deals" target="_blank"><span class="ic">✈️</span>Telegram</a>
+  <div class="sb-sec">Info</div>
+  <a class="sbl" href="about.html"><span class="ic">ℹ️</span>About NexDeal</a>
+  <a class="sbl" href="contact.html"><span class="ic">📬</span>Contact Us</a>
+  <a class="sbl" href="privacy.html"><span class="ic">🔒</span>Privacy Policy</a>
   <div class="sb-sec">Settings</div>
   <button class="sbl" onclick="toggleTheme()"><span class="ic" id="thIc">🌙</span><span id="thTx">Dark Mode</span></button>
-  <div style="padding:8px 0;">
-    <button class="sb-cart-btn" onclick="openCart()">🛒 My Cart <span class="badge" id="cBadge">0</span></button>
-  </div>
-  <p style="font-size:10px;color:var(--muted2);padding:12px 10px 4px;">© 2026 NexDeal · Ajaykumar106 🚀</p>
 </aside>
 
-<!-- MAIN -->
-<main class="main" style="flex:1;">
-
-  <!-- MOBILE HEADER -->
-  <header class="mob-hdr" id="mobHdr">
-    <button class="hbur" onclick="openSB()">☰</button>
-    <a href="#" class="mob-logo"><span class="n">Nex</span><span class="d">Deal</span></a>
-    <div class="mob-r">
-      <button class="hbtn cart" onclick="openCart()">🛒 <span class="badge" id="cBadge2">0</span></button>
-      <a href="nexdeal-ai-agents-1.html" class="hbtn" style="border-color:rgba(168,85,247,.4);color:#a855f7;">🤖</a>
-    </div>
-  </header>
-
-  <!-- INSTALL BANNER -->
-  <div class="inst" id="instB">
-    <span style="font-size:22px">📲</span>
-    <div class="inst-tx"><strong>Install NexDeal!</strong><br><span style="font-size:11px;color:var(--muted)">Get instant deal alerts on your phone</span></div>
-    <button class="inst-btn" id="instBtn">Install</button>
-    <button class="inst-x" onclick="document.getElementById('instB').classList.remove('on')">✕</button>
+<!-- HEADER -->
+<header class="hdr">
+  <button class="hbur" onclick="openSB()">☰</button>
+  <a href="#" class="logo"><span class="n">Nex</span><span class="d">Deal</span></a>
+  <div class="hdr-r">
+    <button class="cart-btn" onclick="openCart()">🛒 <span class="badge" id="cBadge">0</span></button>
+    <a href="nexdeal-ai-agents-1.html" class="ai-btn">🤖 AI</a>
   </div>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-badge">🇮🇳 India's Smartest Price Comparison</div>
-      <h1>Best Price.<br><span class="gr">Every Product.</span><br>One Place.</h1>
-      <p class="hero-sub">Compare prices across Amazon and Flipkart instantly. We show you where to get the best deal — honestly, no fake prices!</p>
-      <div class="hero-btns">
-        <a href="#products" class="btn-p">🔥 Browse Deals</a>
-        <a href="nexdeal-ai-agents-1.html" class="btn-s">🤖 Ask AI</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Honest Prices</div></div>
-        <div class="stat"><div class="stat-n">2</div><div class="stat-l">Platforms Compared</div></div>
-        <div class="stat"><div class="stat-n">₹0</div><div class="stat-l">Extra Cost</div></div>
-        <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">AI Help</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TRUST BAR -->
-  <div class="trust-bar">
-    <div class="trust-item"><span class="ti">✅</span>100% Honest Prices</div>
-    <div class="trust-item"><span class="ti">🔗</span>Direct Amazon & Flipkart Links</div>
-    <div class="trust-item"><span class="ti">🤖</span>AI Shopping Assistant</div>
-    <div class="trust-item"><span class="ti">🔔</span>Daily Deal Alerts on Telegram</div>
-    <div class="trust-item"><span class="ti">💳</span>Bank Offer Tracker</div>
-  </div>
-
-  <!-- SEARCH -->
-  <div class="srch-wrap">
-    <div class="srch-in">
-      <span class="srch-ic">🔍</span>
-      <input class="srch-inp" type="text" id="srchInp" placeholder="Search phones, laptops, earbuds, cameras..." oninput="doSearch(this.value)">
-    </div>
-  </div>
-
-  <!-- PRODUCTS -->
-  <section id="products" class="sec">
-    <div class="sec-hd">
-      <div><div class="sec-lbl">// Best Deals</div><h2 class="sec-t">Compare & Buy <span class="gr">Smart 💡</span></h2></div>
-    </div>
-    <div class="chips" id="chips">
-      <button class="chip on" onclick="setChip('all',this)">🔥 All</button>
-      <button class="chip" onclick="setChip('smartphones',this)">📱 Phones</button>
-      <button class="chip" onclick="setChip('laptops',this)">💻 Laptops</button>
-      <button class="chip" onclick="setChip('audio',this)">🎧 Audio</button>
-      <button class="chip" onclick="setChip('smartwatches',this)">⌚ Watches</button>
-      <button class="chip" onclick="setChip('cameras',this)">📷 Cameras</button>
-      <button class="chip" onclick="setChip('accessories',this)">🔌 Accessories</button>
-    </div>
-    <div class="sort-bar">
-      <span class="p-count" id="pCnt">Loading...</span>
-      <select class="sort-sel" onchange="doSort(this.value)">
-        <option value="default">Default</option>
-        <option value="rating">Top Rated</option>
-        <option value="stock">Low Stock</option>
-        <option value="name">A → Z</option>
-      </select>
-    </div>
-    <div class="grid" id="grid"><div class="loading"><div class="spin"></div><p>Loading products...</p></div></div>
-  </section>
-
-  <!-- HOT DEALS -->
-  <section id="deals" class="sec">
-    <div class="sec-hd"><div><div class="sec-lbl">// Limited Time</div><h2 class="sec-t">🔥 Hot <span class="gr">Deals Today</span></h2></div></div>
-    <div class="deals-row" id="dealsRow"></div>
-  </section>
-
-  <!-- BANK OFFERS -->
-  <section class="sec">
-    <div class="sec-hd"><div><div class="sec-lbl">// Save More</div><h2 class="sec-t">💳 Bank <span class="gr">Offers</span></h2></div></div>
-    <div class="bank-row" id="bankRow"></div>
-  </section>
-
-  <!-- FASHION SECTION — REAL AFFILIATE LINKS -->
-  <section class="sec" id="fashion">
-    <div class="sec-hd">
-      <div><div class="sec-lbl">// Fashion & Lifestyle</div><h2 class="sec-t">Shop Fashion <span class="gr">& Beauty 👗</span></h2></div>
-    </div>
-    <!-- FASHION CATEGORY CHIPS -->
-    <div class="chips" style="margin-bottom:20px;">
-      <button class="chip on" onclick="setFashionCat('all',this)">✨ All</button>
-      <button class="chip" onclick="setFashionCat('clothes',this)">👗 Clothes</button>
-      <button class="chip" onclick="setFashionCat('shoes',this)">👟 Shoes</button>
-      <button class="chip" onclick="setFashionCat('beauty',this)">💄 Beauty</button>
-      <button class="chip" onclick="setFashionCat('accessories',this)">💍 Accessories</button>
-    </div>
-    <!-- PLATFORM CARDS -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;" id="fashionGrid"></div>
-    <!-- FASHION TRUST NOTE -->
-    <div style="margin-top:16px;background:var(--bg2);border-radius:12px;padding:12px 16px;border:1px solid var(--border);font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;">
-      <span>ℹ️</span>
-      <span>All fashion links are affiliate links. NexDeal earns small commission when you shop — at no extra cost to you! Prices are set by the platforms directly.</span>
-    </div>
-  </section>
-
-  <!-- REVIEWS -->
-  <section id="reviews" class="sec">
-    <div class="sec-hd"><div><div class="sec-lbl">// Real Buyers</div><h2 class="sec-t">What Indians <span class="gr">Say 🇮🇳</span></h2></div></div>
-    <div class="rev-row" id="revRow"></div>
-  </section>
-
-  <!-- REQUEST -->
-  <section id="request" class="sec">
-    <div class="req-sec">
-      <div class="req-l">// Can't Find It?</div>
-      <h2 class="req-t">Request Any Product 🙋</h2>
-      <p class="req-s">Tell us what you want — we add it within 24 hours and post on our Telegram channel!</p>
-      <div class="req-grid">
-        <input class="req-inp" type="text" id="reqProd" placeholder="Product name (e.g. Noise ColorFit Ultra 3)">
-        <input class="req-inp" type="text" id="reqName" placeholder="Your name (optional)">
-      </div>
-      <button class="req-btn" id="reqBtn" onclick="submitReq()">🚀 Request This Product</button>
-      <p class="req-note">We'll add it and post on Telegram! ✅</p>
-    </div>
-  </section>
-
-  <!-- PWA INSTALL SECTION -->
-  <section class="sec" id="installApp">
-    <div style="background:linear-gradient(135deg,#eef2ff,#f0fff8);border-radius:24px;padding:32px;border:1px solid var(--border);position:relative;overflow:hidden;">
-      <div style="position:absolute;top:-40px;right:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(79,70,229,.1),transparent);border-radius:50%;"></div>
-      <div class="sec-lbl">// Free Download</div>
-      <h2 class="sec-t" style="margin-bottom:8px;">📲 Install NexDeal <span class="gr">App — Free!</span></h2>
-      <p style="font-size:13.5px;color:var(--muted);margin-bottom:24px;max-width:480px;line-height:1.6;">Install NexDeal directly on your device — no App Store needed! Works on Android, iOS and Windows like a native app. Get deal notifications instantly!</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <button id="pwaAndroid" onclick="triggerPWA()" style="display:flex;align-items:center;gap:10px;padding:13px 22px;background:#01875f;color:#fff;border:none;border-radius:14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;box-shadow:0 4px 16px rgba(1,135,95,.3);">
-          <span style="font-size:22px">🤖</span>
-          <div style="text-align:left;"><div style="font-size:10px;font-weight:400;opacity:.85;">Get it on</div><div>Android</div></div>
-        </button>
-        <button id="pwaIos" onclick="showIosInstall()" style="display:flex;align-items:center;gap:10px;padding:13px 22px;background:#000;color:#fff;border:none;border-radius:14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;box-shadow:0 4px 16px rgba(0,0,0,.2);">
-          <span style="font-size:22px">🍎</span>
-          <div style="text-align:left;"><div style="font-size:10px;font-weight:400;opacity:.85;">Download on</div><div>iPhone / iPad</div></div>
-        </button>
-        <button id="pwaWin" onclick="triggerPWA()" style="display:flex;align-items:center;gap:10px;padding:13px 22px;background:#0078d4;color:#fff;border:none;border-radius:14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;box-shadow:0 4px 16px rgba(0,120,212,.3);">
-          <span style="font-size:22px">🪟</span>
-          <div style="text-align:left;"><div style="font-size:10px;font-weight:400;opacity:.85;">Install on</div><div>Windows / PC</div></div>
-        </button>
-        <button onclick="showMacInstall()" style="display:flex;align-items:center;gap:10px;padding:13px 22px;background:#555;color:#fff;border:none;border-radius:14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;box-shadow:0 4px 16px rgba(0,0,0,.2);">
-          <span style="font-size:22px">💻</span>
-          <div style="text-align:left;"><div style="font-size:10px;font-weight:400;opacity:.85;">Install on</div><div>macOS</div></div>
-        </button>
-      </div>
-      <p style="font-size:11px;color:var(--muted2);margin-top:14px;">✅ Free forever · No sign-up needed · Works offline · Get deal alerts</p>
-    </div>
-  </section>
-
-  <!-- iOS INSTALL INSTRUCTIONS POPUP -->
-  <div id="iosPopup" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);align-items:flex-end;justify-content:center;">
-    <div style="background:var(--bg);border-radius:24px 24px 0 0;padding:24px;width:100%;max-width:480px;margin:0 auto;">
-      <div style="width:36px;height:4px;background:var(--border);border-radius:999px;margin:0 auto 18px;"></div>
-      <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:900;margin-bottom:16px;">🍎 Install on iPhone / iPad</h3>
-      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
-        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border-radius:12px;padding:12px;">
-          <span style="font-size:24px;flex-shrink:0;">1️⃣</span>
-          <span style="font-size:13px;line-height:1.5;">Open <strong>nexdeal-ten.vercel.app</strong> in <strong>Safari</strong> browser (not Chrome)</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border-radius:12px;padding:12px;">
-          <span style="font-size:24px;flex-shrink:0;">2️⃣</span>
-          <span style="font-size:13px;line-height:1.5;">Tap the <strong>Share button</strong> at the bottom (box with arrow ↑)</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border-radius:12px;padding:12px;">
-          <span style="font-size:24px;flex-shrink:0;">3️⃣</span>
-          <span style="font-size:13px;line-height:1.5;">Scroll down and tap <strong>"Add to Home Screen"</strong></span>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;background:var(--bg2);border-radius:12px;padding:12px;">
-          <span style="font-size:24px;flex-shrink:0;">4️⃣</span>
-          <span style="font-size:13px;line-height:1.5;">Tap <strong>"Add"</strong> — NexDeal appears on your home screen!</span>
-        </div>
-      </div>
-      <button onclick="document.getElementById('iosPopup').style.display='none'" style="width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;">Got it! ✅</button>
-    </div>
-  </div>
-
-
-  <footer class="footer">
-    <div class="ft-grid">
-      <div>
-        <div class="ft-logo"><span style="color:var(--p)">Nex</span><span style="color:var(--a)">Deal</span></div>
-        <p class="ft-desc">India's smartest price comparison. We redirect you directly to Amazon and Flipkart — always honest, never fake prices!</p>
-      </div>
-      <div>
-        <div class="ft-head">Products</div>
-        <a class="ft-link" href="#products">All Products</a>
-        <a class="ft-link" href="#deals">Hot Deals</a>
-        <a class="ft-link" href="#request">Request Product</a>
-      </div>
-      <div>
-        <div class="ft-head">Company</div>
-        <a class="ft-link" href="about.html">About Us</a>
-        <a class="ft-link" href="contact.html">Contact Us</a>
-        <a class="ft-link" href="nexdeal-ai-agents-1.html">AI Assistant</a>
-      </div>
-      <div>
-        <div class="ft-head">Legal</div>
-        <a class="ft-link" href="privacy.html">Privacy Policy</a>
-        <a class="ft-link" href="about.html#affiliate">Affiliate Disclosure</a>
-        <a class="ft-link" href="https://t.me/nexdeal_deals" target="_blank">Telegram</a>
-      </div>
-    </div>
-    <div class="ft-disc">ℹ️ Affiliate Disclosure: NexDeal earns a small commission from Amazon and Flipkart affiliate links at no extra cost to you. All prices shown are indicative — check Amazon/Flipkart for latest prices.</div>
-    <p class="ft-copy">© 2026 NexDeal · Built by Ajaykumar106 · CSE Student 🚀 · India's Smartest Price Comparison</p>
-  </footer>
-
-</main>
+<!-- INSTALL BANNER -->
+<div class="inst" id="instB">
+  <span style="font-size:20px">📲</span>
+  <div class="inst-tx"><strong>Install NexDeal!</strong><br><span style="font-size:11px;color:var(--muted)">Free app — get deal alerts!</span></div>
+  <button class="inst-btn" id="instBtn">Install</button>
+  <button class="inst-x" onclick="document.getElementById('instB').classList.remove('on')">✕</button>
 </div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>🇮🇳 India's Smartest Price Comparison</div>
+  <h1>Best Price.<br><span class="gr">Every Product.</span><br>One Place.</h1>
+  <p class="hero-sub">Compare Amazon vs Flipkart instantly. 100% honest prices — we never show fake numbers. Save thousands on every purchase!</p>
+  <div class="hero-btns">
+    <a href="#products" class="btn-p">🔥 Browse Deals</a>
+    <a href="nexdeal-ai-agents-1.html" class="btn-s">🤖 Ask AI</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Honest</div></div>
+    <div class="stat"><div class="stat-n">₹0</div><div class="stat-l">Extra Cost</div></div>
+    <div class="stat"><div class="stat-n">2</div><div class="stat-l">Platforms</div></div>
+    <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">AI Help</div></div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust">
+  <div class="trust-i">✅ 100% Honest Prices</div>
+  <div class="trust-i">🔗 Real Amazon & Flipkart Links</div>
+  <div class="trust-i">🤖 AI Shopping Assistant</div>
+  <div class="trust-i">🔔 Daily Deal Alerts</div>
+</div>
+
+<!-- SEARCH -->
+<div class="srch">
+  <div class="srch-in">
+    <span class="srch-ic">🔍</span>
+    <input class="srch-inp" type="text" id="srchInp" placeholder="Search phones, laptops, earbuds..." oninput="doSearch(this.value)">
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products" class="sec">
+  <div class="sec-lbl">// Best Deals</div>
+  <div class="sec-t">Compare & Buy <span class="gr">Smart 💡</span></div>
+  <div class="chips" id="chips">
+    <button class="chip on" onclick="setChip('all',this)">🔥 All</button>
+    <button class="chip" onclick="setChip('smartphones',this)">📱 Phones</button>
+    <button class="chip" onclick="setChip('laptops',this)">💻 Laptops</button>
+    <button class="chip" onclick="setChip('audio',this)">🎧 Audio</button>
+    <button class="chip" onclick="setChip('smartwatches',this)">⌚ Watches</button>
+    <button class="chip" onclick="setChip('cameras',this)">📷 Cameras</button>
+    <button class="chip" onclick="setChip('accessories',this)">🔌 Accessories</button>
+  </div>
+  <div class="sort-bar">
+    <span class="p-count" id="pCnt">Loading...</span>
+    <select class="sort-sel" onchange="doSort(this.value)">
+      <option value="default">Default</option>
+      <option value="rating">Top Rated</option>
+      <option value="stock">Low Stock</option>
+      <option value="name">A → Z</option>
+    </select>
+  </div>
+  <div class="grid" id="grid"><div class="loading"><div class="spin"></div><p>Loading products...</p></div></div>
+</section>
+
+<!-- HOT DEALS -->
+<section id="deals" class="sec">
+  <div class="sec-lbl">// Limited Time</div>
+  <div class="sec-t">🔥 Hot <span class="gr">Deals Today</span></div>
+  <div class="h-scroll" id="dealsRow"></div>
+</section>
+
+<!-- BANK OFFERS -->
+<section class="sec">
+  <div class="sec-lbl">// Save More</div>
+  <div class="sec-t">💳 Bank <span class="gr">Offers</span></div>
+  <div class="h-scroll" id="bankRow"></div>
+</section>
+
+<!-- FASHION -->
+<section id="fashion" class="sec">
+  <div class="sec-lbl">// Fashion & Lifestyle</div>
+  <div class="sec-t">Shop Fashion <span class="gr">& Beauty 👗</span></div>
+  <div class="chips" style="margin-bottom:14px;" id="fashChips">
+    <button class="chip on" onclick="setFashCat('all',this)">✨ All</button>
+    <button class="chip" onclick="setFashCat('clothes',this)">👗 Clothes</button>
+    <button class="chip" onclick="setFashCat('shoes',this)">👟 Shoes</button>
+    <button class="chip" onclick="setFashCat('beauty',this)">💄 Beauty</button>
+  </div>
+  <div class="fashion-grid" id="fashGrid"></div>
+  <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.5;">ℹ️ Affiliate links — NexDeal earns small commission when you shop, at no extra cost to you.</p>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="sec">
+  <div class="sec-lbl">// Real Buyers</div>
+  <div class="sec-t">What Indians <span class="gr">Say 🇮🇳</span></div>
+  <div class="h-scroll" id="revRow"></div>
+</section>
+
+<!-- REQUEST -->
+<section id="request" class="sec">
+  <div class="req-sec">
+    <div class="sec-lbl">// Can't Find It?</div>
+    <div class="req-t">Request Any Product 🙋</div>
+    <p class="req-s">Tell us what you want — we add it within 24 hours!</p>
+    <input class="req-inp" type="text" id="reqProd" placeholder="Product name (e.g. Noise ColorFit Ultra 3)">
+    <input class="req-inp" type="text" id="reqName" placeholder="Your name (optional)">
+    <button class="req-btn" id="reqBtn" onclick="submitReq()">🚀 Request This Product</button>
+    <p class="req-note">We'll add it and post on Telegram! ✅</p>
+  </div>
+</section>
+
+<!-- PWA INSTALL -->
+<section class="sec">
+  <div class="pwa-sec">
+    <div class="sec-lbl">// Free App</div>
+    <div class="req-t">📲 Install NexDeal App</div>
+    <p class="req-s" style="margin-bottom:0;">Works on Android, iOS, Windows & macOS. Get deal alerts instantly!</p>
+    <div class="pwa-btns">
+      <button id="pwaAndroid" onclick="triggerPWA()" style="background:#01875f;color:#fff;" class="pwa-btn"><span class="pwa-ic">🤖</span><div class="pwa-lbl"><span class="pwa-sub">Get it on</span>Android</div></button>
+      <button onclick="showIosInstall()" style="background:#000;color:#fff;" class="pwa-btn"><span class="pwa-ic">🍎</span><div class="pwa-lbl"><span class="pwa-sub">Download on</span>iPhone/iPad</div></button>
+      <button id="pwaWin" onclick="triggerPWA()" style="background:#0078d4;color:#fff;" class="pwa-btn"><span class="pwa-ic">🪟</span><div class="pwa-lbl"><span class="pwa-sub">Install on</span>Windows</div></button>
+      <button onclick="showMacInstall()" style="background:#555;color:#fff;" class="pwa-btn"><span class="pwa-ic">💻</span><div class="pwa-lbl"><span class="pwa-sub">Install on</span>macOS</div></button>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;">✅ Free forever · No sign-up · Works offline · Deal alerts</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="ft-logo"><span style="color:var(--p)">Nex</span><span style="color:var(--a)">Deal</span></div>
+  <p class="ft-desc">India's smartest price comparison. We redirect you to Amazon & Flipkart for real live prices. 100% honest — never fake numbers!</p>
+  <div class="ft-links">
+    <a class="ft-link" href="#products">All Products</a>
+    <a class="ft-link" href="about.html">About Us</a>
+    <a class="ft-link" href="#deals">Hot Deals</a>
+    <a class="ft-link" href="contact.html">Contact Us</a>
+    <a class="ft-link" href="#fashion">Fashion</a>
+    <a class="ft-link" href="privacy.html">Privacy Policy</a>
+    <a class="ft-link" href="#request">Request Product</a>
+    <a class="ft-link" href="https://t.me/nexdeal_deals" target="_blank">Telegram</a>
+    <a class="ft-link" href="nexdeal-ai-agents-1.html">AI Assistant</a>
+    <a class="ft-link" href="mailto:nexdeal.help@gmail.com">Email Us</a>
+  </div>
+  <div class="ft-disc">ℹ️ Affiliate Disclosure: NexDeal earns a small commission from Amazon & Flipkart affiliate links at no extra cost to you. Prices are set by the platforms directly.</div>
+  <p class="ft-copy">© 2026 NexDeal · Built by Ajaykumar106 · CSE Student 🚀</p>
+</footer>
 
 <!-- FLOATS -->
 <div class="floats">
-  <a href="nexdeal-ai-agents-1.html" class="fb f-ai" title="AI">🤖</a>
-  <a href="https://t.me/nexdeal_deals" class="fb f-tg" target="_blank" title="Telegram">✈️</a>
-</div>
-
-<!-- PRODUCT DETAIL MODAL -->
-<div class="det-ov" id="detOv">
-  <div class="det-modal" id="detModal">
-    <button class="det-close" onclick="closeDet()">✕</button>
-    <div class="det-handle"></div>
-    <div class="det-inner">
-      <div class="det-imgs" id="detImgs">
-        <div class="det-main-img" id="detMainImg"></div>
-        <div class="det-thumbs" id="detThumbs"></div>
-      </div>
-      <div class="det-info" id="detInfo"></div>
-    </div>
-  </div>
+  <a href="nexdeal-ai-agents-1.html" class="fb f-ai">🤖</a>
+  <a href="https://t.me/nexdeal_deals" class="fb f-tg" target="_blank">✈️</a>
 </div>
 
 <!-- CART MODAL -->
@@ -768,156 +584,124 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
   </div>
 </div>
 
+<!-- DETAIL MODAL -->
+<div class="det-ov" id="detOv">
+  <div class="det-modal">
+    <button class="det-close" onclick="closeDet()">✕</button>
+    <div class="det-hnd"></div>
+    <div class="det-body">
+      <div class="det-imgs" id="detImgs">
+        <div class="det-main" id="detMain"></div>
+        <div class="det-thumbs" id="detThumbs"></div>
+      </div>
+      <div class="det-info" id="detInfo"></div>
+    </div>
+  </div>
+</div>
+
+<!-- iOS POPUP -->
+<div class="ios-pop" id="iosPop">
+  <div class="ios-inner">
+    <div style="width:36px;height:4px;background:var(--border);border-radius:999px;margin:0 auto 16px;"></div>
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:900;margin-bottom:14px;">🍎 Install on iPhone/iPad</h3>
+    <div class="ios-step"><span class="ios-n">1️⃣</span><span>Open <strong>nexdeal-ten.vercel.app</strong> in <strong>Safari</strong></span></div>
+    <div class="ios-step"><span class="ios-n">2️⃣</span><span>Tap the <strong>Share button</strong> (↑) at the bottom</span></div>
+    <div class="ios-step"><span class="ios-n">3️⃣</span><span>Tap <strong>"Add to Home Screen"</strong></span></div>
+    <div class="ios-step"><span class="ios-n">4️⃣</span><span>Tap <strong>"Add"</strong> — NexDeal is on your home screen!</span></div>
+    <button onclick="document.getElementById('iosPop').classList.remove('on')" style="width:100%;padding:13px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:8px;">Got it! ✅</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 const AMZ='nexdeal-21';
 
-// PRODUCTS WITH 3 IMAGES EACH
+// PRODUCTS
 const DP=[
   {id:'d1',name:'iPhone 17 Pro 1TB',brand:'Apple',cat:'smartphones',emoji:'📱',
-   imgs:[
-     'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&q=85',
-     'https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=500&q=85',
-     'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500&q=85',
-   ],
-   desc:'A19 Pro Chip | 48MP ProCamera | 1TB | Titanium',rating:4.9,reviews:8420,stock:8,badge:'hot',
-   specs:[['Chip','Apple A19 Pro'],['Display','6.9" Super Retina XDR'],['Camera','48MP Main + 12MP Ultra Wide'],['Battery','Up to 30hr'],['Storage','1TB'],['Color','Titanium']],
-   offers:['💳 HDFC Card: Extra 5% off (Up to ₹5,000)','🏦 SBI: No Cost EMI on 12 months','🎁 Exchange offer: Up to ₹40,000 off'],
-   prodRevs:[{n:'Rahul K.',r:5,t:'Best iPhone ever! Camera is insane especially in low light.'},
-             {n:'Priya M.',r:5,t:'Finally made the switch from Android. No regrets at all!'}],
+   imgs:['https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&q=80','https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500&q=80','https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=500&q=80'],
+   desc:'A19 Pro | 48MP ProCamera | 1TB | Titanium',rating:4.9,reviews:8420,stock:8,badge:'hot',
+   specs:[['Chip','Apple A19 Pro'],['Display','6.9" Super Retina XDR'],['Camera','48MP Main'],['Storage','1TB'],['Battery','Up to 30hr'],['Build','Titanium']],
+   offers:['💳 HDFC: Extra 5% off upto ₹5,000','🏦 SBI: No Cost EMI 12 months','🎁 Exchange: Up to ₹40,000 off'],
+   prodRevs:[{n:'Rahul K.',r:5,t:'Best iPhone ever! Camera is insane in low light.'},{n:'Priya M.',r:5,t:'Switched from Android. No regrets at all!'}],
    amz:`https://www.amazon.in/s?k=iPhone+17+Pro+1TB&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=iPhone+17+Pro+1TB'},
   {id:'d2',name:'Samsung Galaxy S25 Ultra',brand:'Samsung',cat:'smartphones',emoji:'📱',
-   imgs:[
-     'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&q=85',
-     'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=85',
-     'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=500&q=85',
-   ],
+   imgs:['https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&q=80','https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80','https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=500&q=80'],
    desc:'Snapdragon 8 Elite | 200MP | 12GB RAM | S Pen',rating:4.8,reviews:6210,stock:15,badge:'new',
-   specs:[['Chip','Snapdragon 8 Elite'],['Display','6.9" Dynamic AMOLED 2X'],['Camera','200MP Main'],['RAM','12GB'],['Battery','5000mAh'],['S Pen','Built-in']],
-   offers:['💳 ICICI: ₹3,000 instant discount','🏦 Axis: No Cost EMI 6 months','🎁 Free Galaxy Buds worth ₹7,999'],
-   prodRevs:[{n:'Arjun S.',r:5,t:'S Pen is a game changer for productivity. Camera is just brilliant.'},
-             {n:'Neha P.',r:4,t:'Best Android phone. Battery lasts 2 days easily!'}],
+   specs:[['Chip','Snapdragon 8 Elite'],['Display','6.9" AMOLED'],['Camera','200MP Main'],['RAM','12GB'],['Battery','5000mAh'],['S Pen','Built-in']],
+   offers:['💳 ICICI: ₹3,000 instant off','🎁 Free Galaxy Buds worth ₹7,999'],
+   prodRevs:[{n:'Arjun S.',r:5,t:'S Pen is a game changer! Camera is brilliant.'},{n:'Neha P.',r:4,t:'Best Android phone. Battery lasts 2 days!'}],
    amz:`https://www.amazon.in/s?k=Samsung+Galaxy+S25+Ultra&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=Samsung+Galaxy+S25+Ultra'},
   {id:'d3',name:'Apple MacBook Air M4',brand:'Apple',cat:'laptops',emoji:'💻',
-   imgs:[
-     'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=85',
-     'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&q=85',
-     'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&q=85',
-   ],
+   imgs:['https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80','https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&q=80','https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&q=80'],
    desc:'M4 Chip | 16GB RAM | 512GB SSD | 18hr battery',rating:4.9,reviews:4320,stock:5,badge:'hot',
    specs:[['Chip','Apple M4'],['RAM','16GB Unified'],['Storage','512GB SSD'],['Display','13.6" Liquid Retina'],['Battery','Up to 18hr'],['Weight','1.24 kg']],
-   offers:['💳 HDFC: ₹5,000 instant cashback','🏦 SBI: No Cost EMI 24 months','🎁 Free AppleCare worth ₹19,900'],
-   prodRevs:[{n:'Dev R.',r:5,t:'Perfect laptop for CSE students. M4 chip handles everything effortlessly.'},
-             {n:'Kavya T.',r:5,t:'18hr battery life is real! Love the compact design.'}],
+   offers:['💳 HDFC: ₹5,000 cashback','🏦 SBI: No Cost EMI 24 months'],
+   prodRevs:[{n:'Dev R.',r:5,t:'Perfect for CSE students. M4 handles everything!'},{n:'Kavya T.',r:5,t:'18hr battery is real. Love it!'}],
    amz:`https://www.amazon.in/s?k=MacBook+Air+M4&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=MacBook+Air+M4'},
   {id:'d4',name:'Sony WH-1000XM6',brand:'Sony',cat:'audio',emoji:'🎧',
-   imgs:[
-     'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=85',
-     'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&q=85',
-     'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=500&q=85',
-   ],
+   imgs:['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80','https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&q=80','https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=500&q=80'],
    desc:'Industry-best ANC | 40hr Battery | Hi-Res Audio',rating:4.9,reviews:9870,stock:22,badge:'new',
-   specs:[['ANC','Industry Best',''],['Battery','40hr (ANC on)'],['Drivers','30mm HD'],['Codec','LDAC, AAC, SBC'],['Foldable','Yes'],['Weight','250g']],
-   offers:['💳 Kotak: 10% cashback upto ₹2,000','🎁 Free carrying case worth ₹1,500'],
-   prodRevs:[{n:'Vikram J.',r:5,t:'ANC is absolutely insane. Forgot I was on a plane!'},
-             {n:'Sneha A.',r:5,t:'Best headphones I\'ve ever owned. Worth every rupee.'}],
+   specs:[['ANC','Industry Best'],['Battery','40hr'],['Drivers','30mm HD'],['Codec','LDAC, AAC'],['Foldable','Yes'],['Weight','250g']],
+   offers:['💳 Kotak: 10% cashback upto ₹2,000'],
+   prodRevs:[{n:'Vikram J.',r:5,t:'ANC is insane. Forgot I was on a plane!'},{n:'Sneha A.',r:5,t:'Best headphones I ever owned!'}],
    amz:`https://www.amazon.in/s?k=Sony+WH-1000XM6&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=Sony+WH-1000XM6'},
   {id:'d5',name:'Apple Watch Ultra 3',brand:'Apple',cat:'smartwatches',emoji:'⌚',
-   imgs:[
-     'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=500&q=85',
-     'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=85',
-     'https://images.unsplash.com/photo-1617043786394-f977fa12eddf?w=500&q=85',
-   ],
-   desc:'Titanium | 60hr battery | Always-on GPS | Dive-proof',rating:4.8,reviews:3210,stock:10,badge:'new',
-   specs:[['Case','49mm Titanium'],['Display','Always-On Retina'],['Battery','Up to 60hr'],['GPS','Precision Dual-freq'],['Water','100m depth'],['Chip','S10 Dual-core']],
-   offers:['💳 HDFC: ₹3,000 instant discount','🏦 ICICI: No Cost EMI 12 months'],
-   prodRevs:[{n:'Rohit M.',r:5,t:'Built like a tank. GPS tracking is incredibly accurate.'},
-             {n:'Anita B.',r:4,t:'60hr battery is real. Perfect for treks!'}],
+   imgs:['https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=500&q=80','https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80','https://images.unsplash.com/photo-1617043786394-f977fa12eddf?w=500&q=80'],
+   desc:'Titanium | 60hr battery | Always-on GPS',rating:4.8,reviews:3210,stock:10,badge:'new',
+   specs:[['Case','49mm Titanium'],['Display','Always-On Retina'],['Battery','60hr'],['GPS','Dual-frequency'],['Water','100m']],
+   offers:['💳 HDFC: ₹3,000 instant off'],
+   prodRevs:[{n:'Rohit M.',r:5,t:'Built like a tank. GPS is incredibly accurate.'},{n:'Anita B.',r:4,t:'60hr battery is real!'}],
    amz:`https://www.amazon.in/s?k=Apple+Watch+Ultra+3&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=Apple+Watch+Ultra+3'},
   {id:'d6',name:'OnePlus 13R 5G',brand:'OnePlus',cat:'smartphones',emoji:'📱',
-   imgs:[
-     'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=85',
-     'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&q=85',
-     'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=500&q=85',
-   ],
-   desc:'SD 8s Gen 3 | 50MP | 5500mAh | 80W Charge',rating:4.6,reviews:5430,stock:30,badge:'',
-   specs:[['Chip','Snapdragon 8s Gen 3'],['Display','6.78" 120Hz AMOLED'],['Camera','50MP Sony LYT-700'],['RAM','12GB'],['Battery','5500mAh'],['Charging','80W SuperVOOC']],
-   offers:['💳 Axis: ₹1,500 instant discount','🎁 6 months free screen replacement'],
-   prodRevs:[{n:'Aditya K.',r:5,t:'Best mid-range flagship! 80W charging is blazing fast.'},
-             {n:'Meera S.',r:4,t:'Great value. Camera surprised me, especially portraits.'}],
+   imgs:['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80','https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&q=80','https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=500&q=80'],
+   desc:'SD 8s Gen 3 | 50MP | 5500mAh | 80W',rating:4.6,reviews:5430,stock:30,badge:'',
+   specs:[['Chip','Snapdragon 8s Gen 3'],['Display','6.78" 120Hz AMOLED'],['Camera','50MP'],['Battery','5500mAh'],['Charging','80W']],
+   offers:['💳 Axis: ₹1,500 instant off'],
+   prodRevs:[{n:'Aditya K.',r:5,t:'Best mid-range! 80W charging is crazy fast.'},{n:'Meera S.',r:4,t:'Great value. Camera surprised me!'}],
    amz:`https://www.amazon.in/s?k=OnePlus+13R&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=OnePlus+13R'},
   {id:'d7',name:'boAt Airdopes 141',brand:'boAt',cat:'audio',emoji:'🎵',
-   imgs:[
-     'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=85',
-     'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=500&q=85',
-     'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&q=85',
-   ],
-   desc:'42Hr Battery | ENx Tech | IPX4 Waterproof',rating:4.4,reviews:28450,stock:100,badge:'sale',
-   specs:[['Total Battery','42hr (6+36hr case)'],['Driver','8mm Dynamic'],['ANC','ENx Noise Cancellation'],['Water','IPX4'],['Codec','SBC'],['Connect','Instant touch']],
-   offers:['🎁 1 year brand warranty','💳 Free case cover worth ₹299'],
-   prodRevs:[{n:'Sanjay P.',r:4,t:'Best earbuds under ₹700. ENx mic is great for calls.'},
-             {n:'Pooja R.',r:5,t:'Battery actually lasts 40+ hours. Incredible value!'}],
+   imgs:['https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=80','https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=500&q=80','https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&q=80'],
+   desc:'42Hr Battery | ENx Tech | IPX4',rating:4.4,reviews:28450,stock:100,badge:'sale',
+   specs:[['Battery','42hr total'],['ANC','ENx Tech'],['Water','IPX4'],['Codec','SBC']],
+   offers:['🎁 1 year warranty'],
+   prodRevs:[{n:'Sanjay P.',r:4,t:'Best earbuds under ₹700!'},{n:'Pooja R.',r:5,t:'Battery actually lasts 40+ hours!'}],
    amz:`https://www.amazon.in/s?k=boAt+Airdopes+141&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=boAt+Airdopes+141'},
   {id:'d8',name:'Noise ColorFit Ultra 3',brand:'Noise',cat:'smartwatches',emoji:'⌚',
-   imgs:[
-     'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=85',
-     'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=500&q=85',
-     'https://images.unsplash.com/photo-1617043786394-f977fa12eddf?w=500&q=85',
-   ],
-   desc:'1.96" AMOLED | BT Calling | 100+ Sports | SpO2',rating:4.3,reviews:12680,stock:50,badge:'sale',
-   specs:[['Display','1.96" AMOLED'],['BT Calling','Yes, Bluetooth 5.3'],['Battery','7 days typical'],['Sports','100+ modes'],['SpO2','Yes'],['Water','IP68']],
-   offers:['🎁 Extra strap free worth ₹499','💳 HDFC: 5% cashback'],
-   prodRevs:[{n:'Harsh T.',r:4,t:'AMOLED screen is very bright outdoors. BT calling works great.'},
-             {n:'Divya N.',r:4,t:'Best smartwatch under ₹2500. Noise app is smooth.'}],
+   imgs:['https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80','https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=500&q=80','https://images.unsplash.com/photo-1617043786394-f977fa12eddf?w=500&q=80'],
+   desc:'1.96" AMOLED | BT Calling | 100+ Sports',rating:4.3,reviews:12680,stock:50,badge:'sale',
+   specs:[['Display','1.96" AMOLED'],['Calling','Bluetooth 5.3'],['Battery','7 days'],['Sports','100+ modes'],['Water','IP68']],
+   offers:['🎁 Extra strap free'],
+   prodRevs:[{n:'Harsh T.',r:4,t:'AMOLED screen is very bright!'},{n:'Divya N.',r:4,t:'Best under ₹2500!'}],
    amz:`https://www.amazon.in/s?k=Noise+ColorFit+Ultra+3&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=Noise+ColorFit+Ultra+3'},
   {id:'d9',name:'Dell Inspiron 15',brand:'Dell',cat:'laptops',emoji:'💻',
-   imgs:[
-     'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&q=85',
-     'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=85',
-     'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&q=85',
-   ],
-   desc:'Intel i7-13th Gen | 16GB | 512GB SSD | Win 11',rating:4.5,reviews:3120,stock:8,badge:'',
-   specs:[['CPU','Intel Core i7-1355U'],['RAM','16GB DDR5'],['Storage','512GB NVMe SSD'],['Display','15.6" FHD IPS'],['OS','Windows 11 Home'],['Battery','54Whr']],
-   offers:['💳 SBI: ₹3,000 instant discount','🏦 Axis: No Cost EMI 9 months','🎁 Dell bag free worth ₹1,499'],
-   prodRevs:[{n:'Karan V.',r:5,t:'Great laptop for college. i7 handles all coding projects easily.'},
-             {n:'Ritika M.',r:4,t:'Build quality is solid. Display is bright and accurate.'}],
+   imgs:['https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&q=80','https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80','https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500&q=80'],
+   desc:'Intel i7 | 16GB | 512GB SSD | Win 11',rating:4.5,reviews:3120,stock:8,badge:'',
+   specs:[['CPU','Intel Core i7'],['RAM','16GB DDR5'],['Storage','512GB SSD'],['Display','15.6" FHD'],['OS','Windows 11']],
+   offers:['💳 SBI: ₹3,000 instant off'],
+   prodRevs:[{n:'Karan V.',r:5,t:'Great for college. i7 handles all coding!'},{n:'Ritika M.',r:4,t:'Solid build quality!'}],
    amz:`https://www.amazon.in/s?k=Dell+Inspiron+15+i7&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=Dell+Inspiron+15+i7'},
   {id:'d10',name:'Anker 65W GaN Charger',brand:'Anker',cat:'accessories',emoji:'🔌',
-   imgs:[
-     'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&q=85',
-     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=85',
-     'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=500&q=85',
-   ],
-   desc:'GaN II | 3 Ports (2C+1A) | Ultra Compact | All Devices',rating:4.6,reviews:8750,stock:200,badge:'sale',
-   specs:[['Power','65W Total'],['Ports','2x USB-C + 1x USB-A'],['Tech','GaN II'],['Size','Pocket size'],['Compat','All devices'],['Safety','MultiProtect']],
-   offers:['🎁 18 month warranty','💳 Amazon Pay: Extra 5% off'],
-   prodRevs:[{n:'Naman R.',r:5,t:'Charges MacBook AND iPhone simultaneously! Tiny size is a bonus.'},
-             {n:'Trisha K.',r:5,t:'Best charger for travel. No more carrying multiple adapters!'}],
+   imgs:['https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500&q=80','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80','https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=500&q=80'],
+   desc:'GaN II | 3 Ports | Ultra Compact',rating:4.6,reviews:8750,stock:200,badge:'sale',
+   specs:[['Power','65W Total'],['Ports','2x USB-C + 1x USB-A'],['Tech','GaN II'],['Size','Pocket size']],
+   offers:['🎁 18 month warranty'],
+   prodRevs:[{n:'Naman R.',r:5,t:'Charges MacBook AND iPhone at same time!'},{n:'Trisha K.',r:5,t:'Best charger for travel!'}],
    amz:`https://www.amazon.in/s?k=Anker+65W+GaN+Charger&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=Anker+65W+Charger'},
   {id:'d11',name:'Sony ZV-E10 II',brand:'Sony',cat:'cameras',emoji:'📷',
-   imgs:[
-     'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&q=85',
-     'https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?w=500&q=85',
-     'https://images.unsplash.com/photo-1617005082133-548c4dd27f35?w=500&q=85',
-   ],
-   desc:'24.2MP | 4K60fps | Vlog Camera | E-Mount Compatible',rating:4.7,reviews:2340,stock:12,badge:'new',
-   specs:[['Sensor','24.2MP APS-C Exmor R'],['Video','4K 60fps'],['AF','AI Subject Recognition'],['Screen','Vari-angle LCD'],['Mount','Sony E-Mount'],['Mic','Directional 3-capsule']],
-   offers:['💳 HDFC: ₹2,500 instant cashback','🎁 Free 32GB SD card worth ₹799'],
-   prodRevs:[{n:'Ayaan S.',r:5,t:'Perfect vlogging camera. AI autofocus tracks subjects perfectly.'},
-             {n:'Lavanya P.',r:4,t:'4K60fps is incredibly smooth. Content quality jumped massively!'}],
+   imgs:['https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&q=80','https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?w=500&q=80','https://images.unsplash.com/photo-1617005082133-548c4dd27f35?w=500&q=80'],
+   desc:'24.2MP | 4K60fps | Vlog Camera',rating:4.7,reviews:2340,stock:12,badge:'new',
+   specs:[['Sensor','24.2MP APS-C'],['Video','4K 60fps'],['AF','AI Subject Recognition'],['Mount','Sony E-Mount']],
+   offers:['💳 HDFC: ₹2,500 cashback'],
+   prodRevs:[{n:'Ayaan S.',r:5,t:'Perfect vlogging camera!'},{n:'Lavanya P.',r:4,t:'4K60fps is incredibly smooth!'}],
    amz:`https://www.amazon.in/s?k=Sony+ZV-E10+II&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=Sony+ZV-E10+II'},
   {id:'d12',name:'Realme GT 7 Pro',brand:'Realme',cat:'smartphones',emoji:'📱',
-   imgs:[
-     'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=500&q=85',
-     'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=85',
-     'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&q=85',
-   ],
-   desc:'SD 8 Elite | 50MP | 6000mAh | 120Hz AMOLED',rating:4.5,reviews:4120,stock:25,badge:'',
-   specs:[['Chip','Snapdragon 8 Elite'],['Display','6.78" 120Hz AMOLED'],['Camera','50MP Sony LYT-818'],['Battery','6000mAh'],['Charging','120W SuperVOOC'],['OS','Realme UI 6.0']],
-   offers:['💳 SBI: ₹2,000 instant discount','🎁 Free back cover worth ₹599'],
-   prodRevs:[{n:'Suresh D.',r:5,t:'6000mAh battery + 120W charging = never worry about battery again.'},
-             {n:'Aisha M.',r:4,t:'Snapdragon 8 Elite handles everything smoothly. Great value!'}],
+   imgs:['https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=500&q=80','https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80','https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&q=80'],
+   desc:'SD 8 Elite | 50MP | 6000mAh | 120Hz',rating:4.5,reviews:4120,stock:25,badge:'',
+   specs:[['Chip','Snapdragon 8 Elite'],['Display','6.78" 120Hz AMOLED'],['Camera','50MP'],['Battery','6000mAh'],['Charging','120W']],
+   offers:['💳 SBI: ₹2,000 instant off'],
+   prodRevs:[{n:'Suresh D.',r:5,t:'6000mAh + 120W = never worry about battery!'},{n:'Aisha M.',r:4,t:'Great value phone!'}],
    amz:`https://www.amazon.in/s?k=Realme+GT+7+Pro&tag=${AMZ}`,flp:'https://www.flipkart.com/search?q=Realme+GT+7+Pro'},
 ];
 
@@ -926,61 +710,57 @@ const DEALS=[
   {name:'Sony WH-1000XM6',orig:'₹32,990',price:'₹27,490',disc:'17% OFF',emoji:'🎧',timer:'5h 30m',amz:`https://www.amazon.in/s?k=Sony+WH1000XM6&tag=${AMZ}`},
   {name:'MacBook Air M4',orig:'₹1,19,900',price:'₹1,09,900',disc:'8% OFF',emoji:'💻',timer:'12h',amz:`https://www.amazon.in/s?k=MacBook+Air+M4&tag=${AMZ}`},
   {name:'boAt Airdopes 141',orig:'₹1,999',price:'₹699',disc:'65% OFF',emoji:'🎵',timer:'1h 45m',amz:`https://www.amazon.in/s?k=boAt+Airdopes+141&tag=${AMZ}`},
-  {name:'Noise ColorFit Ultra 3',orig:'₹4,999',price:'₹2,499',disc:'50% OFF',emoji:'⌚',timer:'3h',amz:`https://www.amazon.in/s?k=Noise+ColorFit+Ultra+3&tag=${AMZ}`},
 ];
 const BANK=[
-  {ic:'💳',nm:'HDFC Bank',off:'Extra 10% off on Electronics (Up to ₹5,000)',vl:'Valid till 31 Mar'},
-  {ic:'🏦',nm:'SBI Card',off:'₹2,000 cashback on purchase of ₹20,000+',vl:'Valid till 25 Mar'},
+  {ic:'💳',nm:'HDFC Bank',off:'Extra 10% off Electronics (Up to ₹5,000)',vl:'Valid till 31 Mar'},
+  {ic:'🏦',nm:'SBI Card',off:'₹2,000 cashback on ₹20,000+',vl:'Valid till 25 Mar'},
   {ic:'💳',nm:'ICICI Bank',off:'No Cost EMI on 6 & 12 months',vl:'Valid till 30 Mar'},
-  {ic:'🏧',nm:'Kotak Card',off:'5% unlimited cashback on all orders',vl:'Valid till 28 Mar'},
-  {ic:'💳',nm:'Axis Bank',off:'₹1,500 off on minimum purchase ₹15,000',vl:'Valid till 31 Mar'},
+  {ic:'🏧',nm:'Kotak Card',off:'5% unlimited cashback',vl:'Valid till 28 Mar'},
+  {ic:'💳',nm:'Axis Bank',off:'₹1,500 off on ₹15,000+',vl:'Valid till 31 Mar'},
 ];
 const REVS=[
-  {n:'Rohan M.',i:'R',r:5,t:'Saved ₹3,200 on my OnePlus! NexDeal showed Amazon was cheaper. Superb!'},
-  {n:'Priya S.',i:'P',r:5,t:'AI assistant helped me choose between Sony and boAt. Bought Sony — no regrets!'},
-  {n:'Aditya K.',i:'A',r:4,t:'Telegram channel is 🔥 — hot deals posted daily. Keep it up bhai!'},
-  {n:'Sneha T.',i:'S',r:5,t:'Bought MacBook M4 via link here, got extra cashback too. Saved ₹8,000!'},
-  {n:'Vikram J.',i:'V',r:4,t:'Clean interface. No fake prices. Just honest deals. My go-to site!'},
+  {n:'Rohan M.',i:'R',r:5,t:'Saved ₹3,200 on my OnePlus! NexDeal showed Amazon was cheaper!'},
+  {n:'Priya S.',i:'P',r:5,t:'AI assistant helped me choose earbuds. Bought Sony — no regrets!'},
+  {n:'Aditya K.',i:'A',r:4,t:'Telegram channel is 🔥 — hot deals daily!'},
+  {n:'Sneha T.',i:'S',r:5,t:'Bought MacBook M4 via link here. Saved ₹8,000 total!'},
+  {n:'Vikram J.',i:'V',r:4,t:'Clean. No fake prices. My go-to site for electronics!'},
+];
+const FASH=[
+  {name:'Myntra',emoji:'👗',cats:['all','clothes'],color:'#ff3f6c',bg:'#fff0f4',border:'#ffd1dc',desc:'H&M, Zara & 500+ brands',badge:'Most Popular',deals:'50-80% OFF',link:'https://www.myntra.com/'},
+  {name:'AJIO',emoji:'🌟',cats:['all','clothes','shoes'],color:'#f26522',bg:'#fff5f0',border:'#ffd4b8',desc:'Trendy fashion & originals',badge:'Trending',deals:'Up to 70% OFF',link:'https://www.ajio.com/'},
+  {name:'Nykaa',emoji:'💄',cats:['all','beauty'],color:'#fc2779',bg:'#fff0f7',border:'#ffb3d6',desc:'2000+ beauty brands',badge:'Beauty',deals:'Free gift ₹999+',link:'https://www.nykaa.com/'},
+  {name:'Bewakoof',emoji:'😎',cats:['all','clothes'],color:'#3d5af1',bg:'#f0f3ff',border:'#c0caff',desc:'Quirky tees & Gen Z wear',badge:'Gen Z Fav',deals:'Buy 2 Get 1 Free',link:'https://www.bewakoof.com/'},
+  {name:'Nykaa Fashion',emoji:'👠',cats:['all','clothes'],color:'#fc2779',bg:'#fff0f7',border:'#ffb3d6',desc:'Ethnic & western wear',badge:'New',deals:'Min 40% OFF',link:'https://www.nykaafashion.com/'},
+  {name:'Puma',emoji:'🐆',cats:['all','shoes','clothes'],color:'#1a1a1a',bg:'#f5f5f5',border:'#ddd',desc:'Sports shoes & apparel',badge:'Sports',deals:'Up to 50% OFF',link:'https://in.puma.com/'},
+  {name:'Mamaearth',emoji:'🌿',cats:['all','beauty'],color:'#4caf50',bg:'#f0fff0',border:'#b8dfb8',desc:'Natural toxin-free beauty',badge:'Natural',deals:'Flat 20% OFF',link:'https://mamaearth.in/'},
+  {name:'Campus Shoes',emoji:'👟',cats:['all','shoes'],color:'#e91e63',bg:'#fff0f5',border:'#f8bbd9',desc:'Affordable footwear',badge:'Value Pick',deals:'Starting ₹499',link:'https://www.campusshoes.com/'},
 ];
 
-let PRODS=[],curCat='all',curSearch='',curSort='default';
+let PRODS=[],curCat='all',curSearch='',curSort='default',curFash='all';
 let cart=JSON.parse(localStorage.getItem('nd_cart')||'[]');
 let wish=JSON.parse(localStorage.getItem('nd_wish')||'[]');
 
 window.addEventListener('fb-ready',()=>{
   PRODS=(window._FBP&&window._FBP.length)
-    ?window._FBP.map(p=>{
-        // Support all image field names from admin panel
-        const imgs=p.imgs||[
-          p.image1||p.img||p.image||'',
-          p.image2||'',
-          p.image3||''
-        ].filter(Boolean);
-        return{
-          ...p,
-          imgs,
-          // Support all link field names from admin panel
-          amz:p.amazonLink||p.amazon||p.amz||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ}`,
-          flp:p.flipkartLink||p.flipkart||p.flp||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`,
-          cat:p.cat||p.category||'all',
-          badge:p.badge||p.tag||p.label||'',
-          rating:parseFloat(p.rating)||4.5,
-          reviews:parseInt(p.reviews||p.reviewCount||p.rev)||0,
-          stock:parseInt(p.stock||p.stockLeft)||99,
-        };
-      })
+    ?window._FBP.map(p=>({
+        ...p,
+        imgs:p.imgs||[p.image1||p.img||p.image||'',p.image2||'',p.image3||''].filter(Boolean),
+        amz:p.amazonLink||p.amazon||p.amz||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ}`,
+        flp:p.flipkartLink||p.flipkart||p.flp||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`,
+        cat:p.cat||p.category||'all',badge:p.badge||p.tag||'',
+        rating:parseFloat(p.rating)||4.5,reviews:parseInt(p.reviews||p.rev)||0,stock:parseInt(p.stock)||99,
+      }))
     :DP;
-  console.log('✅ Loaded',PRODS.length,'products from',window._FBP?'Firebase':'defaults');
   render();
 });
 setTimeout(()=>{if(!PRODS.length){PRODS=DP;render();}},3500);
 
 function getF(){
   let l=[...PRODS];
-  if(curCat!=='all')l=l.filter(p=>(p.cat||p.category)===curCat);
-  if(curSearch.trim()){const q=curSearch.toLowerCase();l=l.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.brand||'').toLowerCase().includes(q)||(p.desc||p.specs||'').toLowerCase().includes(q));}
-  if(curSort==='rating')l.sort((a,b)=>(b.rating||0)-(a.rating||0));
-  else if(curSort==='stock')l.sort((a,b)=>(a.stock||99)-(b.stock||99));
+  if(curCat!=='all')l=l.filter(p=>p.cat===curCat);
+  if(curSearch.trim()){const q=curSearch.toLowerCase();l=l.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.brand||'').toLowerCase().includes(q));}
+  if(curSort==='rating')l.sort((a,b)=>b.rating-a.rating);
+  else if(curSort==='stock')l.sort((a,b)=>a.stock-b.stock);
   else if(curSort==='name')l.sort((a,b)=>(a.name||'').localeCompare(b.name||''));
   return l;
 }
@@ -988,141 +768,122 @@ function getF(){
 function render(){
   const l=getF(),g=document.getElementById('grid');
   document.getElementById('pCnt').textContent=l.length+' products';
-  if(!l.length){g.innerHTML='<div class="empty"><div style="font-size:44px;margin-bottom:10px">🔍</div><p>No products found</p></div>';return;}
+  if(!l.length){g.innerHTML='<div class="empty"><div style="font-size:40px;margin-bottom:8px">🔍</div><p>No products found</p></div>';return;}
   g.innerHTML=l.map((p,i)=>{
-    const imgs=p.imgs||[p.img||p.image||''];
+    const imgs=p.imgs||[p.img||''];
     const img0=imgs[0]||'';
     const badge=p.badge||'',rating=parseFloat(p.rating)||4.5,stock=parseInt(p.stock)||99,em=p.emoji||'📦';
+    const amz=p.amz||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ}`;
+    const flp=p.flp||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`;
     const pid=p.id||i;
     const stkPct=Math.min(100,Math.max(5,(stock/200)*100));
-    // Build slides
     const slides=imgs.slice(0,3).map(img=>img
       ?`<div class="p-slide"><img src="${img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=\\'em\\'>${em}</span>'"></div>`
-      :`<div class="p-slide"><span class="em" style="font-size:64px">${em}</span></div>`
-    ).join('');
-    const dots=imgs.slice(0,3).map((_,di)=>`<div class="p-dot${di===0?' on':''}" onclick="slideCard('${pid}',${di},event)"></div>`).join('');
+      :`<div class="p-slide"><span class="em">${em}</span></div>`).join('');
+    const dots=imgs.filter(Boolean).slice(0,3).map((_,di)=>`<div class="p-dot${di===0?' on':''}" onclick="slideC('${pid}',${di},event)"></div>`).join('');
     return`<div class="pcard" style="animation-delay:${i*.04}s" data-slide="0" onclick="openDet('${pid}')">
       ${badge?`<span class="p-bdg b-${badge}">${badge.toUpperCase()}</span>`:''}
       <button class="p-wsh" onclick="toggleWish('${pid}',event)">${wish.includes(String(pid))?'❤️':'🤍'}</button>
-      <div class="p-carousel">
-        <div class="p-slides" id="slides-${pid}">${slides}</div>
-        <div class="p-dots" id="dots-${pid}">${dots}</div>
-        ${imgs.length>1?`<button class="p-prev" onclick="slideCard('${pid}',-1,event)">‹</button><button class="p-next" onclick="slideCard('${pid}',1,event)">›</button>`:''}
+      <div class="p-car">
+        <div class="p-slides" id="sl-${pid}">${slides}</div>
+        ${dots?`<div class="p-dots" id="d-${pid}">${dots}</div>`:''}
+        ${imgs.filter(Boolean).length>1?`<button class="p-prev" onclick="slideC('${pid}',-1,event)">‹</button><button class="p-next" onclick="slideC('${pid}',1,event)">›</button>`:''}
       </div>
       <div class="p-inf">
         <div class="p-br">${p.brand||''}</div>
         <div class="p-nm">${p.name}</div>
-        <div class="p-rt"><span class="stars">${'★'.repeat(Math.floor(rating))}</span><span class="r-c">${rating} (${(parseInt(p.reviews||p.rev)||0).toLocaleString('en-IN')})</span></div>
+        <div class="p-rt"><span class="stars">${'★'.repeat(Math.floor(rating))}</span><span class="r-c">${rating} (${(parseInt(p.reviews)||0).toLocaleString('en-IN')})</span></div>
         ${stock<20?`<div class="p-stk">⚠️ Only ${stock} left!<div class="stk-bar"><div class="stk-fill" style="width:${stkPct}%"></div></div></div>`:''}
         <div class="p-plts">
-          <a class="plt-btn plt-amz" href="${p.amz||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ}`}" target="_blank" rel="nofollow sponsored" onclick="event.stopPropagation()">🛒 Amazon</a>
-          <a class="plt-btn plt-flp" href="${p.flp||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`}" target="_blank" rel="nofollow sponsored" onclick="event.stopPropagation()">🏬 Flipkart</a>
+          <a class="plt-btn plt-amz" href="${amz}" target="_blank" rel="nofollow sponsored" onclick="event.stopPropagation()">🛒 Amazon</a>
+          <a class="plt-btn plt-flp" href="${flp}" target="_blank" rel="nofollow sponsored" onclick="event.stopPropagation()">🏬 Flipkart</a>
         </div>
         <button class="add-btn" onclick="addCart('${pid}');event.stopPropagation()">+ Add to Cart</button>
       </div></div>`;
   }).join('');
 }
 
-// CARD CAROUSEL
-function slideCard(pid,dir,e){
+function slideC(pid,dir,e){
   e.stopPropagation();
-  const card=document.querySelector(`[data-slide]`);
-  const slidesEl=document.getElementById('slides-'+pid);
-  const dotsEl=document.getElementById('dots-'+pid);
-  if(!slidesEl)return;
-  const total=slidesEl.children.length;
-  const pcard=slidesEl.closest('.pcard');
+  const sl=document.getElementById('sl-'+pid);
+  const dd=document.getElementById('d-'+pid);
+  if(!sl)return;
+  const pcard=sl.closest('.pcard');
+  const total=sl.children.length;
   let cur=parseInt(pcard.getAttribute('data-slide')||0);
-  if(typeof dir==='number'&&dir>1){cur=dir;}
-  else{cur=((cur+dir)+total)%total;}
+  if(typeof dir==='number'&&dir>=0&&dir<total)cur=dir;
+  else cur=((cur+dir)+total)%total;
   pcard.setAttribute('data-slide',cur);
-  slidesEl.style.transform=`translateX(-${cur*100}%)`;
-  if(dotsEl){dotsEl.querySelectorAll('.p-dot').forEach((d,i)=>d.classList.toggle('on',i===cur));}
+  sl.style.transform=`translateX(-${cur*100}%)`;
+  if(dd)dd.querySelectorAll('.p-dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
 }
 
-// PRODUCT DETAIL
 function openDet(pid){
   const p=PRODS.find(x=>String(x.id)===String(pid));if(!p)return;
-  const imgs=p.imgs||[p.img||p.image||''];
+  const imgs=p.imgs||[p.img||''];
   const em=p.emoji||'📦';
   const rating=parseFloat(p.rating)||4.5;
   const stock=parseInt(p.stock)||99;
   const amz=p.amz||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ}`;
   const flp=p.flp||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`;
-
-  // Main image
-  const mainEl=document.getElementById('detMainImg');
-  mainEl.innerHTML=imgs[0]
-    ?`<img src="${imgs[0]}" alt="${p.name}" id="detMainImgEl" style="max-width:80%;max-height:80%;object-fit:contain;filter:drop-shadow(0 12px 32px rgba(79,70,229,.2));animation:imgFloat 3s ease-in-out infinite;">`
+  const img0=imgs[0]||'';
+  document.getElementById('detMain').innerHTML=img0
+    ?`<img src="${img0}" alt="${p.name}" id="detMainImg" style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(79,70,229,.2));animation:imgFloat 3s ease-in-out infinite;">`
     :`<span class="det-em">${em}</span>`;
-
-  // Thumbnails
-  document.getElementById('detThumbs').innerHTML=imgs.slice(0,3).map((img,i)=>
-    `<div class="det-thumb${i===0?' on':''}" onclick="switchDetImg('${img||''}','${em}',this)" data-img="${img||''}">
-      ${img?`<img src="${img}" alt="view ${i+1}">`:`<span class="tem">${em}</span>`}
-    </div>`
+  document.getElementById('detThumbs').innerHTML=imgs.slice(0,3).filter(Boolean).map((img,i)=>
+    `<div class="det-thumb${i===0?' on':''}" onclick="switchImg('${img}','${em}',this)"><img src="${img}" alt="view ${i+1}" onerror="this.outerHTML='<span style=\\'font-size:20px\\'>${em}</span>'"></div>`
   ).join('');
-
-  // Info panel
   const specs=p.specs||[];
   const offers=p.offers||[];
   const prodRevs=p.prodRevs||[];
   document.getElementById('detInfo').innerHTML=`
     <div class="det-br">${p.brand||''}</div>
-    <h2 class="det-nm">${p.name}</h2>
+    <div class="det-nm">${p.name}</div>
     <div class="det-rt">
-      <span class="det-stars-box">★ ${rating}</span>
-      <span class="det-rev-count">${(parseInt(p.reviews||p.rev)||0).toLocaleString('en-IN')} ratings</span>
-      <span class="det-verified">✅ Verified Reviews</span>
+      <span class="det-star-box">★ ${rating}</span>
+      <span class="det-rev-c">${(parseInt(p.reviews)||0).toLocaleString('en-IN')} ratings</span>
+      <span class="det-ver">✅ Verified</span>
     </div>
     <div class="det-price-box">
-      <div class="det-price-label">💡 Best Price — Check on Platform</div>
-      <div class="det-best-price">
-        <span class="det-price-tag det-amz-tag">🛒 Amazon — Check Price</span>
-        <span class="det-price-tag det-flp-tag">🏬 Flipkart — Check Price</span>
+      <div class="det-price-lbl">💡 Check Real Price On Platform</div>
+      <div class="det-plat-row">
+        <span class="det-plat det-amz">🛒 Amazon</span>
+        <span class="det-plat det-flp">🏬 Flipkart</span>
       </div>
-      <div class="det-honest">✅ We redirect you directly to Amazon & Flipkart for the <strong>real live price</strong>. No fake numbers — always honest!</div>
+      <div class="det-honest">✅ We redirect you to Amazon & Flipkart for the <strong>real live price</strong>. No fake numbers — always honest!</div>
     </div>
-    ${stock<20?`<div style="background:#fff5f5;border:1px solid #fee2e2;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--red);font-weight:700;">⚠️ Only ${stock} units left — Order soon!</div>`:''}
+    ${stock<20?`<div class="det-stk-warn">⚠️ Only ${stock} units left — Order soon!</div>`:''}
     <div class="det-buy-row">
-      <a class="det-buy-btn det-amz-btn" href="${amz}" target="_blank" rel="nofollow sponsored">🛒 Buy on Amazon</a>
-      <a class="det-buy-btn det-flp-btn" href="${flp}" target="_blank" rel="nofollow sponsored">🏬 Buy on Flipkart</a>
+      <a class="det-buy det-amz-btn" href="${amz}" target="_blank" rel="nofollow sponsored">🛒 Amazon</a>
+      <a class="det-buy det-flp-btn" href="${flp}" target="_blank" rel="nofollow sponsored">🏬 Flipkart</a>
     </div>
-    <button class="det-cart-btn" onclick="addCart('${pid}');showToast('✅ Added to cart!')">🛒 Add to Cart</button>
-    ${offers.length?`<div class="det-offers"><div class="det-offers-t">🏷️ Available Offers</div>${offers.map(o=>`<div class="offer-item"><span class="offer-ic">✅</span>${o}</div>`).join('')}</div>`:''}
-    ${specs.length?`<div class="det-specs" style="margin-top:14px;"><div class="det-specs-t">📋 Key Specifications</div>${specs.map(s=>`<div class="spec-row"><span class="spec-k">${s[0]}</span><span class="spec-v">${s[1]}</span></div>`).join('')}</div>`:''}
-    ${prodRevs.length?`<div class="det-revs"><div class="det-revs-t">⭐ Customer Reviews</div>${prodRevs.map(r=>`<div class="det-rev-item"><div class="det-rev-stars">${'★'.repeat(r.r)}</div><div class="det-rev-txt">"${r.t}"</div><div class="det-rev-auth">— ${r.n} ✅ Verified Buyer</div></div>`).join('')}</div>`:''}
-    <p style="font-size:11px;color:var(--muted2);margin-top:14px;text-align:center;">Affiliate links — NexDeal earns small commission at no extra cost to you</p>
-  `;
+    <button class="det-cart" onclick="addCart('${pid}');showToast('✅ Added to cart!')">🛒 Add to Cart</button>
+    ${offers.length?`<div class="det-offers"><div class="det-offers-t">🏷️ Bank Offers</div>${offers.map(o=>`<div class="offer-item"><span>✅</span>${o}</div>`).join('')}</div>`:''}
+    ${specs.length?`<div class="det-specs"><div class="det-specs-t">📋 Specifications</div>${specs.map(s=>`<div class="spec-row"><span class="spec-k">${s[0]}</span><span class="spec-v">${s[1]}</span></div>`).join('')}</div>`:''}
+    ${prodRevs.length?`<div style="padding-top:12px;border-top:1px solid var(--border);"><div class="det-revs-t">⭐ Customer Reviews</div>${prodRevs.map(r=>`<div class="det-rev-item"><div class="det-rev-stars">${'★'.repeat(r.r)}</div><div class="det-rev-txt">"${r.t}"</div><div class="det-rev-auth">— ${r.n} ✅ Verified Buyer</div></div>`).join('')}</div>`:''}
+    <p style="font-size:11px;color:var(--muted2);margin-top:12px;text-align:center;">Affiliate links — NexDeal earns small commission at no extra cost</p>`;
   document.getElementById('detOv').classList.add('on');
   document.body.style.overflow='hidden';
 }
-
-function switchDetImg(img,em,el){
-  document.querySelectorAll('.det-thumb').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  const mainEl=document.getElementById('detMainImg');
-  mainEl.innerHTML=img
-    ?`<img src="${img}" alt="product" style="max-width:80%;max-height:80%;object-fit:contain;filter:drop-shadow(0 12px 32px rgba(79,70,229,.2));animation:imgFloat 3s ease-in-out infinite;">`
+function switchImg(img,em,el){
+  document.querySelectorAll('.det-thumb').forEach(t=>t.classList.remove('on'));el.classList.add('on');
+  document.getElementById('detMain').innerHTML=img
+    ?`<img src="${img}" alt="product" style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(79,70,229,.2));animation:imgFloat 3s ease-in-out infinite;">`
     :`<span class="det-em">${em}</span>`;
 }
-
-function closeDet(){
-  document.getElementById('detOv').classList.remove('on');
-  document.body.style.overflow='';
-}
+function closeDet(){document.getElementById('detOv').classList.remove('on');document.body.style.overflow='';}
 
 function setCat(cat,id){
   curCat=cat;
   document.querySelectorAll('.sbl').forEach(l=>l.classList.remove('on'));
   document.getElementById(id)?.classList.add('on');
-  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.getAttribute('onclick')?.includes(`'${cat}'`)));
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.getAttribute('onclick')?.includes(`'${cat}'`)&&c.closest('#chips')));
   render();closeSB();
   document.getElementById('products').scrollIntoView({behavior:'smooth'});
 }
 function setChip(cat,el){
   curCat=cat;
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');
+  document.querySelectorAll('#chips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');
   document.querySelectorAll('.sbl').forEach(l=>l.classList.remove('on'));
   document.getElementById('sb-'+(cat==='all'?'all':cat))?.classList.add('on');
   render();
@@ -1133,23 +894,22 @@ function doSort(v){curSort=v;render();}
 function addCart(pid){
   const p=PRODS.find(x=>String(x.id)===String(pid));if(!p)return;
   if(!cart.find(x=>String(x.id)===String(pid)))cart.push({...p});
-  saveCart();showToast('✅ '+p.name+' added to cart!');
+  saveCart();showToast('✅ '+p.name+' added!');
 }
 function removeCart(pid){cart=cart.filter(x=>String(x.id)!==String(pid));saveCart();renderCart();}
 function saveCart(){
   localStorage.setItem('nd_cart',JSON.stringify(cart));
   document.getElementById('cBadge').textContent=cart.length;
-  const b2=document.getElementById('cBadge2');if(b2)b2.textContent=cart.length;
 }
 function openCart(){renderCart();document.getElementById('cartMod').classList.add('on');}
 function closeCart(){document.getElementById('cartMod').classList.remove('on');}
 function renderCart(){
   const el=document.getElementById('cartItems'),tot=document.getElementById('cTotN');
-  if(!cart.length){el.innerHTML='<div class="empty"><div style="font-size:40px;margin-bottom:8px">🛒</div><p>Cart is empty</p></div>';tot.textContent='0 items';return;}
+  if(!cart.length){el.innerHTML='<div class="empty"><div style="font-size:36px;margin-bottom:6px">🛒</div><p>Cart is empty</p></div>';tot.textContent='0 items';return;}
   el.innerHTML=cart.map(p=>{
-    const amz=p.amz||p.amazonLink||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ}`;
-    const flp=p.flp||p.flipkartLink||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`;
-    const img=(p.imgs&&p.imgs[0])||p.img||p.image||'';
+    const amz=p.amz||`https://www.amazon.in/s?k=${encodeURIComponent(p.name)}&tag=${AMZ}`;
+    const flp=p.flp||`https://www.flipkart.com/search?q=${encodeURIComponent(p.name)}`;
+    const img=(p.imgs&&p.imgs[0])||p.img||'';
     return`<div class="c-item"><div class="c-img">${img?`<img src="${img}" alt="${p.name}">`:(p.emoji||'📦')}</div><div class="c-inf"><div class="c-nm">${p.name}</div><div class="c-btns"><a class="c-buy c-amz" href="${amz}" target="_blank" rel="nofollow sponsored">🛒 Amazon</a><a class="c-buy c-flp" href="${flp}" target="_blank" rel="nofollow sponsored">🏬 Flipkart</a></div></div><button class="c-rm" onclick="removeCart('${p.id}')">🗑</button></div>`;
   }).join('');
   tot.textContent=cart.length+' item'+(cart.length>1?'s':'');
@@ -1157,17 +917,37 @@ function renderCart(){
 
 function toggleWish(pid,e){
   e.stopPropagation();const s=String(pid);
-  if(wish.includes(s)){wish=wish.filter(x=>x!==s);showToast('💔 Removed from wishlist');}
-  else{wish.push(s);showToast('❤️ Added to wishlist!');}
+  if(wish.includes(s)){wish=wish.filter(x=>x!==s);showToast('💔 Removed');}
+  else{wish.push(s);showToast('❤️ Wishlisted!');}
   localStorage.setItem('nd_wish',JSON.stringify(wish));render();
 }
 
+function setFashCat(cat,el){
+  curFash=cat;
+  document.querySelectorAll('#fashChips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');
+  renderFash();
+}
+function renderFash(){
+  const g=document.getElementById('fashGrid');if(!g)return;
+  const list=FASH.filter(p=>p.cats.includes(curFash));
+  g.innerHTML=list.map(p=>`
+    <a href="${p.link}" target="_blank" rel="nofollow sponsored"
+       style="background:${p.bg};border:1.5px solid ${p.border};border-radius:16px;padding:16px 12px;text-align:center;text-decoration:none;display:block;position:relative;transition:all .2s;"
+       onclick="this.style.transform='scale(.97)';setTimeout(()=>this.style.transform='',200)">
+      <span style="position:absolute;top:7px;right:7px;background:${p.color};color:#fff;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;">${p.badge}</span>
+      <div style="font-size:30px;margin-bottom:6px;">${p.emoji}</div>
+      <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:900;color:${p.color};margin-bottom:3px;">${p.name}</div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:7px;line-height:1.3;">${p.desc}</div>
+      <div style="background:${p.color};color:#fff;font-size:9px;font-weight:700;padding:3px 9px;border-radius:999px;display:inline-block;">${p.deals}</div>
+    </a>`).join('');
+}
+
 async function submitReq(){
-  const prod=document.getElementById('reqProd').value.trim(),name=document.getElementById('reqName').value.trim();
+  const prod=document.getElementById('reqProd').value.trim();
   if(!prod){showToast('⚠️ Enter a product name!');return;}
   const btn=document.getElementById('reqBtn');btn.disabled=true;btn.textContent='⏳ Sending...';
   try{
-    await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'telegram',product:prod,name:name||'Anonymous'})});
+    await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'telegram',product:prod,name:document.getElementById('reqName').value.trim()||'Anonymous'})});
     showToast('✅ Request sent! Adding within 24hrs!');
     document.getElementById('reqProd').value='';document.getElementById('reqName').value='';
   }catch(e){showToast('✅ Request noted! We will add it soon.');}
@@ -1187,158 +967,26 @@ function toggleTheme(){
 let _tt;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('on'),3000);}
 
-function renderDeals(){
-  document.getElementById('dealsRow').innerHTML=DEALS.map(d=>`
-    <a class="deal-card" href="${d.amz}" target="_blank" rel="nofollow sponsored">
-      <div class="deal-timer">⏰ ${d.timer} left</div>
-      <div style="font-size:30px;margin-bottom:5px">${d.emoji}</div>
-      <div class="deal-nm">${d.name}</div>
-      <div class="deal-op">${d.orig}</div>
-      <div class="deal-p">${d.price}</div>
-      <span class="deal-d">${d.disc}</span>
-    </a>`).join('');
-}
-function renderBank(){
-  document.getElementById('bankRow').innerHTML=BANK.map(b=>`
-    <div class="bank-card">
-      <div class="bank-ic">${b.ic}</div>
-      <div class="bank-nm">${b.nm}</div>
-      <div class="bank-off">${b.off}</div>
-      <div class="bank-vl">${b.vl}</div>
-    </div>`).join('');
-}
-function renderRevs(){
-  document.getElementById('revRow').innerHTML=REVS.map(r=>`
-    <div class="rev-card">
-      <div class="rev-stars">${'★'.repeat(r.r)}</div>
-      <p class="rev-txt">"${r.t}"</p>
-      <div class="rev-auth">
-        <div class="rev-av">${r.i}</div>
-        <div><div class="rev-nm">${r.n}</div><div class="rev-vr">✅ Verified Buyer</div></div>
-      </div>
-    </div>`).join('');
-}
+function renderDeals(){document.getElementById('dealsRow').innerHTML=DEALS.map(d=>`<a class="deal-card" href="${d.amz}" target="_blank" rel="nofollow sponsored"><div class="deal-timer">⏰ ${d.timer} left</div><div style="font-size:26px;margin-bottom:4px">${d.emoji}</div><div class="deal-nm">${d.name}</div><div class="deal-op">${d.orig}</div><div class="deal-p">${d.price}</div><span class="deal-d">${d.disc}</span></a>`).join('');}
+function renderBank(){document.getElementById('bankRow').innerHTML=BANK.map(b=>`<div class="bank-card"><div class="bank-ic">${b.ic}</div><div class="bank-nm">${b.nm}</div><div class="bank-off">${b.off}</div><div class="bank-vl">${b.vl}</div></div>`).join('');}
+function renderRevs(){document.getElementById('revRow').innerHTML=REVS.map(r=>`<div class="rev-card"><div class="rev-stars">${'★'.repeat(r.r)}</div><p class="rev-txt">"${r.t}"</p><div class="rev-auth"><div class="rev-av">${r.i}</div><div><div class="rev-nm">${r.n}</div><div class="rev-vr">✅ Verified Buyer</div></div></div></div>`).join('');}
 
-// ── FASHION DATA ──
-const FASHION_PLATFORMS=[
-  {id:'f1',name:'Myntra',emoji:'👗',cats:['all','clothes','accessories'],
-   color:'#ff3f6c',bg:'#fff0f4',border:'#ffd1dc',
-   desc:'Top brands — H&M, Zara, Roadster & more',
-   badge:'Most Popular',badgeColor:'#ff3f6c',
-   deals:'50-80% OFF Sale Live!',
-   link:'https://www.myntra.com/'},
-  {id:'f2',name:'AJIO',emoji:'🌟',cats:['all','clothes','shoes','accessories'],
-   color:'#f26522',bg:'#fff5f0',border:'#ffd4b8',
-   desc:'Trendy fashion & AJIO Originals',
-   badge:'Trending',badgeColor:'#f26522',
-   deals:'Up to 70% OFF',
-   link:'https://www.ajio.com/'},
-  {id:'f3',name:'Nykaa',emoji:'💄',cats:['all','beauty'],
-   color:'#fc2779',bg:'#fff0f7',border:'#ffb3d6',
-   desc:'Beauty & skincare — 2000+ brands',
-   badge:'Beauty Expert',badgeColor:'#fc2779',
-   deals:'Free gift on ₹999+',
-   link:'https://www.nykaa.com/'},
-  {id:'f4',name:'Bewakoof',emoji:'😎',cats:['all','clothes'],
-   color:'#3d5af1',bg:'#f0f3ff',border:'#c0caff',
-   desc:'Quirky tees & casual wear for Gen Z',
-   badge:'Gen Z Fav',badgeColor:'#3d5af1',
-   deals:'Buy 2 Get 1 Free',
-   link:'https://www.bewakoof.com/'},
-  {id:'f5',name:'Nykaa Fashion',emoji:'👠',cats:['all','clothes','accessories'],
-   color:'#fc2779',bg:'#fff0f7',border:'#ffb3d6',
-   desc:'Ethnic & western — sarees, kurtas, dresses',
-   badge:'New',badgeColor:'#10b981',
-   deals:'Min 40% OFF',
-   link:'https://www.nykaafashion.com/'},
-  {id:'f6',name:'Puma',emoji:'🐆',cats:['all','shoes','clothes'],
-   color:'#1a1a1a',bg:'#f5f5f5',border:'#ddd',
-   desc:'Sports shoes, apparel & accessories',
-   badge:'Sports',badgeColor:'#1a1a1a',
-   deals:'Sale: Up to 50% OFF',
-   link:'https://in.puma.com/'},
-  {id:'f7',name:'Mamaearth',emoji:'🌿',cats:['all','beauty'],
-   color:'#4caf50',bg:'#f0fff0',border:'#b8dfb8',
-   desc:'Natural & toxin-free beauty products',
-   badge:'Natural',badgeColor:'#4caf50',
-   deals:'Flat 20% OFF sitewide',
-   link:'https://mamaearth.in/'},
-  {id:'f8',name:'Campus Shoes',emoji:'👟',cats:['all','shoes'],
-   color:'#e91e63',bg:'#fff0f5',border:'#f8bbd9',
-   desc:'Affordable sports & casual footwear',
-   badge:'Value Pick',badgeColor:'#e91e63',
-   deals:'Starting ₹499',
-   link:'https://www.campusshoes.com/'},
-];
-let curFashCat='all';
-function setFashionCat(cat,el){
-  curFashCat=cat;
-  el.closest('.chips').querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
-  renderFashion();
-}
-function renderFashion(){
-  const g=document.getElementById('fashionGrid');if(!g)return;
-  const list=FASHION_PLATFORMS.filter(p=>p.cats.includes(curFashCat));
-  g.innerHTML=list.map(p=>`
-    <a href="${p.link}" target="_blank" rel="nofollow sponsored"
-       style="background:${p.bg};border:1.5px solid ${p.border};border-radius:18px;padding:18px 14px;text-align:center;text-decoration:none;color:var(--text);display:block;transition:all .25s;position:relative;overflow:hidden;box-shadow:var(--sh);"
-       onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='var(--sh2)'"
-       onmouseout="this.style.transform='';this.style.boxShadow='var(--sh)'">
-      <span style="position:absolute;top:8px;right:8px;background:${p.badgeColor};color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:999px;">${p.badge}</span>
-      <div style="font-size:34px;margin-bottom:7px;">${p.emoji}</div>
-      <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:900;margin-bottom:4px;color:${p.color};">${p.name}</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.4;">${p.desc}</div>
-      <div style="background:${p.color};color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:999px;display:inline-block;">${p.deals}</div>
-      <div style="margin-top:10px;font-size:11px;font-weight:700;color:${p.color};">Shop Now →</div>
-    </a>`).join('');
-}
-function showMacInstall(){
-  showToast('💻 Mac Chrome: Look for install icon (⊕) in address bar → click it!');
-  setTimeout(()=>showToast('Or Chrome Menu → "Install NexDeal" option'),3200);
-}
-
-document.getElementById('detOv').addEventListener('click',e=>{if(e.target===e.currentTarget)closeDet();});
 document.getElementById('cartMod').addEventListener('click',e=>{if(e.target===e.currentTarget)closeCart();});
+document.getElementById('detOv').addEventListener('click',e=>{if(e.target===e.currentTarget)closeDet();});
 
 let _dp;
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault();_dp=e;
-  document.getElementById('instB').classList.add('on');
-  // Enable Android/Windows buttons
-  document.getElementById('pwaAndroid').style.background='#01875f';
-  document.getElementById('pwaWin').style.background='#0078d4';
-});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_dp=e;document.getElementById('instB').classList.add('on');});
 document.getElementById('instBtn').addEventListener('click',()=>triggerPWA());
-
-function triggerPWA(){
-  if(_dp){
-    _dp.prompt();
-    _dp.userChoice.then(r=>{
-      if(r.outcome==='accepted'){showToast('✅ NexDeal installed successfully!');}
-      _dp=null;
-      document.getElementById('instB').classList.remove('on');
-    });
-  } else {
-    // Fallback — show instructions
-    showToast('📲 Open in Chrome → Menu → "Add to Home Screen"');
-  }
-}
-
-function showIosInstall(){
-  const p=document.getElementById('iosPopup');
-  p.style.display='flex';
-}
-// Close iOS popup on backdrop tap
-document.getElementById('iosPopup').addEventListener('click',e=>{
-  if(e.target===e.currentTarget)e.currentTarget.style.display='none';
-});
+function triggerPWA(){if(_dp){_dp.prompt();_dp.userChoice.then(r=>{if(r.outcome==='accepted')showToast('✅ NexDeal installed!');_dp=null;document.getElementById('instB').classList.remove('on');});}else showToast('📲 Open in Chrome → Menu → Install NexDeal');}
+function showIosInstall(){document.getElementById('iosPop').classList.add('on');}
+function showMacInstall(){showToast('💻 Chrome: Look for install icon (⊕) in address bar!');}
+document.getElementById('iosPop').addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.classList.remove('on');});
 
 (function init(){
   const t=localStorage.getItem('nd_theme')||'light';
   document.documentElement.setAttribute('data-theme',t);
   if(t==='dark'){document.getElementById('thIc').textContent='☀️';document.getElementById('thTx').textContent='Light Mode';}
-  saveCart();renderDeals();renderBank();renderRevs();renderFashion();
+  saveCart();renderDeals();renderBank();renderRevs();renderFash();
 })();
 </script>
 </body>
