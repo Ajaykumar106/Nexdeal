@@ -2,739 +2,817 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>NexDeal Admin Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Firebase SDK - using CDN with proper loading -->
-<script>
-// Firebase config - defined before scripts load
-window.FBCONFIG = {
-  apiKey:"AIzaSyAMAk5_UPUTtHXs786DOQWDM-LZBGcxU4Y",
-  authDomain:"nexdeal-app-f29fb.firebaseapp.com",
-  projectId:"nexdeal-app-f29fb",
-  storageBucket:"nexdeal-app-f29fb.firebasestorage.app",
-  messagingSenderId:"793227042599",
-  appId:"1:793227042599:web:b6e880ebaf48f9f5691302"
-};
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexDeal Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 <style>
-:root{
-  --p:#4f46e5;--p2:#818cf8;--a:#f97316;
-  --bg:#f8f9ff;--card:#fff;--card2:#f0f2ff;
-  --text:#1a1840;--muted:#64748b;--muted2:#94a3b8;
-  --border:rgba(79,70,229,.12);--border2:rgba(79,70,229,.3);
-  --sh:0 2px 12px rgba(79,70,229,.08);--sh2:0 8px 32px rgba(79,70,229,.16);
-  --green:#10b981;--red:#ef4444;--r:14px;
-}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+:root{
+  --p:#4f46e5;--a:#f97316;--bg:#f5f6fa;--card:#fff;
+  --text:#1e1b4b;--muted:#6b7280;--border:#e5e7eb;
+  --green:#10b981;--red:#ef4444;
+  --sh:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+  --sh2:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-/* ── LOGIN ── */
-.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(145deg,#eef2ff,#fff8f4);}
-.login-box{background:var(--card);border-radius:24px;padding:36px 28px;width:100%;max-width:380px;box-shadow:var(--sh2);border:1px solid var(--border);}
-.login-logo{font-family:'Syne',sans-serif;font-size:26px;font-weight:900;text-align:center;margin-bottom:4px;}
+/* LOGIN */
+#loginPage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#eef2ff 0%,#fef3e2 100%);}
+.login-card{background:var(--card);border-radius:20px;padding:32px 24px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(79,70,229,.15);}
+.login-logo{font-size:28px;font-weight:800;text-align:center;margin-bottom:4px;}
 .login-logo .n{color:var(--p)}.login-logo .d{color:var(--a)}
 .login-sub{text-align:center;font-size:13px;color:var(--muted);margin-bottom:28px;}
-.login-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px;display:block;}
-.login-inp{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;margin-bottom:14px;}
-.login-inp:focus{border-color:var(--border2);background:var(--card);}
-.login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:4px;}
-.login-btn:active{transform:scale(.98);}
-.login-err{background:#fff5f5;border:1px solid #fee2e2;border-radius:9px;padding:10px 13px;font-size:12px;color:var(--red);margin-top:10px;display:none;}
-.login-secure{text-align:center;font-size:11px;color:var(--muted);margin-top:14px;display:flex;align-items:center;justify-content:center;gap:5px;}
+.lbl{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px;}
+.linp{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);outline:none;transition:.2s;margin-bottom:14px;background:#fafafa;}
+.linp:focus{border-color:var(--p);background:var(--card);box-shadow:0 0 0 3px rgba(79,70,229,.1);}
+.login-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--p),#7c3aed);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+.login-btn:active{opacity:.9;}
+.lerr{background:#fef2f2;border:1px solid #fecaca;border-radius:9px;padding:10px 13px;font-size:12px;color:var(--red);margin-top:10px;display:none;}
+.lerr.show{display:block;}
 
-/* ── ADMIN APP ── */
-.app{display:none;}
+/* APP LAYOUT */
+#app{display:none;min-height:100vh;}
 
-/* TOP HEADER */
-.top-hdr{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:var(--sh);}
-.hdr-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:900;text-decoration:none;}
+/* HEADER */
+.hdr{background:var(--card);border-bottom:1px solid var(--border);padding:0 16px;height:56px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;box-shadow:var(--sh);}
+.hdr-logo{font-size:20px;font-weight:800;}
 .hdr-logo .n{color:var(--p)}.hdr-logo .d{color:var(--a)}
-.hdr-badge{background:rgba(79,70,229,.08);border:1px solid var(--border2);border-radius:999px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--p);}
-.hdr-r{margin-left:auto;display:flex;align-items:center;gap:8px;}
-.view-btn{padding:7px 12px;border-radius:999px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:var(--green);font-size:12px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;}
-.logout-btn{padding:7px 12px;border-radius:999px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red);font-size:12px;font-weight:700;cursor:pointer;border:1px solid rgba(239,68,68,.2);font-family:'DM Sans',sans-serif;}
+.hdr-badge{background:#eef2ff;color:var(--p);font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;}
+.hdr-r{margin-left:auto;display:flex;gap:8px;}
+.hdr-btn{padding:7px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border:1.5px solid;text-decoration:none;display:flex;align-items:center;gap:5px;}
+.hdr-view{background:#f0fdf4;color:var(--green);border-color:#bbf7d0;}
+.hdr-out{background:#fef2f2;color:var(--red);border-color:#fecaca;}
 
-/* TAB NAV */
-.tab-nav{background:var(--card);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;}
-.tab-nav::-webkit-scrollbar{display:none;}
-.tab-btn{padding:13px 18px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;white-space:nowrap;border-bottom:2.5px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;}
-.tab-btn.on{color:var(--p);border-bottom-color:var(--p);font-weight:700;}
+/* SIDEBAR + CONTENT */
+.layout{display:flex;min-height:calc(100vh - 56px);}
+.sidebar{width:220px;background:var(--card);border-right:1px solid var(--border);padding:16px 10px;flex-shrink:0;display:flex;flex-direction:column;gap:2px;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;}
+@media(max-width:768px){.sidebar{display:none;}}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:.15s;font-family:'Plus Jakarta Sans',sans-serif;}
+.nav-item:hover{background:#f3f4f6;color:var(--text);}
+.nav-item.active{background:#eef2ff;color:var(--p);font-weight:700;}
+.nav-ic{font-size:18px;width:24px;text-align:center;}
+.nav-sec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:12px 12px 4px;}
 
-/* CONTENT */
-.content{padding:16px;max-width:800px;margin:0 auto;}
+/* MOBILE NAV */
+.mob-nav{display:none;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.mob-nav::-webkit-scrollbar{display:none;}
+@media(max-width:768px){.mob-nav{display:flex;}}
+.mob-nav-btn{padding:12px 16px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;border-bottom:2px solid transparent;transition:.15s;display:flex;align-items:center;gap:5px;}
+.mob-nav-btn.active{color:var(--p);border-bottom-color:var(--p);}
 
-/* DASHBOARD CARDS */
-.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
-@media(min-width:600px){.dash-grid{grid-template-columns:repeat(4,1fr);}}
-.dash-card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:16px;text-align:center;box-shadow:var(--sh);}
-.dash-ic{font-size:26px;margin-bottom:6px;}
-.dash-n{font-family:'Syne',sans-serif;font-size:24px;font-weight:900;color:var(--p);margin-bottom:2px;}
-.dash-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
-.dash-actions{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:16px;box-shadow:var(--sh);margin-bottom:16px;}
-.dash-act-t{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:12px;}
-.act-btns{display:flex;gap:8px;flex-wrap:wrap;}
-.act-btn{padding:9px 16px;border-radius:10px;border:none;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:6px;}
-.act-btn:active{transform:scale(.97);}
-.act-p{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;}
-.act-s{background:var(--card2);color:var(--p);border:1.5px solid var(--border2);}
-.act-g{background:rgba(16,185,129,.1);color:var(--green);border:1.5px solid rgba(16,185,129,.25);}
+/* MAIN CONTENT */
+.main{flex:1;padding:20px 16px;max-width:900px;overflow-x:hidden;}
+@media(min-width:769px){.main{padding:24px 28px;}}
+
+/* PANELS */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* DASHBOARD */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
+@media(min-width:600px){.stats-grid{grid-template-columns:repeat(4,1fr);}}
+.stat-card{background:var(--card);border-radius:14px;padding:16px;border:1px solid var(--border);box-shadow:var(--sh);}
+.stat-ic{font-size:28px;margin-bottom:8px;}
+.stat-n{font-size:26px;font-weight:800;color:var(--p);margin-bottom:2px;}
+.stat-l{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+.stat-card.live{background:#f0fdf4;border-color:#bbf7d0;}
+.stat-card.live .stat-n{color:var(--green);}
+
+.quick-card{background:var(--card);border-radius:14px;padding:16px;border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:16px;}
+.quick-title{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.quick-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.qbtn{padding:9px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;border:none;transition:.15s;display:flex;align-items:center;gap:6px;text-decoration:none;}
+.qbtn:active{transform:scale(.97);}
+.qbtn-p{background:var(--p);color:#fff;}
+.qbtn-g{background:#f0fdf4;color:var(--green);border:1.5px solid #bbf7d0;}
+.qbtn-b{background:#eef2ff;color:var(--p);border:1.5px solid #c7d2fe;}
+
+.tips-card{background:var(--card);border-radius:14px;padding:16px;border:1px solid var(--border);box-shadow:var(--sh);}
+.tips-title{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.tip-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.5;}
+.tip-item:last-child{border-bottom:none;}
+.tip-ic{font-size:18px;flex-shrink:0;margin-top:1px;}
 
 /* FORM */
-.form-card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:18px;box-shadow:var(--sh);margin-bottom:14px;}
-.form-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
-@media(max-width:480px){.form-grid{grid-template-columns:1fr;}}
+.page-title{font-size:20px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.form-section{background:var(--card);border-radius:14px;padding:18px;border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:14px;}
+.form-section-title{font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:500px){.form-row{grid-template-columns:1fr;}}
 .form-full{grid-column:1/-1;}
-.f-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:5px;display:block;}
-.f-required{color:var(--red);}
-.f-inp{width:100%;padding:11px 13px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;}
-.f-inp:focus{border-color:var(--border2);background:var(--card);box-shadow:0 0 0 3px rgba(79,70,229,.07);}
-.f-inp::placeholder{color:var(--muted2);}
-.f-sel{width:100%;padding:11px 13px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer;}
-.f-sel:focus{border-color:var(--border2);}
+.field{margin-bottom:12px;}
+.field-label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px;}
+.req{color:var(--red);}
+.field-inp{width:100%;padding:10px 13px;border-radius:9px;border:1.5px solid var(--border);font-size:13.5px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);outline:none;transition:.2s;background:#fafafa;}
+.field-inp:focus{border-color:var(--p);background:var(--card);box-shadow:0 0 0 3px rgba(79,70,229,.08);}
+.field-inp::placeholder{color:#d1d5db;}
+select.field-inp{cursor:pointer;}
 
-/* IMAGE PREVIEW */
-.img-preview-row{display:flex;gap:8px;margin-top:8px;}
-.img-prev{width:60px;height:60px;border-radius:9px;border:1.5px solid var(--border);background:var(--card2);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted);flex-shrink:0;}
-.img-prev img{width:100%;height:100%;object-fit:contain;}
+/* IMAGE FIELDS */
+.img-field{position:relative;}
+.img-preview{width:100%;height:120px;border-radius:9px;border:1.5px dashed var(--border);background:#fafafa;display:flex;align-items:center;justify-content:center;margin-top:8px;overflow:hidden;transition:.2s;}
+.img-preview img{width:100%;height:100%;object-fit:contain;}
+.img-preview .placeholder{font-size:12px;color:var(--muted);text-align:center;}
+.img-preview.has-img{border-style:solid;border-color:var(--p);}
 
 /* SAVE BTN */
-.save-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--a));color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;}
-.save-btn:hover{opacity:.92;transform:translateY(-1px);}
+.save-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--a));color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.save-btn:hover{opacity:.93;}
 .save-btn:active{transform:scale(.98);}
 .save-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 
-/* SUCCESS/ERROR */
-.alert{border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;margin-bottom:12px;display:none;}
-.alert.success{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;}
-.alert.error{background:#fff5f5;border:1px solid #fee2e2;color:var(--red);}
-.alert.on{display:block;}
+/* ALERTS */
+.alert{border-radius:10px;padding:11px 14px;font-size:13px;font-weight:600;margin-bottom:14px;display:none;align-items:center;gap:8px;}
+.alert.show{display:flex;}
+.alert-ok{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;}
+.alert-err{background:#fef2f2;border:1px solid #fecaca;color:var(--red);}
 
 /* PRODUCTS LIST */
-.prod-list{display:flex;flex-direction:column;gap:10px;}
-.prod-item{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:13px;display:flex;align-items:center;gap:12px;box-shadow:var(--sh);}
-.prod-img{width:52px;height:52px;border-radius:9px;background:var(--card2);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:24px;}
-.prod-img img{width:100%;height:100%;object-fit:contain;}
-.prod-inf{flex:1;min-width:0;}
-.prod-br{font-size:9px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;}
-.prod-nm{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.prod-cat{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:5px;}
-.prod-bdg{display:inline-block;padding:1px 7px;border-radius:999px;font-size:9px;font-weight:800;text-transform:uppercase;}
-.bdg-hot{background:#fee2e2;color:var(--red);}
-.bdg-new{background:#dcfce7;color:#166534;}
-.bdg-sale{background:#fff7ed;color:#c2410c;}
-.prod-acts{display:flex;gap:6px;flex-shrink:0;}
-.prod-edit{padding:6px 11px;border-radius:7px;background:var(--card2);border:1px solid var(--border2);color:var(--p);font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
-.prod-del{padding:6px 11px;border-radius:7px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);color:var(--red);font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.prod-grid{display:flex;flex-direction:column;gap:10px;}
+.prod-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:12px;display:flex;align-items:center;gap:12px;box-shadow:var(--sh);}
+.prod-thumb{width:56px;height:56px;border-radius:10px;background:var(--bg);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:26px;border:1px solid var(--border);}
+.prod-thumb img{width:100%;height:100%;object-fit:contain;}
+.prod-details{flex:1;min-width:0;}
+.prod-brand{font-size:10px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;}
+.prod-name{font-size:13.5px;font-weight:700;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.prod-meta{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);}
+.prod-badge{padding:1px 7px;border-radius:999px;font-size:9px;font-weight:800;text-transform:uppercase;}
+.badge-hot{background:#fee2e2;color:var(--red);}
+.badge-new{background:#dcfce7;color:#166534;}
+.badge-sale{background:#fff7ed;color:#c2410c;}
+.prod-actions{display:flex;gap:6px;flex-shrink:0;}
+.btn-edit{padding:6px 12px;border-radius:7px;background:#eef2ff;border:1px solid #c7d2fe;color:var(--p);font-size:11.5px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+.btn-del{padding:6px 12px;border-radius:7px;background:#fef2f2;border:1px solid #fecaca;color:var(--red);font-size:11.5px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
 
-/* LOADING SPINNER */
-.spin{width:30px;height:30px;border:2.5px solid var(--border);border-top-color:var(--p);border-radius:50%;animation:sp .8s linear infinite;margin:20px auto;}
+/* BANK OFFERS LIST */
+.offer-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:13px;display:flex;align-items:center;gap:12px;box-shadow:var(--sh);margin-bottom:10px;}
+.offer-ic{font-size:28px;flex-shrink:0;}
+.offer-details{flex:1;}
+.offer-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.offer-text{font-size:12px;color:var(--p);font-weight:600;}
+.offer-valid{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* EMPTY + LOADING */
+.empty{text-align:center;padding:40px 20px;color:var(--muted);}
+.empty-ic{font-size:44px;margin-bottom:10px;}
+.empty-t{font-size:14px;font-weight:600;margin-bottom:4px;}
+.empty-s{font-size:12px;}
+.spin{width:32px;height:32px;border:2.5px solid var(--border);border-top-color:var(--p);border-radius:50%;animation:sp .8s linear infinite;margin:30px auto;}
 @keyframes sp{to{transform:rotate(360deg)}}
-.empty-state{text-align:center;padding:36px 20px;color:var(--muted);}
-.empty-ic{font-size:40px;margin-bottom:8px;}
-
-/* TABS HIDDEN PANELS */
-.tab-panel{display:none;}
-.tab-panel.on{display:block;}
 
 /* TOAST */
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:999px;font-size:13px;font-weight:700;z-index:999;transition:transform .3s;white-space:nowrap;pointer-events:none;max-width:90vw;text-align:center;}
-.toast.on{transform:translateX(-50%) translateY(0);}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:#1e1b4b;color:#fff;padding:11px 22px;border-radius:999px;font-size:13px;font-weight:600;z-index:999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;pointer-events:none;max-width:92vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.toast.show{transform:translateX(-50%) translateY(0);}
 
-/* SECTION HEADER */
-.sec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.sec-t{font-family:'Syne',sans-serif;font-size:17px;font-weight:900;}
-.count-badge{background:var(--card2);border:1px solid var(--border2);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700;color:var(--p);}
+/* SECTION COUNT */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.section-title{font-size:16px;font-weight:800;}
+.count-pill{background:#eef2ff;color:var(--p);font-size:12px;font-weight:700;padding:3px 11px;border-radius:999px;}
 
-/* BANK OFFERS */
-.offer-item-card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:13px;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:var(--sh);margin-bottom:8px;}
-.offer-left{display:flex;align-items:center;gap:10px;}
-.offer-ic{font-size:24px;}
-.offer-nm{font-size:13px;font-weight:700;margin-bottom:2px;}
-.offer-txt{font-size:12px;color:var(--p);font-weight:600;}
-.offer-vl{font-size:10px;color:var(--muted);}
+/* EDIT MODE BANNER */
+.edit-banner{background:#fffbeb;border:1.5px solid #fde68a;border-radius:10px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;display:none;}
+.edit-banner.show{display:flex;}
+.edit-banner-text{font-size:13px;font-weight:600;color:#92400e;}
+.edit-cancel{background:none;border:none;color:#92400e;font-size:13px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:underline;}
 </style>
 </head>
 <body>
 
-<!-- LOGIN PAGE -->
-<div class="login-page" id="loginPage">
-  <div class="login-box">
+<!-- LOGIN -->
+<div id="loginPage">
+  <div class="login-card">
     <div class="login-logo"><span class="n">Nex</span><span class="d">Deal</span></div>
     <p class="login-sub">Admin Panel — Only for Ajay 🔐</p>
-    <label class="login-label">Email</label>
-    <input class="login-inp" type="email" id="loginEmail" placeholder="your@email.com">
-    <label class="login-label">Password</label>
-    <input class="login-inp" type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()" id="loginBtn">🔐 Login to Admin</button>
-    <div class="login-err" id="loginErr"></div>
-    <p class="login-secure">🔒 Protected by Firebase Auth</p>
+    <label class="lbl">Email</label>
+    <input class="linp" type="email" id="lemail" placeholder="your@email.com">
+    <label class="lbl">Password</label>
+    <input class="linp" type="password" id="lpass" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()">
+    <button class="login-btn" id="lbtn" onclick="login()">🔐 Login to Admin</button>
+    <div class="lerr" id="lerr"></div>
   </div>
 </div>
 
-<!-- ADMIN APP -->
-<div class="app" id="adminApp">
-
+<!-- APP -->
+<div id="app">
   <!-- HEADER -->
-  <header class="top-hdr">
+  <header class="hdr">
     <span class="hdr-logo"><span class="n">Nex</span><span class="d">Deal</span></span>
-    <span class="hdr-badge">⚙️ Admin</span>
+    <span class="hdr-badge">Admin Panel</span>
     <div class="hdr-r">
-      <a href="index.html" class="view-btn" target="_blank">🌐 Live Site</a>
-      <button class="logout-btn" onclick="doLogout()">Logout</button>
+      <a href="index.html" target="_blank" class="hdr-btn hdr-view">🌐 Live Site</a>
+      <button class="hdr-btn hdr-out" onclick="logout()">Logout</button>
     </div>
   </header>
 
-  <!-- TAB NAV -->
-  <nav class="tab-nav">
-    <button class="tab-btn on" onclick="showTab('dashboard',this)">📊 Dashboard</button>
-    <button class="tab-btn" onclick="showTab('add',this)">➕ Add Product</button>
-    <button class="tab-btn" onclick="showTab('products',this)">📦 Products</button>
-    <button class="tab-btn" onclick="showTab('bank',this)">💳 Bank Offers</button>
-    <button class="tab-btn" onclick="showTab('banners',this)">🎨 Banners</button>
+  <!-- MOBILE NAV -->
+  <nav class="mob-nav" id="mobNav">
+    <button class="mob-nav-btn active" onclick="goTab('dashboard',this)">📊 Dashboard</button>
+    <button class="mob-nav-btn" onclick="goTab('add',this)">➕ Add Product</button>
+    <button class="mob-nav-btn" onclick="goTab('products',this)">📦 Products</button>
+    <button class="mob-nav-btn" onclick="goTab('bank',this)">💳 Bank Offers</button>
+    <button class="mob-nav-btn" onclick="goTab('banners',this)">🎨 Banners</button>
   </nav>
 
-  <!-- CONTENT -->
-  <div class="content">
+  <div class="layout">
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="sidebar">
+      <div class="nav-sec">Main</div>
+      <button class="nav-item active" id="sn-dashboard" onclick="goTab('dashboard',this)"><span class="nav-ic">📊</span>Dashboard</button>
+      <button class="nav-item" id="sn-add" onclick="goTab('add',this)"><span class="nav-ic">➕</span>Add Product</button>
+      <button class="nav-item" id="sn-products" onclick="goTab('products',this)"><span class="nav-ic">📦</span>Products</button>
+      <div class="nav-sec">Settings</div>
+      <button class="nav-item" id="sn-bank" onclick="goTab('bank',this)"><span class="nav-ic">💳</span>Bank Offers</button>
+      <button class="nav-item" id="sn-banners" onclick="goTab('banners',this)"><span class="nav-ic">🎨</span>Banners</button>
+      <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--border);margin-top:20px;">
+        <a href="https://t.me/nexdeal_deals" target="_blank" class="nav-item" style="text-decoration:none;display:flex;"><span class="nav-ic">✈️</span>Telegram</a>
+      </div>
+    </aside>
 
-    <!-- DASHBOARD -->
-    <div class="tab-panel on" id="tab-dashboard">
-      <div style="padding:4px 0 16px;">
-        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:900;margin-bottom:2px;">👋 Welcome Ajay!</div>
-        <div style="font-size:13px;color:var(--muted);">NexDeal Admin Dashboard</div>
-      </div>
-      <div class="dash-grid">
-        <div class="dash-card"><div class="dash-ic">📦</div><div class="dash-n" id="totalProds">0</div><div class="dash-l">Products</div></div>
-        <div class="dash-card"><div class="dash-ic">💳</div><div class="dash-n" id="totalOffers">0</div><div class="dash-l">Bank Offers</div></div>
-        <div class="dash-card"><div class="dash-ic">🎨</div><div class="dash-n" id="totalBanners">0</div><div class="dash-l">Banners</div></div>
-        <div class="dash-card" style="background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.2);"><div class="dash-ic">🔥</div><div class="dash-n" style="color:var(--green);">Live</div><div class="dash-l">Status</div></div>
-      </div>
-      <div class="dash-actions">
-        <div class="dash-act-t">⚡ Quick Actions</div>
-        <div class="act-btns">
-          <button class="act-btn act-p" onclick="showTab('add',document.querySelector('[onclick*=add]'))">➕ Add Product</button>
-          <a href="index.html" target="_blank" class="act-btn act-g" style="text-decoration:none;">🌐 View Site</a>
-          <a href="https://t.me/nexdeal_deals" target="_blank" class="act-btn act-s" style="text-decoration:none;">✈️ Telegram</a>
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- DASHBOARD -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="page-title">👋 Welcome Ajay!</div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-ic">📦</div><div class="stat-n" id="dn-prods">—</div><div class="stat-l">Products</div></div>
+          <div class="stat-card"><div class="stat-ic">💳</div><div class="stat-n" id="dn-bank">—</div><div class="stat-l">Bank Offers</div></div>
+          <div class="stat-card"><div class="stat-ic">🎨</div><div class="stat-n" id="dn-ban">—</div><div class="stat-l">Banners</div></div>
+          <div class="stat-card live"><div class="stat-ic">🔥</div><div class="stat-n">Live</div><div class="stat-l">Status</div></div>
         </div>
-      </div>
-      <!-- TIPS -->
-      <div class="form-card">
-        <div class="form-title">💡 Daily Update Tips</div>
-        <div style="display:flex;flex-direction:column;gap:9px;">
-          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="font-size:18px;flex-shrink:0;">🖼️</span><div><strong>Images</strong> — Use Imgur.com to upload and get permanent image links</div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="font-size:18px;flex-shrink:0;">🔗</span><div><strong>Amazon links</strong> — Always add <code style="background:var(--card2);padding:1px 5px;border-radius:4px;">?tag=nexdeal-21</code> at the end</div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="font-size:18px;flex-shrink:0;">⏰</span><div><strong>Update daily</strong> — Amazon links work best within 24 hours</div></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;"><span style="font-size:18px;flex-shrink:0;">📊</span><div><strong>GSMArena</strong> — Best source for phone specs & images</div></div>
+        <div class="quick-card">
+          <div class="quick-title">⚡ Quick Actions</div>
+          <div class="quick-btns">
+            <button class="qbtn qbtn-p" onclick="goTab('add',null)">➕ Add Product</button>
+            <a href="index.html" target="_blank" class="qbtn qbtn-g">🌐 View Site</a>
+            <a href="https://t.me/nexdeal_deals" target="_blank" class="qbtn qbtn-b">✈️ Telegram</a>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <!-- ADD PRODUCT -->
-    <div class="tab-panel" id="tab-add">
-      <div class="alert success" id="addSuccess">✅ Product saved successfully! Homepage updated!</div>
-      <div class="alert error" id="addError"></div>
-
-      <div class="form-card">
-        <div class="form-title">📦 Product Details</div>
-        <div class="form-grid">
-          <div>
-            <label class="f-label">Brand Name <span class="f-required">*</span></label>
-            <input class="f-inp" id="fBrand" placeholder="e.g. Apple, Samsung">
-          </div>
-          <div>
-            <label class="f-label">Category <span class="f-required">*</span></label>
-            <select class="f-sel" id="fCat">
-              <option value="smartphones">📱 Smartphones</option>
-              <option value="laptops">💻 Laptops</option>
-              <option value="audio">🎧 Audio</option>
-              <option value="smartwatches">⌚ Smartwatches</option>
-              <option value="cameras">📷 Cameras</option>
-              <option value="accessories">🔌 Accessories</option>
-              <option value="gaming">🎮 Gaming</option>
-            </select>
-          </div>
-          <div class="form-full">
-            <label class="f-label">Product Title <span class="f-required">*</span></label>
-            <input class="f-inp" id="fTitle" placeholder="e.g. iPhone 17 Pro 256GB">
-          </div>
-          <div>
-            <label class="f-label">Badge</label>
-            <select class="f-sel" id="fBadge">
-              <option value="">None</option>
-              <option value="hot">🔥 HOT</option>
-              <option value="new">✨ NEW</option>
-              <option value="sale">💰 SALE</option>
-            </select>
-          </div>
-          <div>
-            <label class="f-label">Rating (e.g. 4.8)</label>
-            <input class="f-inp" id="fRating" type="number" step="0.1" min="1" max="5" placeholder="4.8">
-          </div>
-          <div>
-            <label class="f-label">Total Reviews</label>
-            <input class="f-inp" id="fReviews" type="number" placeholder="e.g. 12000">
-          </div>
-          <div>
-            <label class="f-label">Stock Left</label>
-            <input class="f-inp" id="fStock" type="number" placeholder="e.g. 15">
-          </div>
-          <div class="form-full">
-            <label class="f-label">Specs (one line)</label>
-            <input class="f-inp" id="fSpecs" placeholder="e.g. A19 Pro Chip | 48MP | 1TB | Titanium">
-          </div>
+        <div class="tips-card">
+          <div class="tips-title">💡 Daily Tips</div>
+          <div class="tip-item"><span class="tip-ic">🖼️</span><span><strong>Images</strong> — Upload to imgur.com → copy link → paste in Image URL field</span></div>
+          <div class="tip-item"><span class="tip-ic">🔗</span><span><strong>Amazon links</strong> — Always add <code style="background:#f3f4f6;padding:1px 5px;border-radius:4px;">?tag=nexdeal-21</code> at the end</span></div>
+          <div class="tip-item"><span class="tip-ic">⏰</span><span><strong>Update daily</strong> — Amazon links earn best within 24 hours of clicking</span></div>
+          <div class="tip-item"><span class="tip-ic">📱</span><span><strong>GSMArena</strong> — Best site for phone images and specs</span></div>
         </div>
       </div>
 
-      <!-- IMAGES -->
-      <div class="form-card">
-        <div class="form-title">🖼️ Product Images</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Upload images to <strong>imgur.com</strong> → copy link → paste below. Or use GSMArena image URLs.</p>
-        <div style="margin-bottom:12px;">
-          <label class="f-label">Image 1 URL <span class="f-required">*</span> (Main)</label>
-          <input class="f-inp" id="fImg1" placeholder="https://imgur.com/..." oninput="previewImg('fImg1','prev1')">
-          <div class="img-preview-row">
-            <div class="img-prev" id="prev1">👆 Preview</div>
+      <!-- ADD PRODUCT -->
+      <div class="panel" id="panel-add">
+        <div class="page-title">➕ Add Product</div>
+        <div class="edit-banner" id="editBanner">
+          <span class="edit-banner-text">✏️ Editing existing product</span>
+          <button class="edit-cancel" onclick="cancelEdit()">Cancel Edit</button>
+        </div>
+        <div class="alert alert-ok" id="ok-msg"></div>
+        <div class="alert alert-err" id="err-msg"></div>
+
+        <!-- BASIC INFO -->
+        <div class="form-section">
+          <div class="form-section-title">📋 Basic Information</div>
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Brand Name <span class="req">*</span></label>
+              <input class="field-inp" id="f-brand" placeholder="e.g. Apple, Samsung, boAt">
+            </div>
+            <div class="field">
+              <label class="field-label">Category <span class="req">*</span></label>
+              <select class="field-inp" id="f-cat">
+                <option value="smartphones">📱 Smartphones</option>
+                <option value="laptops">💻 Laptops</option>
+                <option value="audio">🎧 Audio</option>
+                <option value="smartwatches">⌚ Smartwatches</option>
+                <option value="cameras">📷 Cameras</option>
+                <option value="accessories">🔌 Accessories</option>
+                <option value="gaming">🎮 Gaming</option>
+              </select>
+            </div>
+            <div class="field form-full">
+              <label class="field-label">Product Title <span class="req">*</span></label>
+              <input class="field-inp" id="f-title" placeholder="e.g. iPhone 17 Pro 256GB">
+            </div>
+            <div class="field form-full">
+              <label class="field-label">Short Specs</label>
+              <input class="field-inp" id="f-specs" placeholder="e.g. A19 Pro | 48MP | 1TB | Titanium">
+            </div>
+            <div class="field">
+              <label class="field-label">Badge</label>
+              <select class="field-inp" id="f-badge">
+                <option value="">No Badge</option>
+                <option value="hot">🔥 HOT</option>
+                <option value="new">✨ NEW</option>
+                <option value="sale">💰 SALE</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label">Rating (1-5)</label>
+              <input class="field-inp" id="f-rating" type="number" step="0.1" min="1" max="5" placeholder="4.8">
+            </div>
+            <div class="field">
+              <label class="field-label">Total Reviews</label>
+              <input class="field-inp" id="f-reviews" type="number" placeholder="e.g. 8420">
+            </div>
+            <div class="field">
+              <label class="field-label">Stock Left</label>
+              <input class="field-inp" id="f-stock" type="number" placeholder="e.g. 15">
+            </div>
           </div>
         </div>
-        <div style="margin-bottom:12px;">
-          <label class="f-label">Image 2 URL (optional)</label>
-          <input class="f-inp" id="fImg2" placeholder="https://imgur.com/..." oninput="previewImg('fImg2','prev2')">
-          <div class="img-preview-row">
-            <div class="img-prev" id="prev2">👆 Preview</div>
+
+        <!-- IMAGES -->
+        <div class="form-section">
+          <div class="form-section-title">🖼️ Product Images</div>
+          <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6;">
+            📌 <strong>How to get images:</strong> Open <a href="https://imgur.com" target="_blank" style="color:var(--p);">imgur.com</a> → Upload product photo → Copy link. Or go to GSMArena → right click phone image → Copy image link.
+          </p>
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Image 1 (Main) <span class="req">*</span></label>
+              <input class="field-inp" id="f-img1" placeholder="https://i.imgur.com/..." oninput="prevImg(1)">
+              <div class="img-preview" id="prev1"><div class="placeholder">🖼️<br>Preview here</div></div>
+            </div>
+            <div class="field">
+              <label class="field-label">Image 2 (optional)</label>
+              <input class="field-inp" id="f-img2" placeholder="https://i.imgur.com/..." oninput="prevImg(2)">
+              <div class="img-preview" id="prev2"><div class="placeholder">🖼️<br>Preview here</div></div>
+            </div>
+            <div class="field">
+              <label class="field-label">Image 3 (optional)</label>
+              <input class="field-inp" id="f-img3" placeholder="https://i.imgur.com/..." oninput="prevImg(3)">
+              <div class="img-preview" id="prev3"><div class="placeholder">🖼️<br>Preview here</div></div>
+            </div>
           </div>
         </div>
-        <div>
-          <label class="f-label">Image 3 URL (optional)</label>
-          <input class="f-inp" id="fImg3" placeholder="https://imgur.com/..." oninput="previewImg('fImg3','prev3')">
-          <div class="img-preview-row">
-            <div class="img-prev" id="prev3">👆 Preview</div>
+
+        <!-- LINKS -->
+        <div class="form-section">
+          <div class="form-section-title">🔗 Affiliate Links & Prices</div>
+          <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6;">
+            ⚠️ Amazon link must contain <code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:11px;">?tag=nexdeal-21</code> to earn commission!
+          </p>
+          <div class="form-row">
+            <div class="field form-full">
+              <label class="field-label">Amazon Affiliate Link <span class="req">*</span></label>
+              <input class="field-inp" id="f-amz" placeholder="https://www.amazon.in/dp/XXXXX?tag=nexdeal-21">
+            </div>
+            <div class="field form-full">
+              <label class="field-label">Flipkart Link (optional)</label>
+              <input class="field-inp" id="f-flp" placeholder="https://www.flipkart.com/product/...">
+            </div>
+            <div class="field">
+              <label class="field-label">Amazon Price</label>
+              <input class="field-inp" id="f-amzp" placeholder="e.g. ₹1,29,999">
+            </div>
+            <div class="field">
+              <label class="field-label">Flipkart Price</label>
+              <input class="field-inp" id="f-flpp" placeholder="e.g. ₹1,31,999">
+            </div>
+            <div class="field">
+              <label class="field-label">Best Platform</label>
+              <select class="field-inp" id="f-best">
+                <option value="amazon">Amazon (Best Price)</option>
+                <option value="flipkart">Flipkart (Best Price)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label">Featured?</label>
+              <select class="field-inp" id="f-feat">
+                <option value="no">No</option>
+                <option value="yes">⭐ Yes — Show on top</option>
+              </select>
+            </div>
           </div>
         </div>
+
+        <input type="hidden" id="f-editid">
+        <button class="save-btn" id="savebtn" onclick="saveProduct()">
+          💾 Save Product to Database
+        </button>
       </div>
 
-      <!-- LINKS & PRICES -->
-      <div class="form-card">
-        <div class="form-title">🔗 Affiliate Links & Prices</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Always add <code style="background:var(--card2);padding:1px 6px;border-radius:4px;font-size:11px;">?tag=nexdeal-21</code> to Amazon links!</p>
-        <div class="form-grid">
-          <div class="form-full">
-            <label class="f-label">Amazon Affiliate Link <span class="f-required">*</span></label>
-            <input class="f-inp" id="fAmz" placeholder="https://www.amazon.in/dp/XXXXX?tag=nexdeal-21">
-          </div>
-          <div class="form-full">
-            <label class="f-label">Flipkart Affiliate Link</label>
-            <input class="f-inp" id="fFlp" placeholder="https://www.flipkart.com/product/...">
-          </div>
-          <div>
-            <label class="f-label">Amazon Price</label>
-            <input class="f-inp" id="fAmzPrice" placeholder="e.g. ₹1,29,999">
-          </div>
-          <div>
-            <label class="f-label">Flipkart Price</label>
-            <input class="f-inp" id="fFlpPrice" placeholder="e.g. ₹1,31,999">
-          </div>
-          <div>
-            <label class="f-label">Best Platform</label>
-            <select class="f-sel" id="fBest">
-              <option value="amazon">Amazon</option>
-              <option value="flipkart">Flipkart</option>
-            </select>
-          </div>
-          <div>
-            <label class="f-label">Featured Product?</label>
-            <select class="f-sel" id="fFeatured">
-              <option value="no">No</option>
-              <option value="yes">⭐ Yes — Show on top</option>
-            </select>
-          </div>
+      <!-- PRODUCTS LIST -->
+      <div class="panel" id="panel-products">
+        <div class="section-header">
+          <div class="section-title">📦 All Products</div>
+          <span class="count-pill" id="prods-count">Loading...</span>
         </div>
+        <div id="prods-list"><div class="spin"></div></div>
       </div>
 
-      <input type="hidden" id="fEditId">
-      <button class="save-btn" id="saveBtn" onclick="saveProduct()">💾 Save Product to Database</button>
-    </div>
-
-    <!-- PRODUCTS LIST -->
-    <div class="tab-panel" id="tab-products">
-      <div class="sec-hd">
-        <div class="sec-t">📦 All Products</div>
-        <span class="count-badge" id="prodCount">0 products</span>
-      </div>
-      <div id="prodList"><div class="spin"></div></div>
-    </div>
-
-    <!-- BANK OFFERS -->
-    <div class="tab-panel" id="tab-bank">
-      <div class="sec-hd">
-        <div class="sec-t">💳 Bank Offers</div>
-        <span class="count-badge" id="bankCount">0 offers</span>
-      </div>
-
-      <!-- ADD OFFER FORM -->
-      <div class="form-card">
-        <div class="form-title">➕ Add Bank Offer</div>
-        <div class="form-grid">
-          <div>
-            <label class="f-label">Bank Name</label>
-            <input class="f-inp" id="bkName" placeholder="e.g. HDFC Bank">
-          </div>
-          <div>
-            <label class="f-label">Emoji Icon</label>
-            <input class="f-inp" id="bkIc" placeholder="e.g. 💳">
-          </div>
-          <div class="form-full">
-            <label class="f-label">Offer Text</label>
-            <input class="f-inp" id="bkOff" placeholder="e.g. Extra 10% off on Electronics">
-          </div>
-          <div class="form-full">
-            <label class="f-label">Valid Till</label>
-            <input class="f-inp" id="bkVl" placeholder="e.g. Valid till 31 Mar">
-          </div>
+      <!-- BANK OFFERS -->
+      <div class="panel" id="panel-bank">
+        <div class="section-header">
+          <div class="section-title">💳 Bank Offers</div>
+          <span class="count-pill" id="bank-count">Loading...</span>
         </div>
-        <button class="save-btn" onclick="saveBankOffer()" style="margin-top:12px;">💾 Save Bank Offer</button>
-      </div>
-
-      <div id="bankList"><div class="spin"></div></div>
-    </div>
-
-    <!-- BANNERS -->
-    <div class="tab-panel" id="tab-banners">
-      <div class="sec-hd">
-        <div class="sec-t">🎨 Banners</div>
-        <span class="count-badge" id="bannerCount">0 banners</span>
-      </div>
-      <div class="form-card">
-        <div class="form-title">➕ Add Banner</div>
-        <div class="form-grid">
-          <div class="form-full">
-            <label class="f-label">Banner Title</label>
-            <input class="f-inp" id="bnTitle" placeholder="e.g. 🔥 Republic Day Sale — Up to 70% OFF!">
+        <div class="form-section" style="margin-bottom:16px;">
+          <div class="form-section-title">➕ Add New Offer</div>
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label">Bank Name</label>
+              <input class="field-inp" id="b-name" placeholder="e.g. HDFC Bank">
+            </div>
+            <div class="field">
+              <label class="field-label">Icon Emoji</label>
+              <input class="field-inp" id="b-ic" placeholder="💳">
+            </div>
+            <div class="field form-full">
+              <label class="field-label">Offer Text</label>
+              <input class="field-inp" id="b-off" placeholder="e.g. Extra 10% off on Electronics (up to ₹5,000)">
+            </div>
+            <div class="field form-full">
+              <label class="field-label">Valid Till</label>
+              <input class="field-inp" id="b-vl" placeholder="e.g. Valid till 31 Mar 2026">
+            </div>
           </div>
-          <div>
-            <label class="f-label">Button Text</label>
-            <input class="f-inp" id="bnBtn" placeholder="e.g. Shop Now">
-          </div>
-          <div>
-            <label class="f-label">Button Link</label>
-            <input class="f-inp" id="bnLink" placeholder="e.g. #products">
-          </div>
-          <div class="form-full">
-            <label class="f-label">Background Color</label>
-            <input class="f-inp" id="bnBg" placeholder="e.g. linear-gradient(135deg,#4f46e5,#f97316)">
-          </div>
+          <button class="save-btn" onclick="saveOffer()" style="margin-top:4px;">💾 Save Offer</button>
         </div>
-        <button class="save-btn" onclick="saveBanner()" style="margin-top:12px;">💾 Save Banner</button>
+        <div id="bank-list"><div class="spin"></div></div>
       </div>
-      <div id="bannerList"><div class="spin"></div></div>
-    </div>
 
-  </div><!-- /content -->
-</div><!-- /app -->
+      <!-- BANNERS -->
+      <div class="panel" id="panel-banners">
+        <div class="section-header">
+          <div class="section-title">🎨 Banners</div>
+          <span class="count-pill" id="ban-count">Loading...</span>
+        </div>
+        <div class="form-section">
+          <div class="form-section-title">➕ Add Banner</div>
+          <div class="form-row">
+            <div class="field form-full">
+              <label class="field-label">Banner Title</label>
+              <input class="field-inp" id="bn-title" placeholder="e.g. 🔥 Republic Day Sale — Up to 70% OFF!">
+            </div>
+            <div class="field">
+              <label class="field-label">Button Text</label>
+              <input class="field-inp" id="bn-btn" placeholder="Shop Now">
+            </div>
+            <div class="field">
+              <label class="field-label">Button Link</label>
+              <input class="field-inp" id="bn-link" placeholder="#products">
+            </div>
+          </div>
+          <button class="save-btn" onclick="saveBanner()" style="margin-top:4px;">💾 Save Banner</button>
+        </div>
+        <div id="ban-list"><div class="spin"></div></div>
+      </div>
+
+    </main>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// Wait for Firebase to be ready
-(function initFirebase() {
-  if (typeof firebase === 'undefined') {
-    setTimeout(initFirebase, 100);
-    return;
-  }
+// Firebase init
+let auth, db;
+function initFB() {
+  if (typeof firebase === 'undefined') { setTimeout(initFB, 150); return; }
+  try {
+    const app = firebase.apps.length ? firebase.app() : firebase.initializeApp({
+      apiKey:"AIzaSyAMAk5_UPUTtHXs786DOQWDM-LZBGcxU4Y",
+      authDomain:"nexdeal-app-f29fb.firebaseapp.com",
+      projectId:"nexdeal-app-f29fb",
+      storageBucket:"nexdeal-app-f29fb.firebasestorage.app",
+      messagingSenderId:"793227042599",
+      appId:"1:793227042599:web:b6e880ebaf48f9f5691302"
+    });
+    auth = firebase.auth();
+    db = firebase.firestore();
+    auth.onAuthStateChanged(u => {
+      if (u) { showApp(); loadAll(); }
+      else { showLogin(); }
+    });
+  } catch(e) { toast('Firebase error: ' + e.message); }
+}
+initFB();
 
-// FIREBASE INIT
-let fb, auth, db;
-try {
-  if (!firebase.apps.length) {
-    fb = firebase.initializeApp(window.FBCONFIG);
+function showLogin() {
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+}
+function showApp() {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+async function login() {
+  const em = document.getElementById('lemail').value.trim();
+  const pw = document.getElementById('lpass').value;
+  const btn = document.getElementById('lbtn');
+  const err = document.getElementById('lerr');
+  if (!em || !pw) { err.textContent = '⚠️ Enter email and password'; err.classList.add('show'); return; }
+  btn.textContent = 'Logging in...'; btn.disabled = true; err.classList.remove('show');
+  try { await auth.signInWithEmailAndPassword(em, pw); }
+  catch(e) { err.textContent = '❌ ' + e.message; err.classList.add('show'); btn.textContent = '🔐 Login to Admin'; btn.disabled = false; }
+}
+function logout() { auth.signOut(); }
+
+// TABS
+function goTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.mob-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  // sync sidebar
+  const sn = document.getElementById('sn-' + id);
+  if (sn) sn.classList.add('active');
+  // sync mobile nav
+  if (el) {
+    el.classList.add('active');
   } else {
-    fb = firebase.app();
+    // find and activate mobile btn
+    document.querySelectorAll('.mob-nav-btn').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active');
+    });
   }
-  auth = firebase.auth();
-  db = firebase.firestore();
-} catch(e) {
-  console.error('Firebase init error:', e);
-  alert('Firebase error: ' + e.message);
-  return;
+  window.scrollTo(0, 0);
 }
 
-// ── AUTH ──
-auth.onAuthStateChanged(user => {
-  if(user){
-    document.getElementById('loginPage').style.display='none';
-    document.getElementById('adminApp').style.display='block';
-    loadDashboard();
-    loadProducts();
-    loadBankOffers();
-    loadBanners();
+// Load all data
+function loadAll() {
+  loadDash(); loadProducts(); loadOffers(); loadBanners();
+}
+
+async function loadDash() {
+  try {
+    const [ps, bs, bns] = await Promise.all([
+      db.collection('products').get(),
+      db.collection('bankOffers').get(),
+      db.collection('banners').get()
+    ]);
+    document.getElementById('dn-prods').textContent = ps.size;
+    document.getElementById('dn-bank').textContent = bs.size;
+    document.getElementById('dn-ban').textContent = bns.size;
+  } catch(e) {}
+}
+
+// IMAGE PREVIEW
+function prevImg(n) {
+  const url = document.getElementById('f-img' + n).value.trim();
+  const prev = document.getElementById('prev' + n);
+  if (url) {
+    prev.innerHTML = `<img src="${url}" onerror="this.parentElement.innerHTML='<div class=placeholder>❌ Image not found</div>'">`;
+    prev.classList.add('has-img');
   } else {
-    document.getElementById('loginPage').style.display='flex';
-    document.getElementById('adminApp').style.display='none';
-  }
-});
-
-async function doLogin(){
-  const email=document.getElementById('loginEmail').value.trim();
-  const pass=document.getElementById('loginPass').value;
-  const btn=document.getElementById('loginBtn');
-  const err=document.getElementById('loginErr');
-  if(!email||!pass){err.textContent='⚠️ Enter email and password';err.style.display='block';return;}
-  btn.textContent='Logging in...';btn.disabled=true;err.style.display='none';
-  try{
-    await auth.signInWithEmailAndPassword(email,pass);
-  }catch(e){
-    err.textContent='❌ '+e.message;err.style.display='block';
-    btn.textContent='🔐 Login to Admin';btn.disabled=false;
-  }
-}
-function doLogout(){auth.signOut();}
-
-// ── TABS ──
-function showTab(id,el){
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('tab-'+id).classList.add('on');
-  el.classList.add('on');
-}
-
-// ── DASHBOARD ──
-async function loadDashboard(){
-  try{
-    const ps=await db.collection('products').get();
-    const bs=await db.collection('bankOffers').get();
-    const bns=await db.collection('banners').get();
-    document.getElementById('totalProds').textContent=ps.size;
-    document.getElementById('totalOffers').textContent=bs.size;
-    document.getElementById('totalBanners').textContent=bns.size;
-  }catch(e){}
-}
-
-// ── IMAGE PREVIEW ──
-function previewImg(inputId,prevId){
-  const url=document.getElementById(inputId).value.trim();
-  const prev=document.getElementById(prevId);
-  if(url){
-    prev.innerHTML=`<img src="${url}" onerror="this.parentElement.innerHTML='❌'">`;
-  } else {
-    prev.innerHTML='👆 Preview';
+    prev.innerHTML = '<div class="placeholder">🖼️<br>Preview here</div>';
+    prev.classList.remove('has-img');
   }
 }
 
-// ── SAVE PRODUCT ──
-async function saveProduct(){
-  const brand=document.getElementById('fBrand').value.trim();
-  const title=document.getElementById('fTitle').value.trim();
-  const amz=document.getElementById('fAmz').value.trim();
-  if(!brand||!title||!amz){showAlert('addError','⚠️ Brand, Title and Amazon Link are required!');return;}
-  const btn=document.getElementById('saveBtn');
-  btn.disabled=true;btn.innerHTML='⏳ Saving...';
+// SAVE PRODUCT
+async function saveProduct() {
+  const brand = document.getElementById('f-brand').value.trim();
+  const title = document.getElementById('f-title').value.trim();
+  const amz = document.getElementById('f-amz').value.trim();
+  if (!brand) { showErr('⚠️ Brand name is required!'); return; }
+  if (!title) { showErr('⚠️ Product title is required!'); return; }
+  if (!amz) { showErr('⚠️ Amazon affiliate link is required!'); return; }
+  const btn = document.getElementById('savebtn');
+  btn.disabled = true; btn.innerHTML = '⏳ Saving to database...';
   hideAlerts();
-  const imgs=[
-    document.getElementById('fImg1').value.trim(),
-    document.getElementById('fImg2').value.trim(),
-    document.getElementById('fImg3').value.trim(),
+  const imgs = [
+    document.getElementById('f-img1').value.trim(),
+    document.getElementById('f-img2').value.trim(),
+    document.getElementById('f-img3').value.trim(),
   ].filter(Boolean);
-  const data={
-    brand,name:title,
-    cat:document.getElementById('fCat').value,
-    badge:document.getElementById('fBadge').value,
-    rating:parseFloat(document.getElementById('fRating').value)||4.5,
-    reviews:parseInt(document.getElementById('fReviews').value)||0,
-    stock:parseInt(document.getElementById('fStock').value)||99,
-    specs:document.getElementById('fSpecs').value.trim(),
-    imgs,image1:imgs[0]||'',image2:imgs[1]||'',image3:imgs[2]||'',
-    amazonLink:amz,flipkartLink:document.getElementById('fFlp').value.trim(),
-    amazonPrice:document.getElementById('fAmzPrice').value.trim(),
-    flipkartPrice:document.getElementById('fFlpPrice').value.trim(),
-    bestPlatform:document.getElementById('fBest').value,
-    featured:document.getElementById('fFeatured').value==='yes',
-    updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+  const data = {
+    brand, name: title,
+    cat: document.getElementById('f-cat').value,
+    badge: document.getElementById('f-badge').value,
+    rating: parseFloat(document.getElementById('f-rating').value) || 4.5,
+    reviews: parseInt(document.getElementById('f-reviews').value) || 0,
+    stock: parseInt(document.getElementById('f-stock').value) || 99,
+    specs: document.getElementById('f-specs').value.trim(),
+    imgs, image1: imgs[0]||'', image2: imgs[1]||'', image3: imgs[2]||'',
+    amazonLink: amz,
+    flipkartLink: document.getElementById('f-flp').value.trim(),
+    amazonPrice: document.getElementById('f-amzp').value.trim(),
+    flipkartPrice: document.getElementById('f-flpp').value.trim(),
+    bestPlatform: document.getElementById('f-best').value,
+    featured: document.getElementById('f-feat').value === 'yes',
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
   };
-  try{
-    const editId=document.getElementById('fEditId').value;
-    if(editId){
-      await db.collection('products').doc(editId).update(data);
-      document.getElementById('fEditId').value='';
-      btn.innerHTML='💾 Save Product to Database';
+  try {
+    const eid = document.getElementById('f-editid').value;
+    if (eid) {
+      await db.collection('products').doc(eid).update(data);
+      cancelEdit();
+      showOk('✅ Product updated! Homepage will refresh automatically.');
     } else {
-      data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+      data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
       await db.collection('products').add(data);
+      clearForm();
+      showOk('✅ Product saved! It will appear on the homepage now.');
     }
-    showAlert('addSuccess','✅ Product saved! Homepage updated automatically!');
-    clearProductForm();
-    loadDashboard();
-    showToast('✅ Product saved successfully!');
-  }catch(e){
-    showAlert('addError','❌ Error: '+e.message);
+    loadAll();
+    toast('✅ Product saved successfully!');
+  } catch(e) {
+    showErr('❌ Error: ' + e.message);
   }
-  btn.disabled=false;btn.innerHTML='💾 Save Product to Database';
+  btn.disabled = false; btn.innerHTML = '💾 Save Product to Database';
 }
 
-function clearProductForm(){
-  ['fBrand','fTitle','fRating','fReviews','fStock','fSpecs','fImg1','fImg2','fImg3','fAmz','fFlp','fAmzPrice','fFlpPrice','fEditId'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('fBadge').value='';
-  document.getElementById('fBest').value='amazon';
-  document.getElementById('fFeatured').value='no';
-  ['prev1','prev2','prev3'].forEach(id=>document.getElementById(id).innerHTML='👆 Preview');
+function clearForm() {
+  ['f-brand','f-title','f-specs','f-img1','f-img2','f-img3','f-amz','f-flp','f-amzp','f-flpp'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-badge').value = '';
+  document.getElementById('f-best').value = 'amazon';
+  document.getElementById('f-feat').value = 'no';
+  document.getElementById('f-rating').value = '';
+  document.getElementById('f-reviews').value = '';
+  document.getElementById('f-stock').value = '';
+  [1,2,3].forEach(n => {
+    const p = document.getElementById('prev'+n);
+    p.innerHTML = '<div class="placeholder">🖼️<br>Preview here</div>';
+    p.classList.remove('has-img');
+  });
 }
 
-// ── LOAD PRODUCTS ──
-async function loadProducts(){
-  const list=document.getElementById('prodList');
-  try{
-    const snap=await db.collection('products').orderBy('createdAt','desc').get();
-    document.getElementById('prodCount').textContent=snap.size+' products';
-    if(snap.empty){list.innerHTML='<div class="empty-state"><div class="empty-ic">📦</div><p>No products yet. Add your first product!</p></div>';return;}
-    list.innerHTML=snap.docs.map(doc=>{
-      const p={id:doc.id,...doc.data()};
-      const img=p.imgs?.[0]||p.image1||p.img||'';
-      const badge=p.badge||'';
-      return`<div class="prod-item">
-        <div class="prod-img">${img?`<img src="${img}" alt="${p.name}">`:'📦'}</div>
-        <div class="prod-inf">
-          <div class="prod-br">${p.brand||''}</div>
-          <div class="prod-nm">${p.name}</div>
-          <div class="prod-cat">
-            ${p.cat||''} 
-            ${badge?`<span class="prod-bdg bdg-${badge}">${badge.toUpperCase()}</span>`:''}
+function cancelEdit() {
+  document.getElementById('f-editid').value = '';
+  document.getElementById('editBanner').classList.remove('show');
+  document.getElementById('savebtn').innerHTML = '💾 Save Product to Database';
+  clearForm();
+  hideAlerts();
+}
+
+// LOAD PRODUCTS
+async function loadProducts() {
+  const list = document.getElementById('prods-list');
+  try {
+    const snap = await db.collection('products').orderBy('createdAt', 'desc').get();
+    document.getElementById('prods-count').textContent = snap.size + ' products';
+    if (snap.empty) {
+      list.innerHTML = `<div class="empty"><div class="empty-ic">📦</div><div class="empty-t">No products yet</div><div class="empty-s">Add your first product using the ➕ Add Product tab!</div></div>`;
+      return;
+    }
+    list.innerHTML = snap.docs.map(doc => {
+      const p = { id: doc.id, ...doc.data() };
+      const img = p.imgs?.[0] || p.image1 || '';
+      const badge = p.badge || '';
+      return `<div class="prod-card">
+        <div class="prod-thumb">${img ? `<img src="${img}" alt="${p.name}" onerror="this.parentElement.textContent='📦'">` : '📦'}</div>
+        <div class="prod-details">
+          <div class="prod-brand">${p.brand || ''}</div>
+          <div class="prod-name">${p.name}</div>
+          <div class="prod-meta">
+            ${p.cat || ''}
+            ${badge ? `<span class="prod-badge badge-${badge}">${badge.toUpperCase()}</span>` : ''}
+            ${p.rating ? `⭐ ${p.rating}` : ''}
           </div>
         </div>
-        <div class="prod-acts">
-          <button class="prod-edit" onclick="editProduct('${doc.id}')">✏️ Edit</button>
-          <button class="prod-del" onclick="deleteProduct('${doc.id}','${p.name}')">🗑️</button>
+        <div class="prod-actions">
+          <button class="btn-edit" onclick="editProduct('${doc.id}')">✏️ Edit</button>
+          <button class="btn-del" onclick="delProduct('${doc.id}','${p.name.replace(/'/g,"\\'")}')">🗑️</button>
         </div>
       </div>`;
     }).join('');
-  }catch(e){list.innerHTML='<div class="empty-state"><p>❌ Error loading products</p></div>';}
+  } catch(e) {
+    list.innerHTML = `<div class="empty"><div class="empty-t">❌ Error loading products</div><div class="empty-s">${e.message}</div></div>`;
+  }
 }
 
-async function editProduct(id){
-  try{
-    const doc=await db.collection('products').doc(id).get();
-    const p=doc.data();
-    document.getElementById('fBrand').value=p.brand||'';
-    document.getElementById('fTitle').value=p.name||'';
-    document.getElementById('fCat').value=p.cat||'smartphones';
-    document.getElementById('fBadge').value=p.badge||'';
-    document.getElementById('fRating').value=p.rating||'';
-    document.getElementById('fReviews').value=p.reviews||'';
-    document.getElementById('fStock').value=p.stock||'';
-    document.getElementById('fSpecs').value=p.specs||'';
-    const imgs=p.imgs||[];
-    document.getElementById('fImg1').value=imgs[0]||p.image1||'';
-    document.getElementById('fImg2').value=imgs[1]||p.image2||'';
-    document.getElementById('fImg3').value=imgs[2]||p.image3||'';
-    document.getElementById('fAmz').value=p.amazonLink||'';
-    document.getElementById('fFlp').value=p.flipkartLink||'';
-    document.getElementById('fAmzPrice').value=p.amazonPrice||'';
-    document.getElementById('fFlpPrice').value=p.flipkartPrice||'';
-    document.getElementById('fBest').value=p.bestPlatform||'amazon';
-    document.getElementById('fFeatured').value=p.featured?'yes':'no';
-    document.getElementById('fEditId').value=id;
-    ['fImg1','fImg2','fImg3'].forEach((fid,i)=>{
-      const v=document.getElementById(fid).value;
-      const prev=document.getElementById('prev'+(i+1));
-      if(v)prev.innerHTML=`<img src="${v}">`;
-    });
-    document.getElementById('saveBtn').innerHTML='💾 Update Product';
-    showTab('add',document.querySelectorAll('.tab-btn')[1]);
+async function editProduct(id) {
+  try {
+    const doc = await db.collection('products').doc(id).get();
+    const p = doc.data();
+    document.getElementById('f-brand').value = p.brand || '';
+    document.getElementById('f-title').value = p.name || '';
+    document.getElementById('f-cat').value = p.cat || 'smartphones';
+    document.getElementById('f-badge').value = p.badge || '';
+    document.getElementById('f-rating').value = p.rating || '';
+    document.getElementById('f-reviews').value = p.reviews || '';
+    document.getElementById('f-stock').value = p.stock || '';
+    document.getElementById('f-specs').value = p.specs || '';
+    const imgs = p.imgs || [];
+    document.getElementById('f-img1').value = imgs[0] || p.image1 || '';
+    document.getElementById('f-img2').value = imgs[1] || p.image2 || '';
+    document.getElementById('f-img3').value = imgs[2] || p.image3 || '';
+    document.getElementById('f-amz').value = p.amazonLink || '';
+    document.getElementById('f-flp').value = p.flipkartLink || '';
+    document.getElementById('f-amzp').value = p.amazonPrice || '';
+    document.getElementById('f-flpp').value = p.flipkartPrice || '';
+    document.getElementById('f-best').value = p.bestPlatform || 'amazon';
+    document.getElementById('f-feat').value = p.featured ? 'yes' : 'no';
+    document.getElementById('f-editid').value = id;
+    [1,2,3].forEach(n => prevImg(n));
+    document.getElementById('editBanner').classList.add('show');
+    document.getElementById('savebtn').innerHTML = '💾 Update Product';
+    goTab('add', null);
     window.scrollTo(0,0);
-    showToast('✏️ Editing: '+p.name);
-  }catch(e){showToast('❌ Error loading product');}
+    toast('✏️ Editing: ' + p.name);
+  } catch(e) { toast('❌ Error: ' + e.message); }
 }
 
-async function deleteProduct(id,name){
-  if(!confirm(`Delete "${name}"?`))return;
-  try{
+async function delProduct(id, name) {
+  if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
+  try {
     await db.collection('products').doc(id).delete();
-    showToast('🗑️ Deleted: '+name);
-    loadProducts();loadDashboard();
-  }catch(e){showToast('❌ Error: '+e.message);}
+    toast('🗑️ Deleted: ' + name);
+    loadProducts(); loadDash();
+  } catch(e) { toast('❌ Error: ' + e.message); }
 }
 
-// ── BANK OFFERS ──
-async function saveBankOffer(){
-  const nm=document.getElementById('bkName').value.trim();
-  const off=document.getElementById('bkOff').value.trim();
-  if(!nm||!off){showToast('⚠️ Enter bank name and offer!');return;}
-  try{
+// BANK OFFERS
+async function saveOffer() {
+  const name = document.getElementById('b-name').value.trim();
+  const off = document.getElementById('b-off').value.trim();
+  if (!name || !off) { toast('⚠️ Enter bank name and offer text!'); return; }
+  try {
     await db.collection('bankOffers').add({
-      nm,ic:document.getElementById('bkIc').value||'💳',
-      off,vl:document.getElementById('bkVl').value.trim(),
-      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+      nm: name,
+      ic: document.getElementById('b-ic').value || '💳',
+      off,
+      vl: document.getElementById('b-vl').value.trim(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    ['bkName','bkIc','bkOff','bkVl'].forEach(id=>document.getElementById(id).value='');
-    showToast('✅ Bank offer saved!');loadBankOffers();loadDashboard();
-  }catch(e){showToast('❌ Error: '+e.message);}
+    ['b-name','b-ic','b-off','b-vl'].forEach(id => document.getElementById(id).value = '');
+    toast('✅ Bank offer saved!'); loadOffers(); loadDash();
+  } catch(e) { toast('❌ Error: ' + e.message); }
 }
-async function loadBankOffers(){
-  const list=document.getElementById('bankList');
-  try{
-    const snap=await db.collection('bankOffers').get();
-    document.getElementById('bankCount').textContent=snap.size+' offers';
-    if(snap.empty){list.innerHTML='<div class="empty-state"><div class="empty-ic">💳</div><p>No bank offers yet</p></div>';return;}
-    list.innerHTML=snap.docs.map(doc=>{
-      const b={id:doc.id,...doc.data()};
-      return`<div class="offer-item-card">
-        <div class="offer-left"><span class="offer-ic">${b.ic||'💳'}</span><div><div class="offer-nm">${b.nm}</div><div class="offer-txt">${b.off}</div><div class="offer-vl">${b.vl||''}</div></div></div>
-        <button class="prod-del" onclick="deleteOffer('${doc.id}')">🗑️</button>
+
+async function loadOffers() {
+  const list = document.getElementById('bank-list');
+  try {
+    const snap = await db.collection('bankOffers').get();
+    document.getElementById('bank-count').textContent = snap.size + ' offers';
+    if (snap.empty) { list.innerHTML = '<div class="empty"><div class="empty-ic">💳</div><div class="empty-t">No bank offers yet</div></div>'; return; }
+    list.innerHTML = snap.docs.map(doc => {
+      const b = { id: doc.id, ...doc.data() };
+      return `<div class="offer-card">
+        <span class="offer-ic">${b.ic || '💳'}</span>
+        <div class="offer-details">
+          <div class="offer-name">${b.nm}</div>
+          <div class="offer-text">${b.off}</div>
+          <div class="offer-valid">${b.vl || ''}</div>
+        </div>
+        <button class="btn-del" onclick="delOffer('${doc.id}')">🗑️</button>
       </div>`;
     }).join('');
-  }catch(e){}
+  } catch(e) {}
 }
-async function deleteOffer(id){
+
+async function delOffer(id) {
   await db.collection('bankOffers').doc(id).delete();
-  showToast('🗑️ Deleted!');loadBankOffers();loadDashboard();
+  toast('🗑️ Deleted!'); loadOffers(); loadDash();
 }
 
-// ── BANNERS ──
-async function saveBanner(){
-  const title=document.getElementById('bnTitle').value.trim();
-  if(!title){showToast('⚠️ Enter banner title!');return;}
-  try{
+// BANNERS
+async function saveBanner() {
+  const title = document.getElementById('bn-title').value.trim();
+  if (!title) { toast('⚠️ Enter banner title!'); return; }
+  try {
     await db.collection('banners').add({
-      title,btnText:document.getElementById('bnBtn').value.trim(),
-      link:document.getElementById('bnLink').value.trim(),
-      bg:document.getElementById('bnBg').value.trim(),
-      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+      title,
+      btnText: document.getElementById('bn-btn').value.trim(),
+      link: document.getElementById('bn-link').value.trim(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    ['bnTitle','bnBtn','bnLink','bnBg'].forEach(id=>document.getElementById(id).value='');
-    showToast('✅ Banner saved!');loadBanners();loadDashboard();
-  }catch(e){showToast('❌ Error: '+e.message);}
+    ['bn-title','bn-btn','bn-link'].forEach(id => document.getElementById(id).value = '');
+    toast('✅ Banner saved!'); loadBanners(); loadDash();
+  } catch(e) { toast('❌ Error: ' + e.message); }
 }
-async function loadBanners(){
-  const list=document.getElementById('bannerList');
-  try{
-    const snap=await db.collection('banners').get();
-    document.getElementById('bannerCount').textContent=snap.size+' banners';
-    if(snap.empty){list.innerHTML='<div class="empty-state"><div class="empty-ic">🎨</div><p>No banners yet</p></div>';return;}
-    list.innerHTML=snap.docs.map(doc=>{
-      const b={id:doc.id,...doc.data()};
-      return`<div class="offer-item-card">
-        <div class="offer-left"><div><div class="offer-nm">${b.title}</div><div class="offer-txt">${b.btnText||''} ${b.link||''}</div></div></div>
-        <button class="prod-del" onclick="deleteBanner('${doc.id}')">🗑️</button>
+
+async function loadBanners() {
+  const list = document.getElementById('ban-list');
+  try {
+    const snap = await db.collection('banners').get();
+    document.getElementById('ban-count').textContent = snap.size + ' banners';
+    if (snap.empty) { list.innerHTML = '<div class="empty"><div class="empty-ic">🎨</div><div class="empty-t">No banners yet</div></div>'; return; }
+    list.innerHTML = snap.docs.map(doc => {
+      const b = { id: doc.id, ...doc.data() };
+      return `<div class="offer-card">
+        <div class="offer-details">
+          <div class="offer-name">${b.title}</div>
+          <div class="offer-text">${b.btnText || ''} ${b.link ? '→ ' + b.link : ''}</div>
+        </div>
+        <button class="btn-del" onclick="delBanner('${doc.id}')">🗑️</button>
       </div>`;
     }).join('');
-  }catch(e){}
+  } catch(e) {}
 }
-async function deleteBanner(id){
+
+async function delBanner(id) {
   await db.collection('banners').doc(id).delete();
-  showToast('🗑️ Deleted!');loadBanners();loadDashboard();
+  toast('🗑️ Deleted!'); loadBanners(); loadDash();
 }
 
-// ── UTILS ──
-function showAlert(id,msg){
-  const el=document.getElementById(id);el.textContent=msg;el.classList.add('on');
-  setTimeout(()=>el.classList.remove('on'),5000);
-}
-function hideAlerts(){['addSuccess','addError'].forEach(id=>document.getElementById(id).classList.remove('on'));}
-let _tt;
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('on'),3000);}
+// UTILS
+function showOk(msg) { const el = document.getElementById('ok-msg'); el.textContent = msg; el.classList.add('show'); }
+function showErr(msg) { const el = document.getElementById('err-msg'); el.textContent = msg; el.classList.add('show'); }
+function hideAlerts() { ['ok-msg','err-msg'].forEach(id => document.getElementById(id).classList.remove('show')); }
 
-})(); // end initFirebase
+let _t;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(_t); _t = setTimeout(() => t.classList.remove('show'), 3000);
+}
 </script>
 </body>
 </html>
