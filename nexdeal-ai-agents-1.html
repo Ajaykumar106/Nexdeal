@@ -4,151 +4,371 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NexDeal AI Assistant</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--p:#6366f1;--p2:#818cf8;--a:#f97316;--bg:#07060f;--bg2:#0e0c1e;--bg3:#161430;--glass:rgba(255,255,255,0.05);--glass2:rgba(255,255,255,0.08);--border:rgba(255,255,255,0.1);--border2:rgba(99,102,241,0.3);--text:#f0eeff;--muted:#8b87b0;}
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;}
-body{display:flex;flex-direction:column;position:relative;}
-.orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.1;animation:float 8s ease-in-out infinite;}
-.o1{width:400px;height:400px;background:#6366f1;top:-100px;left:-100px;}
-.o2{width:300px;height:300px;background:#f97316;bottom:-80px;right:-80px;animation-delay:3s;}
-.o3{width:200px;height:200px;background:#06b6d4;top:40%;left:50%;animation-delay:5s;}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-25px)}}
-.hdr{position:relative;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(14,12,30,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);flex-shrink:0;}
-.back{background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:7px 12px;cursor:pointer;color:var(--text);font-size:15px;text-decoration:none;transition:all .2s;}
-.back:hover{background:var(--glass2);}
-.ai-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
-.ai-nm{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
-.ai-st{font-size:11px;color:#10b981;display:flex;align-items:center;gap:4px;}
-.ai-st::before{content:'';width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.tabs{position:relative;z-index:10;display:flex;gap:5px;padding:10px 14px 8px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;background:rgba(14,12,30,.5);}
-.tabs::-webkit-scrollbar{display:none;}
-.tab{padding:6px 13px;border-radius:999px;border:1px solid var(--border);background:var(--glass);color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .2s;}
-.tab.on{background:var(--p);color:#fff;border-color:var(--p);}
-.chat-area{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;}
+:root{
+  --p:#6c63ff;--p2:#a78bfa;--a:#f97316;
+  --bg:#0d0d1a;--bg2:#13132a;--bg3:#1a1a38;
+  --card:rgba(255,255,255,0.05);--card2:rgba(255,255,255,0.08);
+  --border:rgba(255,255,255,0.09);--border2:rgba(108,99,255,0.4);
+  --text:#f0eeff;--muted:#8b87b0;--muted2:#6b6890;
+  --green:#10b981;--user-bg:linear-gradient(135deg,#4f46e5,#7c3aed);
+  --ai-bg:rgba(108,99,255,0.1);
+}
+[data-theme="light"]{
+  --bg:#f5f6fa;--bg2:#eef0ff;--bg3:#fff;
+  --card:rgba(255,255,255,0.9);--card2:rgba(240,240,255,0.9);
+  --border:rgba(108,99,255,0.12);--border2:rgba(108,99,255,0.35);
+  --text:#1a1840;--muted:#6b7280;--muted2:#9ca3af;
+  --ai-bg:rgba(108,99,255,0.06);
+  --user-bg:linear-gradient(135deg,#4f46e5,#7c3aed);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;font-family:'Plus Jakarta Sans',sans-serif;}
+body{background:var(--bg);color:var(--text);display:flex;flex-direction:column;overflow:hidden;position:relative;}
+
+/* ANIMATED BG */
+.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.07;animation:orbFloat 8s ease-in-out infinite;}
+.orb1{width:400px;height:400px;background:#6c63ff;top:-100px;left:-100px;}
+.orb2{width:300px;height:300px;background:#f97316;bottom:-80px;right:-80px;animation-delay:3s;}
+.orb3{width:200px;height:200px;background:#06b6d4;top:40%;left:50%;animation-delay:5s;}
+@keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+
+/* HEADER */
+.hdr{position:relative;z-index:10;display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(13,13,26,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);flex-shrink:0;}
+[data-theme="light"] .hdr{background:rgba(245,246,250,.95);}
+.back{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:7px 12px;cursor:pointer;color:var(--text);font-size:15px;text-decoration:none;transition:.2s;font-weight:600;}
+.ai-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--border2);}
+.ai-avatar img{width:100%;height:100%;object-fit:cover;}
+.ai-info{flex:1;}
+.ai-name{font-size:15px;font-weight:800;margin-bottom:1px;}
+.ai-status{font-size:11px;color:var(--green);display:flex;align-items:center;gap:5px;font-weight:600;}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--text);font-size:15px;}
+
+/* MODE TABS */
+.mode-tabs{position:relative;z-index:10;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;background:rgba(13,13,26,.7);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);flex-shrink:0;}
+[data-theme="light"] .mode-tabs{background:rgba(245,246,250,.8);}
+.mode-tabs::-webkit-scrollbar{display:none;}
+.mode-tab{padding:11px 16px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;border-bottom:2.5px solid transparent;transition:.2s;display:flex;align-items:center;gap:5px;}
+.mode-tab.active{color:var(--p2);border-bottom-color:var(--p);}
+
+/* CHAT AREA */
+.chat-area{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:14px;position:relative;z-index:1;}
 .chat-area::-webkit-scrollbar{width:3px;}
-.chat-area::-webkit-scrollbar-track{background:transparent;}
-.chat-area::-webkit-scrollbar-thumb{background:var(--border);}
-.msg{display:flex;gap:9px;animation:fuP .3s ease;}
-@keyframes fuP{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.chat-area::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+
+/* MESSAGES */
+.msg{display:flex;gap:10px;animation:msgIn .3s ease;}
 .msg.user{flex-direction:row-reverse;}
-.mav{width:31px;height:31px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;}
-.mav.ai{background:linear-gradient(135deg,#7c3aed,#a855f7);}
-.mav.user{background:linear-gradient(135deg,#f97316,#fbbf24);}
-.bubble{max-width:82%;padding:11px 13px;border-radius:16px;font-size:13.5px;line-height:1.55;}
-.ai-b{background:rgba(99,102,241,.1);color:var(--text);border:1px solid rgba(99,102,241,.2);border-radius:4px 16px 16px 16px;}
-.user-b{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border-radius:16px 4px 16px 16px;}
-.typing{display:flex;gap:4px;align-items:center;padding:12px 14px;}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:bounce .8s infinite;}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg-av{width:33px;height:33px;border-radius:50%;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.msg-av.ai{border:1.5px solid var(--border2);}
+.msg-av.ai img{width:100%;height:100%;object-fit:cover;}
+.msg-av.user{background:var(--user-bg);font-size:15px;}
+.bubble{max-width:82%;padding:12px 14px;border-radius:16px;font-size:14px;line-height:1.6;font-weight:500;}
+.ai-bubble{background:var(--ai-bg);color:var(--text);border:1px solid var(--border);border-radius:4px 16px 16px 16px;}
+.user-bubble{background:var(--user-bg);color:#fff;border-radius:16px 4px 16px 16px;}
+
+/* TYPING */
+.typing{display:flex;gap:5px;align-items:center;padding:13px 15px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted);animation:bounce .8s infinite;}
 .dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
 @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-8px)}}
-.qchips{position:relative;z-index:10;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:0 14px 10px;flex-shrink:0;}
-.qchips::-webkit-scrollbar{display:none;}
-.qc{padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:var(--glass);color:var(--text);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .2s;}
-.qc:hover{border-color:var(--p);color:var(--p);}
-.inp-row{display:flex;gap:8px;padding:11px 14px;background:rgba(14,12,30,.85);backdrop-filter:blur(20px);border-top:1px solid var(--border);flex-shrink:0;position:relative;z-index:10;}
-.ci{flex:1;padding:11px 15px;border-radius:999px;border:1px solid var(--border);background:var(--glass2);color:var(--text);font-size:13.5px;font-family:'DM Sans',sans-serif;outline:none;transition:all .2s;}
-.ci:focus{border-color:var(--p);}
+
+/* QUICK CHIPS */
+.quick-chips{position:relative;z-index:10;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:10px 14px;border-top:1px solid var(--border);background:rgba(13,13,26,.7);backdrop-filter:blur(10px);flex-shrink:0;}
+[data-theme="light"] .quick-chips{background:rgba(245,246,250,.8);}
+.quick-chips::-webkit-scrollbar{display:none;}
+.qchip{padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;transition:.2s;flex-shrink:0;}
+.qchip:active{transform:scale(.96);}
+
+/* INPUT ROW */
+.inp-row{display:flex;gap:9px;padding:11px 14px 14px;background:rgba(13,13,26,.9);backdrop-filter:blur(20px);border-top:1px solid var(--border);flex-shrink:0;position:relative;z-index:10;}
+[data-theme="light"] .inp-row{background:rgba(245,246,250,.95);}
+.ci{flex:1;padding:12px 16px;border-radius:999px;border:1.5px solid var(--border);background:var(--card2);color:var(--text);font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:.2s;}
+.ci:focus{border-color:var(--border2);}
 .ci::placeholder{color:var(--muted);}
-.sb{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--p2));border:none;color:#fff;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
-.sb:hover{transform:scale(1.08);}
-.sb:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+.send-btn{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--p2));border:none;color:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;}
+.send-btn:hover{transform:scale(1.05);}
+.send-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+/* WELCOME CARD */
+.welcome-card{background:var(--ai-bg);border:1px solid var(--border);border-radius:18px;padding:20px;margin:4px 0;}
+.wc-title{font-size:17px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.wc-sub{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px;}
+.wc-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.wc-feat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px;cursor:pointer;transition:.2s;}
+.wc-feat:active{transform:scale(.97);}
+.wc-feat .fi{font-size:20px;}
 </style>
 </head>
 <body>
-<div class="orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
-<div class="hdr">
-  <a class="back" href="index.html">←</a>
-  <div class="ai-av">🤖</div>
-  <div>
-    <div class="ai-nm">NexDeal AI</div>
-    <div class="ai-st">Online • Groq AI Powered</div>
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<header class="hdr">
+  <a class="back" href="index.html">← Back</a>
+  <div class="ai-avatar msg-av ai">
+    <img src="https://i.imgur.com/placeholder.png" id="aiAvatar" alt="NexDeal AI"
+      onerror="this.outerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;font-size:20px;\'>🤖</div>'">
   </div>
-</div>
-<div class="tabs">
-  <button class="tab on" onclick="setMode('general',this)">🤖 Assistant</button>
-  <button class="tab" onclick="setMode('deals',this)">🔍 Deal Finder</button>
-  <button class="tab" onclick="setMode('compare',this)">⚖️ Compare</button>
-  <button class="tab" onclick="setMode('budget',this)">💰 Budget</button>
-  <button class="tab" onclick="setMode('support',this)">💬 Support</button>
-</div>
+  <div class="ai-info">
+    <div class="ai-name">NexDeal AI</div>
+    <div class="ai-status"><span class="status-dot"></span>Online · Groq AI · 2026</div>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+</header>
+
+<nav class="mode-tabs" id="modeTabs">
+  <button class="mode-tab active" onclick="setMode('general',this)">🤖 Assistant</button>
+  <button class="mode-tab" onclick="setMode('compare',this)">⚖️ Compare</button>
+  <button class="mode-tab" onclick="setMode('deals',this)">🔍 Deal Finder</button>
+  <button class="mode-tab" onclick="setMode('budget',this)">💰 Budget</button>
+  <button class="mode-tab" onclick="setMode('support',this)">💬 Support</button>
+</nav>
+
 <div class="chat-area" id="chatArea">
+  <!-- Welcome message -->
   <div class="msg">
-    <div class="mav ai">🤖</div>
-    <div class="bubble ai-b">🙏 <strong>Namaste! I'm NexDeal AI</strong><br><br>Ask me anything about electronics — phones, laptops, earbuds, prices, comparisons. I'll help you buy smart and save money!<br><br>📱 Best phone under ₹20k?<br>⚖️ iPhone vs Samsung comparison?<br>💻 Best laptop for coding?<br>🎧 Earbuds under ₹2000?</div>
+    <div class="msg-av ai">
+      <img src="https://i.imgur.com/placeholder.png" id="aiAvatar2" alt="AI"
+        onerror="this.outerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;font-size:16px;\'>🤖</div>'">
+    </div>
+    <div class="welcome-card">
+      <div class="wc-title">🙏 Namaste! I'm NexDeal AI</div>
+      <div class="wc-sub">I know about all latest 2026 products — iPhone 17, Samsung S25 Ultra, MacBook M4 and more! Ask me anything about electronics, compare prices, or find the best deal in your budget!</div>
+      <div class="wc-features">
+        <div class="wc-feat" onclick="quick('Best phone under ₹20,000 in 2026?')"><span class="fi">📱</span>Best Phones</div>
+        <div class="wc-feat" onclick="quick('iPhone 17 Pro vs Samsung S25 Ultra comparison')"><span class="fi">⚖️</span>Compare</div>
+        <div class="wc-feat" onclick="quick('Best laptop for CSE student under ₹60,000?')"><span class="fi">💻</span>Laptops</div>
+        <div class="wc-feat" onclick="quick('Best earbuds under ₹2000 in India?')"><span class="fi">🎧</span>Earbuds</div>
+      </div>
+    </div>
   </div>
 </div>
-<div class="qchips">
-  <button class="qc" onclick="quick('Best phone under ₹20,000?')">📱 Under ₹20k</button>
-  <button class="qc" onclick="quick('Best earbuds under ₹2000?')">🎧 Earbuds ₹2k</button>
-  <button class="qc" onclick="quick('iPhone 17 vs Samsung S25 Ultra honest comparison')">⚖️ Compare</button>
-  <button class="qc" onclick="quick('Best laptop for CSE student under ₹60,000?')">💻 Study Laptop</button>
-  <button class="qc" onclick="quick('Amazon or Flipkart which is better for electronics?')">🛒 Which Platform</button>
-  <button class="qc" onclick="quick('Best smartwatch under ₹5000?')">⌚ Smartwatch</button>
+
+<div class="quick-chips" id="quickChips">
+  <button class="qchip" onclick="quick('Best phone under ₹20,000?')">📱 Under ₹20k</button>
+  <button class="qchip" onclick="quick('Best earbuds under ₹2000?')">🎧 Earbuds ₹2k</button>
+  <button class="qchip" onclick="quick('iPhone 17 Pro vs Samsung S25 Ultra honest comparison')">⚖️ iPhone vs Samsung</button>
+  <button class="qchip" onclick="quick('Best laptop for coding under ₹60,000?')">💻 Coding Laptop</button>
+  <button class="qchip" onclick="quick('Amazon or Flipkart which is better for electronics?')">🛒 Amazon vs Flipkart</button>
+  <button class="qchip" onclick="quick('Best smartwatch under ₹5000 in 2026?')">⌚ Smartwatch</button>
+  <button class="qchip" onclick="quick('Best gaming phone under ₹30,000?')">🎮 Gaming Phone</button>
 </div>
+
 <div class="inp-row">
-  <input class="ci" id="ci" placeholder="Ask about any product..." onkeydown="if(event.key==='Enter'&&!event.shiftKey)sendMsg()">
-  <button class="sb" id="sb" onclick="sendMsg()">➤</button>
+  <input class="ci" id="ci" placeholder="Ask about any product..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){sendMsg();event.preventDefault();}">
+  <button class="send-btn" id="sendBtn" onclick="sendMsg()">➤</button>
 </div>
+
 <script>
-let msgs=[];
-let mode='general';
-const MODES={
-  general:'You are NexDeal AI — India\'s smartest electronics shopping assistant. Help with any product queries.',
-  deals:'You are a Deal Finder. Find the best current deals and discounts on electronics in India. Focus on value for money and mention specific prices.',
-  compare:'You are a Product Comparator. Give detailed honest comparisons. Use clear formatting with pros and cons.',
-  budget:'You are a Budget Advisor. Help users find the best products within their budget in Indian Rupees. Always ask for budget if not specified.',
-  support:'You are a Customer Support agent for NexDeal. Help users with the website, how to find products, how to compare prices, and shopping tips.',
+// CURRENT DATE for AI context
+const TODAY = new Date().toLocaleDateString('en-IN', {year:'numeric',month:'long',day:'numeric'});
+const YEAR = new Date().getFullYear();
+
+let currentMode = 'general';
+let msgs = [];
+
+// AI Avatar - use the robot image from NexDeal branding
+// Try to set a proper robot avatar
+document.querySelectorAll('#aiAvatar, #aiAvatar2').forEach(el => {
+  el.src = 'https://em-content.zobj.net/source/animated-noto-color-emoji/356/robot_1f916.gif';
+});
+
+const SYSTEM_PROMPTS = {
+  general: `You are NexDeal AI — India's smartest electronics shopping assistant for 2026.
+
+CRITICAL: Today's date is ${TODAY}. You are in the year ${YEAR}.
+
+You KNOW about these LATEST 2026 products:
+- iPhone 17 series (iPhone 17, 17 Plus, 17 Pro, 17 Pro Max) - released 2025
+- Samsung Galaxy S25 series (S25, S25+, S25 Ultra) - released Jan 2025
+- Apple MacBook Air M4 - released 2025
+- Apple MacBook Pro M4/M4 Pro/M4 Max - released 2024
+- Samsung Galaxy S24 FE - released 2024
+- OnePlus 13, 13R - released 2025
+- Realme GT 7 Pro - released 2024
+- Google Pixel 9 series - released 2024
+- Nothing Phone 3a - released 2025
+- Sony WH-1000XM6 headphones - released 2025
+- Apple Watch Series 10, Ultra 2 - released 2024
+- boAt, Noise, Realme latest products 2025-2026
+
+YOUR JOB:
+- Help Indians find best deals on electronics
+- Compare Amazon vs Flipkart prices
+- Recommend products for any budget in ₹
+- Be honest — never recommend outdated products as new
+
+RULES:
+- Always use Indian Rupees ₹
+- Always mention both Amazon and Flipkart
+- Be concise, helpful, use relevant emojis
+- NEVER say you don't know about products released before 2026
+- Always suggest visiting nexdeal-ten.vercel.app for live prices
+- Current year is ${YEAR} — not 2023 or 2024`,
+
+  compare: `You are a Product Comparison Expert at NexDeal for ${YEAR} India.
+
+Today is ${TODAY}.
+
+You know ALL latest products including iPhone 17, Samsung S25 Ultra, MacBook M4, OnePlus 13, etc.
+
+When comparing products:
+1. Give a clear winner recommendation
+2. Show key differences in a simple table format
+3. Mention Amazon and Flipkart price ranges
+4. Consider Indian buyer priorities: value for money, service centers, resale value
+5. Be honest and opinionated — users want a clear answer
+
+Format comparisons clearly with pros/cons.`,
+
+  deals: `You are a Deal Finder for NexDeal India in ${YEAR}.
+
+Today is ${TODAY}.
+
+Help users find the best current deals. You know about:
+- Amazon Great Indian Festival, Prime Day deals
+- Flipkart Big Billion Days deals  
+- Bank card offers (HDFC 10% off, SBI cashback etc.)
+- Seasonal sales and discounts
+
+Always mention:
+- Approximate price ranges in ₹
+- Which platform is currently cheaper
+- Bank card offers that apply
+- Whether to wait for upcoming sale or buy now`,
+
+  budget: `You are a Budget Shopping Advisor for NexDeal India in ${YEAR}.
+
+Today is ${TODAY}.
+
+When user gives a budget:
+1. Show TOP 3 best options in that budget
+2. Rank them clearly (Best Overall, Best Value, Best Performance)  
+3. Give exact approximate prices in ₹
+4. Mention Amazon and Flipkart for purchase
+5. Ask follow-up questions to narrow down (what will they use it for?)
+
+Budget categories you handle:
+- Phones: ₹5k-₹1.5 lakh
+- Laptops: ₹20k-₹2 lakh
+- Earbuds: ₹500-₹25k
+- Smartwatches: ₹1k-₹1 lakh`,
+
+  support: `You are NexDeal Customer Support for ${YEAR}.
+
+Today is ${TODAY}.
+
+Help users with:
+- How to use NexDeal website
+- How to find best prices
+- How affiliate links work
+- How to request a product
+- How to use the AI assistant
+- How to install the NexDeal app
+
+NexDeal info:
+- Website: nexdeal-ten.vercel.app
+- Compare Amazon vs Flipkart prices
+- AI assistant available 24/7
+- Request any product — added within 24 hours
+- Telegram channel: @nexdeal_deals
+- Email: nexdeal.help@gmail.com`
 };
-function setMode(m,el){mode=m;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');}
-function addMsg(role,text){
-  msgs.push({role,content:text});
-  const area=document.getElementById('chatArea');
-  const div=document.createElement('div');
-  div.className='msg'+(role==='user'?' user':'');
-  div.innerHTML=`<div class="mav ${role==='user'?'user':'ai'}">${role==='user'?'👤':'🤖'}</div><div class="bubble ${role==='user'?'user-b':'ai-b'}">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+
+function setMode(mode, el) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  // Update quick chips based on mode
+  updateChips(mode);
+}
+
+function updateChips(mode) {
+  const chips = {
+    compare: ['iPhone 17 vs Samsung S25 Ultra','MacBook Air M4 vs Dell XPS 13','OnePlus 13 vs Realme GT 7 Pro','boAt vs Sony earbuds','Apple Watch vs Samsung Galaxy Watch'],
+    deals: ['Best deals today on Amazon','Phones on sale under ₹20k','Laptop deals this week','Best cashback offers now','When is next Amazon sale?'],
+    budget: ['Best phone under ₹15,000','Best laptop under ₹40,000','Best earbuds under ₹1,500','Best smartwatch under ₹3,000','Best camera under ₹50,000'],
+    support: ['How do affiliate links work?','How to request a product?','How to install NexDeal app?','How to get best deal?','Contact NexDeal support'],
+    general: ['Best phone under ₹20,000?','Best earbuds under ₹2000?','iPhone 17 Pro vs Samsung S25 Ultra','Best laptop for coding?','Amazon vs Flipkart?','Best smartwatch under ₹5000?','Best gaming phone?'],
+  };
+  const c = document.getElementById('quickChips');
+  const list = chips[mode] || chips.general;
+  c.innerHTML = list.map(q => `<button class="qchip" onclick="quick('${q}')">${q}</button>`).join('');
+}
+
+function addMsg(role, text) {
+  msgs.push({ role, content: text });
+  const area = document.getElementById('chatArea');
+  const div = document.createElement('div');
+  div.className = 'msg' + (role === 'user' ? ' user' : '');
+  const avatarHTML = role === 'user'
+    ? `<div class="msg-av user">👤</div>`
+    : `<div class="msg-av ai" style="width:33px;height:33px;border-radius:50%;overflow:hidden;border:1.5px solid var(--border2);flex-shrink:0;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;font-size:17px;">🤖</div>`;
+  div.innerHTML = `${avatarHTML}<div class="bubble ${role === 'user' ? 'user-bubble' : 'ai-bubble'}">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>')}</div>`;
   area.appendChild(div);
-  area.scrollTop=area.scrollHeight;
+  area.scrollTop = area.scrollHeight;
 }
-function showTyping(){
-  const area=document.getElementById('chatArea');
-  const div=document.createElement('div');
-  div.className='msg';div.id='typing';
-  div.innerHTML='<div class="mav ai">🤖</div><div class="bubble ai-b"><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>';
-  area.appendChild(div);area.scrollTop=area.scrollHeight;
+
+function showTyping() {
+  const area = document.getElementById('chatArea');
+  const div = document.createElement('div');
+  div.className = 'msg'; div.id = 'typing';
+  div.innerHTML = `<div class="msg-av ai" style="width:33px;height:33px;border-radius:50%;overflow:hidden;border:1.5px solid var(--border2);flex-shrink:0;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;font-size:17px;">🤖</div><div class="bubble ai-bubble"><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+  area.appendChild(div);
+  area.scrollTop = area.scrollHeight;
 }
-function hideTyping(){document.getElementById('typing')?.remove();}
-async function sendMsg(){
-  const inp=document.getElementById('ci');
-  const text=inp.value.trim();
-  if(!text)return;
-  inp.value='';
-  document.getElementById('sb').disabled=true;
-  addMsg('user',text);
+
+function hideTyping() {
+  document.getElementById('typing')?.remove();
+}
+
+async function sendMsg() {
+  const inp = document.getElementById('ci');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  document.getElementById('sendBtn').disabled = true;
+  addMsg('user', text);
   showTyping();
-  try{
-    const res=await fetch('/api/chat',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        system:`${MODES[mode]}\n\nYou are NexDeal AI built by Ajaykumar106 (CSE student). Always use Indian Rupees. Be helpful, concise, add emojis. Suggest nexdeal-ten.vercel.app for live price comparison.`,
-        messages:msgs.slice(-8)
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system: SYSTEM_PROMPTS[currentMode],
+        messages: msgs.slice(-10)
       })
     });
-    const data=await res.json();
+    const data = await res.json();
     hideTyping();
-    addMsg('assistant',data.reply||'Sorry, I could not respond right now. Please try again!');
-  }catch(e){
+    addMsg('assistant', data.reply || 'Sorry, I could not respond. Please try again!');
+  } catch(e) {
     hideTyping();
-    addMsg('assistant','⚠️ Connection error. Please check your internet and try again!');
+    addMsg('assistant', '⚠️ Connection error. Please check internet and try again!');
   }
-  document.getElementById('sb').disabled=false;
+  document.getElementById('sendBtn').disabled = false;
   document.getElementById('ci').focus();
 }
-function quick(q){document.getElementById('ci').value=q;sendMsg();}
+
+function quick(q) {
+  document.getElementById('ci').value = q;
+  sendMsg();
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+}
 </script>
 </body>
 </html>
